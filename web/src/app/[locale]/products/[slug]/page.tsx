@@ -40,7 +40,6 @@ function ProductDetailContent({
   product: Product
   relatedProducts: Product[]
 }) {
-  const t = useTranslations()
   const tProduct = useTranslations(`productDetails.${product.id}`)
   const tCommon = useTranslations('products')
 

@@ -6,7 +6,7 @@ import { hasLocale } from 'next-intl'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { inter } from '@/lib/fonts'
-import { locales, type Locale } from '@/i18n/config'
+import { locales } from '@/i18n/config'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 

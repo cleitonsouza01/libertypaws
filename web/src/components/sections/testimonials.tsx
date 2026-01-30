@@ -96,7 +96,7 @@ export function Testimonials() {
 
               {/* Text */}
               <p className="mb-6 text-text-muted">
-                "{t(testimonial.textKey)}"
+                &ldquo;{t(testimonial.textKey)}&rdquo;
               </p>
 
               {/* Author */}
