@@ -1,0 +1,285 @@
+{
+  "metadata": {
+    "title": "Liberty Paws International - Registro de Perros de Servicio y ESA",
+    "description": "Kits de registro profesional para Perros de Servicio y Animales de Apoyo Emocional, certificados y tarjetas de identificación. De confianza para dueños de mascotas en todo el mundo."
+  },
+  "nav": {
+    "home": "Inicio",
+    "products": "Productos",
+    "contact": "Contacto",
+    "searchRegistration": "Buscar Registro"
+  },
+  "hero": {
+    "badge": "Confiable y Oficial",
+    "title": "Tu Mejor Amigo Merece Reconocimiento Oficial",
+    "subtitle": "Cartas ESA profesionales y registro de Perros de Servicio Psiquiátrico. Obtén documentación legítima de profesionales de salud mental licenciados.",
+    "cta": {
+      "primary": "Ver Productos",
+      "secondary": "Contáctanos"
+    },
+    "stats": {
+      "happy": "10,000+ Clientes Satisfechos",
+      "verified": "100% Legal y Verificado"
+    },
+    "imageAlt": "Perro feliz con su dueño",
+    "floatingBadge": {
+      "title": "Documentación Oficial",
+      "subtitle": "Profesionales Licenciados"
+    }
+  },
+  "trustBar": {
+    "items": {
+      "legal": {
+        "title": "100% Legal",
+        "description": "Cumple con las leyes federales"
+      },
+      "fast": {
+        "title": "Procesamiento Rápido",
+        "description": "Entrega en 24-48 horas"
+      },
+      "official": {
+        "title": "Profesionales Licenciados",
+        "description": "Expertos en salud mental"
+      },
+      "support": {
+        "title": "Soporte 24/7",
+        "description": "Estamos aquí para ayudar"
+      }
+    }
+  },
+  "home": {
+    "products": {
+      "title": "Nuestros Productos y Servicios",
+      "subtitle": "Cartas ESA legítimas y registro PSD de profesionales licenciados",
+      "viewAll": "Ver Todos los Productos"
+    },
+    "categories": {
+      "esa": {
+        "title": "Cartas de Animales de Apoyo Emocional",
+        "description": "Cartas ESA oficiales de profesionales de salud mental licenciados para acomodaciones de vivienda y viaje bajo la ley federal.",
+        "benefits": {
+          "1": "Válida para vivienda bajo la Ley de Vivienda Justa",
+          "2": "Evaluación de profesional de salud mental licenciado",
+          "3": "Documentación digital y física incluida"
+        },
+        "cta": "Explorar Cartas ESA",
+        "imageAlt": "Persona con animal de apoyo emocional"
+      },
+      "psd": {
+        "title": "Registro de Perros de Servicio Psiquiátrico",
+        "description": "Paquetes completos de registro PSD incluyendo documentación oficial, tarjetas de identificación y recursos de entrenamiento.",
+        "benefits": {
+          "1": "Documentación conforme a la ADA",
+          "2": "Tarjeta de identificación oficial de perro de servicio",
+          "3": "Guías y recursos de entrenamiento"
+        },
+        "cta": "Explorar Opciones PSD",
+        "imageAlt": "Perro de servicio con chaleco"
+      }
+    },
+    "whyChooseUs": {
+      "title": "¿Por Qué Elegir Liberty Paws?",
+      "subtitle": "Estamos comprometidos a proporcionar documentación legítima y legal para ti y tu compañero",
+      "items": {
+        "legal": {
+          "title": "100% Legalmente Conforme",
+          "description": "Toda la documentación sigue las leyes federales y estatales incluyendo la Ley de Vivienda Justa y la ADA."
+        },
+        "fast": {
+          "title": "Procesamiento Rápido",
+          "description": "Obtén tu documentación en 24-48 horas. Opciones urgentes disponibles para necesidades inmediatas."
+        },
+        "professional": {
+          "title": "Profesionales Licenciados",
+          "description": "Nuestra red incluye profesionales de salud mental licenciados en los 50 estados."
+        },
+        "compassionate": {
+          "title": "Atención Compasiva",
+          "description": "Entendemos la importancia de tu animal de apoyo emocional en tu vida."
+        },
+        "trusted": {
+          "title": "Confianza de Miles",
+          "description": "Más de 10,000 clientes satisfechos han confiado en nosotros para sus necesidades ESA y PSD."
+        },
+        "support": {
+          "title": "Soporte Dedicado",
+          "description": "Nuestro equipo de soporte está disponible para responder preguntas y guiarte en el proceso."
+        }
+      }
+    },
+    "testimonials": {
+      "title": "Lo Que Dicen Nuestros Clientes",
+      "subtitle": "Historias reales de dueños de mascotas que confiaron en Liberty Paws",
+      "items": {
+        "1": {
+          "name": "Sarah M.",
+          "location": "California, EE.UU.",
+          "text": "Liberty Paws hizo el proceso de carta ESA muy simple. ¡Mi casero la aceptó inmediatamente, y ahora Max puede quedarse conmigo!"
+        },
+        "2": {
+          "name": "James R.",
+          "location": "Texas, EE.UU.",
+          "text": "El kit de registro PSD fue completo y profesional. Lo recomiendo a cualquiera que necesite documentación de perro de servicio."
+        },
+        "3": {
+          "name": "Maria L.",
+          "location": "Florida, EE.UU.",
+          "text": "Rápido, profesional y legítimo. Obtuve mi carta ESA en menos de 24 horas. El equipo de soporte fue increíblemente útil."
+        }
+      }
+    },
+    "cta": {
+      "title": "¿Listo para Comenzar?",
+      "subtitle": "Únete a miles de dueños de mascotas que han obtenido exitosamente sus cartas ESA y registro PSD a través de Liberty Paws.",
+      "primaryButton": "Ver Productos",
+      "secondaryButton": "Contáctanos"
+    }
+  },
+  "products": {
+    "title": "Nuestros Productos",
+    "subtitle": "Cartas ESA legítimas y registro PSD de profesionales licenciados",
+    "featured": "Destacado",
+    "popular": "Más Popular",
+    "viewDetails": "Ver Detalles",
+    "buyNow": "Comprar Ahora",
+    "addToCart": "Añadir al Carrito",
+    "price": "Precio",
+    "priceFrom": "Desde",
+    "categories": {
+      "all": "Todos los Productos",
+      "esa": "Cartas ESA",
+      "psd": "Registro PSD"
+    },
+    "filters": {
+      "category": "Categoría",
+      "priceRange": "Rango de Precio",
+      "sortBy": "Ordenar Por",
+      "sortOptions": {
+        "featured": "Destacados",
+        "priceLow": "Precio: Menor a Mayor",
+        "priceHigh": "Precio: Mayor a Menor",
+        "newest": "Más Recientes"
+      }
+    },
+    "detail": {
+      "description": "Descripción",
+      "features": "Qué Incluye",
+      "requiredInfo": "Información Requerida",
+      "addOns": {
+        "title": "Complementos",
+        "appleWallet": "Tarjeta Digital Apple Wallet"
+      },
+      "relatedProducts": "Productos Relacionados",
+      "backToProducts": "Volver a Productos"
+    }
+  },
+  "contact": {
+    "title": "Contáctanos",
+    "subtitle": "¿Tienes preguntas? ¡Estamos aquí para ayudar!",
+    "form": {
+      "name": "Tu Nombre",
+      "namePlaceholder": "Ingresa tu nombre completo",
+      "email": "Correo Electrónico",
+      "emailPlaceholder": "Ingresa tu correo",
+      "phone": "Número de Teléfono",
+      "phonePlaceholder": "Ingresa tu teléfono (opcional)",
+      "subject": "Asunto",
+      "subjectPlaceholder": "Selecciona un asunto",
+      "subjectOptions": {
+        "general": "Consulta General",
+        "product": "Pregunta sobre Producto",
+        "order": "Problema con Pedido",
+        "other": "Otro"
+      },
+      "message": "Mensaje",
+      "messagePlaceholder": "¿Cómo podemos ayudarte?",
+      "submit": "Enviar Mensaje",
+      "sending": "Enviando...",
+      "success": "¡Gracias! Nos pondremos en contacto pronto.",
+      "error": "Algo salió mal. Por favor intenta de nuevo."
+    },
+    "info": {
+      "title": "Información de Contacto",
+      "email": "Correo",
+      "response": "Normalmente respondemos dentro de 24-48 horas"
+    },
+    "faq": {
+      "title": "Preguntas Frecuentes",
+      "questions": {
+        "q1": {
+          "question": "¿Cuánto tiempo toma obtener mi carta ESA?",
+          "answer": "La mayoría de las cartas ESA se entregan dentro de 24-48 horas después de completar tu evaluación."
+        },
+        "q2": {
+          "question": "¿Son legítimas sus cartas ESA?",
+          "answer": "¡Sí! Todas nuestras cartas ESA son escritas por profesionales de salud mental licenciados y cumplen con la ley federal."
+        },
+        "q3": {
+          "question": "¿Qué pasa si mi casero no acepta la carta?",
+          "answer": "Proporcionamos apoyo y orientación. Los caseros están legalmente obligados a aceptar cartas ESA válidas bajo la Ley de Vivienda Justa."
+        }
+      }
+    }
+  },
+  "footer": {
+    "company": {
+      "title": "Liberty Paws International",
+      "description": "Cartas ESA profesionales y registro de perros de servicio de profesionales de salud mental licenciados. De confianza para dueños de mascotas en todo el país."
+    },
+    "links": {
+      "title": "Enlaces Rápidos",
+      "home": "Inicio",
+      "products": "Productos",
+      "contact": "Contacto",
+      "privacy": "Política de Privacidad",
+      "terms": "Términos de Servicio"
+    },
+    "contact": {
+      "title": "Contáctanos",
+      "email": "support@libertypaws.com"
+    },
+    "copyright": "© {year} Liberty Paws International. Todos los derechos reservados."
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Ocurrió un error",
+    "retry": "Intentar de Nuevo",
+    "learnMore": "Saber Más",
+    "viewAll": "Ver Todo",
+    "close": "Cerrar",
+    "menu": "Menú",
+    "language": "Idioma"
+  },
+  "validation": {
+    "required": "Este campo es obligatorio",
+    "email": "Por favor ingresa un correo válido",
+    "minLength": "Debe tener al menos {min} caracteres",
+    "maxLength": "No debe exceder {max} caracteres"
+  },
+  "productDetails": {
+    "esa-letter-housing": {
+      "name": "Carta ESA para Vivienda",
+      "description": "Carta oficial de Animal de Apoyo Emocional para acomodaciones de vivienda bajo la Ley de Vivienda Justa. Escrita por un profesional de salud mental licenciado, esta carta asegura que tu arrendador reconozca tu derecho legal de vivir con tu ESA."
+    },
+    "esa-letter-travel": {
+      "name": "Carta ESA para Viaje",
+      "description": "Documentación para viajar con tu Animal de Apoyo Emocional en aerolíneas. Nuestros profesionales licenciados proporcionan la documentación adecuada para asegurar experiencias de viaje sin problemas con tu compañero."
+    },
+    "esa-combo-package": {
+      "name": "Paquete ESA Completo",
+      "description": "Paquete ESA completo que incluye cartas de vivienda y viaje, más una tarjeta de identificación ESA oficial. El mejor valor para cobertura completa y tranquilidad."
+    },
+    "psd-registration": {
+      "name": "Registro de Perro de Servicio Psiquiátrico",
+      "description": "Registro oficial para tu Perro de Servicio Psiquiátrico con documentación completa y tarjeta de identificación. Documentación conforme a la ADA para proteger tus derechos en espacios públicos."
+    },
+    "psd-training-guide": {
+      "name": "Guía de Entrenamiento y Documentación PSD",
+      "description": "Guía de entrenamiento completa y paquete de documentación para Perros de Servicio Psiquiátrico. Incluye currículum de entrenamiento, guía de acceso público y manual de derechos legales."
+    },
+    "psd-complete-kit": {
+      "name": "Kit PSD Completo",
+      "description": "Todo lo que necesitas para tu Perro de Servicio Psiquiátrico: registro completo, tarjeta de identificación oficial, chaleco de perro de servicio y documentación completa. El paquete definitivo para soporte completo de perro de servicio."
+    }
+  }
+}

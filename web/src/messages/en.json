@@ -1,0 +1,285 @@
+{
+  "metadata": {
+    "title": "Liberty Paws International - Service Dog & ESA Registration",
+    "description": "Professional Service Dog & Emotional Support Animal registration kits, certificates, and ID cards. Trusted by pet owners worldwide."
+  },
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "contact": "Contact",
+    "searchRegistration": "Search Registration"
+  },
+  "hero": {
+    "badge": "Trusted & Official",
+    "title": "Your Best Friend Deserves Official Recognition",
+    "subtitle": "Professional ESA Letters and Psychiatric Service Dog registration. Get legitimate documentation from licensed mental health professionals.",
+    "cta": {
+      "primary": "View Products",
+      "secondary": "Contact Us"
+    },
+    "stats": {
+      "happy": "10,000+ Happy Customers",
+      "verified": "100% Legal & Verified"
+    },
+    "imageAlt": "Happy dog with owner",
+    "floatingBadge": {
+      "title": "Official Documentation",
+      "subtitle": "Licensed Professionals"
+    }
+  },
+  "trustBar": {
+    "items": {
+      "legal": {
+        "title": "100% Legal",
+        "description": "Compliant with federal laws"
+      },
+      "fast": {
+        "title": "Fast Processing",
+        "description": "24-48 hour turnaround"
+      },
+      "official": {
+        "title": "Licensed Professionals",
+        "description": "Real mental health experts"
+      },
+      "support": {
+        "title": "24/7 Support",
+        "description": "We're here to help"
+      }
+    }
+  },
+  "home": {
+    "products": {
+      "title": "Our Products & Services",
+      "subtitle": "Legitimate ESA letters and PSD registration from licensed professionals",
+      "viewAll": "View All Products"
+    },
+    "categories": {
+      "esa": {
+        "title": "Emotional Support Animal Letters",
+        "description": "Official ESA letters from licensed mental health professionals for housing and travel accommodations under federal law.",
+        "benefits": {
+          "1": "Valid for housing under Fair Housing Act",
+          "2": "Licensed mental health professional evaluation",
+          "3": "Digital and physical documentation included"
+        },
+        "cta": "Explore ESA Letters",
+        "imageAlt": "Person with emotional support animal"
+      },
+      "psd": {
+        "title": "Psychiatric Service Dog Registration",
+        "description": "Comprehensive PSD registration packages including official documentation, ID cards, and training resources.",
+        "benefits": {
+          "1": "ADA compliant documentation",
+          "2": "Official service dog ID card",
+          "3": "Training guides and resources"
+        },
+        "cta": "Explore PSD Options",
+        "imageAlt": "Service dog in vest"
+      }
+    },
+    "whyChooseUs": {
+      "title": "Why Choose Liberty Paws?",
+      "subtitle": "We're committed to providing legitimate, legal documentation for you and your companion",
+      "items": {
+        "legal": {
+          "title": "100% Legally Compliant",
+          "description": "All documentation follows federal and state laws including the Fair Housing Act and ADA."
+        },
+        "fast": {
+          "title": "Fast Processing",
+          "description": "Get your documentation within 24-48 hours. Rush options available for urgent needs."
+        },
+        "professional": {
+          "title": "Licensed Professionals",
+          "description": "Our network includes licensed mental health professionals in all 50 states."
+        },
+        "compassionate": {
+          "title": "Compassionate Care",
+          "description": "We understand the importance of your emotional support animal in your life."
+        },
+        "trusted": {
+          "title": "Trusted by Thousands",
+          "description": "Over 10,000 satisfied customers have trusted us with their ESA and PSD needs."
+        },
+        "support": {
+          "title": "Dedicated Support",
+          "description": "Our support team is available to answer questions and guide you through the process."
+        }
+      }
+    },
+    "testimonials": {
+      "title": "What Our Customers Say",
+      "subtitle": "Real stories from real pet owners who trusted Liberty Paws",
+      "items": {
+        "1": {
+          "name": "Sarah M.",
+          "location": "California, USA",
+          "text": "Liberty Paws made the ESA letter process so simple. My landlord accepted it immediately, and now Max can stay with me!"
+        },
+        "2": {
+          "name": "James R.",
+          "location": "Texas, USA",
+          "text": "The PSD registration kit was comprehensive and professional. Highly recommend to anyone needing service dog documentation."
+        },
+        "3": {
+          "name": "Maria L.",
+          "location": "Florida, USA",
+          "text": "Fast, professional, and legitimate. Got my ESA letter in less than 24 hours. The support team was incredibly helpful."
+        }
+      }
+    },
+    "cta": {
+      "title": "Ready to Get Started?",
+      "subtitle": "Join thousands of pet owners who have successfully obtained their ESA letters and PSD registration through Liberty Paws.",
+      "primaryButton": "Browse Products",
+      "secondaryButton": "Contact Us"
+    }
+  },
+  "products": {
+    "title": "Our Products",
+    "subtitle": "Legitimate ESA letters and PSD registration from licensed professionals",
+    "featured": "Featured",
+    "popular": "Most Popular",
+    "viewDetails": "View Details",
+    "buyNow": "Buy Now",
+    "addToCart": "Add to Cart",
+    "price": "Price",
+    "priceFrom": "From",
+    "categories": {
+      "all": "All Products",
+      "esa": "ESA Letters",
+      "psd": "PSD Registration"
+    },
+    "filters": {
+      "category": "Category",
+      "priceRange": "Price Range",
+      "sortBy": "Sort By",
+      "sortOptions": {
+        "featured": "Featured",
+        "priceLow": "Price: Low to High",
+        "priceHigh": "Price: High to Low",
+        "newest": "Newest"
+      }
+    },
+    "detail": {
+      "description": "Description",
+      "features": "What's Included",
+      "requiredInfo": "Required Information",
+      "addOns": {
+        "title": "Add-Ons",
+        "appleWallet": "Apple Wallet Digital Card"
+      },
+      "relatedProducts": "Related Products",
+      "backToProducts": "Back to Products"
+    }
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "subtitle": "Have questions? We're here to help!",
+    "form": {
+      "name": "Your Name",
+      "namePlaceholder": "Enter your full name",
+      "email": "Email Address",
+      "emailPlaceholder": "Enter your email",
+      "phone": "Phone Number",
+      "phonePlaceholder": "Enter your phone (optional)",
+      "subject": "Subject",
+      "subjectPlaceholder": "Select a subject",
+      "subjectOptions": {
+        "general": "General Inquiry",
+        "product": "Product Question",
+        "order": "Order Issue",
+        "other": "Other"
+      },
+      "message": "Message",
+      "messagePlaceholder": "How can we help you?",
+      "submit": "Send Message",
+      "sending": "Sending...",
+      "success": "Thank you! We'll get back to you soon.",
+      "error": "Something went wrong. Please try again."
+    },
+    "info": {
+      "title": "Contact Information",
+      "email": "Email",
+      "response": "We typically respond within 24-48 hours"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "questions": {
+        "q1": {
+          "question": "How long does it take to get my ESA letter?",
+          "answer": "Most ESA letters are delivered within 24-48 hours after your evaluation is completed."
+        },
+        "q2": {
+          "question": "Are your ESA letters legitimate?",
+          "answer": "Yes! All our ESA letters are written by licensed mental health professionals and comply with federal law."
+        },
+        "q3": {
+          "question": "What if my landlord doesn't accept the letter?",
+          "answer": "We provide support and guidance. Landlords are legally required to accept valid ESA letters under the Fair Housing Act."
+        }
+      }
+    }
+  },
+  "footer": {
+    "company": {
+      "title": "Liberty Paws International",
+      "description": "Professional ESA letters and service dog registration from licensed mental health professionals. Trusted by pet owners nationwide."
+    },
+    "links": {
+      "title": "Quick Links",
+      "home": "Home",
+      "products": "Products",
+      "contact": "Contact",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service"
+    },
+    "contact": {
+      "title": "Contact Us",
+      "email": "support@libertypaws.com"
+    },
+    "copyright": "© {year} Liberty Paws International. All rights reserved."
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Try Again",
+    "learnMore": "Learn More",
+    "viewAll": "View All",
+    "close": "Close",
+    "menu": "Menu",
+    "language": "Language"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Please enter a valid email address",
+    "minLength": "Must be at least {min} characters",
+    "maxLength": "Must be no more than {max} characters"
+  },
+  "productDetails": {
+    "esa-letter-housing": {
+      "name": "ESA Letter for Housing",
+      "description": "Official Emotional Support Animal letter for housing accommodations under the Fair Housing Act. Written by a licensed mental health professional, this letter ensures your landlord recognizes your legal right to live with your ESA."
+    },
+    "esa-letter-travel": {
+      "name": "ESA Letter for Travel",
+      "description": "Documentation for traveling with your Emotional Support Animal on airlines. Our licensed professionals provide proper documentation to ensure smooth travel experiences with your companion."
+    },
+    "esa-combo-package": {
+      "name": "ESA Complete Package",
+      "description": "Comprehensive ESA package including both housing and travel letters, plus an official ESA ID card. The best value for complete coverage and peace of mind."
+    },
+    "psd-registration": {
+      "name": "Psychiatric Service Dog Registration",
+      "description": "Official registration for your Psychiatric Service Dog with comprehensive documentation and ID card. ADA compliant documentation to protect your rights in public spaces."
+    },
+    "psd-training-guide": {
+      "name": "PSD Training & Documentation",
+      "description": "Complete training guide and documentation package for Psychiatric Service Dogs. Includes training curriculum, public access guide, and legal rights handbook."
+    },
+    "psd-complete-kit": {
+      "name": "PSD Complete Kit",
+      "description": "Everything you need for your Psychiatric Service Dog: full registration, official ID card, service dog vest, and comprehensive documentation. The ultimate package for complete service dog support."
+    }
+  }
+}

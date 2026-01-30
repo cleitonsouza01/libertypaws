@@ -1,0 +1,8 @@
+export { Hero } from './hero'
+export { TrustBar } from './trust-bar'
+export { ProductCard, type Product } from './product-card'
+export { ProductGrid } from './product-grid'
+export { CategorySection } from './category-section'
+export { WhyChooseUs } from './why-choose-us'
+export { Testimonials } from './testimonials'
+export { CtaBanner } from './cta-banner'

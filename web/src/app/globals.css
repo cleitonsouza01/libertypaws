@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand Colors */
+  --color-brand-navy: #2b301d;
+  --color-brand-lime: #5d7901;
+  --color-brand-lime-dark: #4a6101;
+  --color-brand-red: #c41e3a;
+  --color-brand-blue: #3374ff;
+
+  /* Text Colors */
+  --color-text-primary: #1b1b1b;
+  --color-text-muted: #636363;
+  --color-text-light: #9ca3af;
+
+  /* Background Colors */
+  --color-bg-cream: #faf8f5;
+  --color-bg-white: #ffffff;
+  --color-bg-light: #f5f5f5;
+
+  /* Border Colors */
+  --color-border-light: #e5e5e5;
+  --color-border-default: #d1d5db;
+
+  /* Font Family */
+  --font-inter: var(--font-inter), system-ui, -apple-system, sans-serif;
+}
+
+:root {
+  --background: var(--color-bg-cream);
+  --foreground: var(--color-text-primary);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid var(--color-brand-lime);
+  outline-offset: 2px;
+}
+
+/* Selection styles */
+::selection {
+  background-color: var(--color-brand-lime);
+  color: white;
+}
