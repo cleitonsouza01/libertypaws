@@ -8,6 +8,7 @@ import { Menu, X, Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { LanguageSwitcher, LanguageSwitcherCompact } from './language-switcher'
 import { MobileNav } from './mobile-nav'
+import { getImageUrl } from '@/lib/assets'
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -26,7 +27,7 @@ export function Header() {
         <Link href="/" className="flex items-center gap-2">
           <div className="relative h-10 w-10 md:h-12 md:w-12">
             <Image
-              src="/images/logo.png"
+              src={getImageUrl('images/logo.png')}
               alt="Liberty Paws International"
               fill
               className="object-contain"

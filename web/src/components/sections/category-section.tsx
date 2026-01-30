@@ -7,6 +7,7 @@ import { ArrowRight, Heart, Shield } from 'lucide-react'
 import { motion } from 'motion/react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { getImageUrl } from '@/lib/assets'
 
 interface CategorySectionProps {
   variant?: 'esa' | 'psd'
@@ -109,7 +110,7 @@ export function CategorySection({ variant = 'esa', reverse = false }: CategorySe
               )}
             >
               <Image
-                src={isEsa ? '/images/categories/category-esa.jpg' : '/images/categories/category-service-dog.jpg'}
+                src={isEsa ? getImageUrl('images/categories/category-esa.jpg') : getImageUrl('images/categories/category-service-dog.jpg')}
                 alt={t(`${variant}.imageAlt`)}
                 fill
                 className="object-cover"

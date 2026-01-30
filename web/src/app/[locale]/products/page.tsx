@@ -8,6 +8,7 @@ import { motion } from 'motion/react'
 import { ProductCard } from '@/components/sections/product-card'
 import { products } from '@/data/products'
 import { cn } from '@/lib/utils'
+import { getImageUrl } from '@/lib/assets'
 
 type Category = 'all' | 'esa' | 'psd'
 type SortOption = 'featured' | 'priceLow' | 'priceHigh' | 'newest'
@@ -69,7 +70,7 @@ function ProductsContent() {
       {/* Hero Section */}
       <section className="relative overflow-hidden py-16 text-white md:py-24">
         <Image
-          src="/images/products/products-hero.jpg"
+          src={getImageUrl('images/products/products-hero.jpg')}
           alt="Products"
           fill
           className="object-cover"

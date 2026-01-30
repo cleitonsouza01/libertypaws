@@ -1,4 +1,5 @@
 import type { Product } from '@/components/sections/product-card'
+import { getAssetUrl } from '@/lib/assets'
 
 export const products: Product[] = [
   // ESA Products
@@ -9,7 +10,7 @@ export const products: Product[] = [
     name: 'ESA Letter for Housing',
     description: 'Official Emotional Support Animal letter for housing accommodations under the Fair Housing Act.',
     price: 149,
-    image: '/images/products/esa-housing.jpg',
+    image: getAssetUrl('images/products/esa-housing.jpg'),
     badge: 'Housing',
     popular: true,
     features: [
@@ -26,7 +27,7 @@ export const products: Product[] = [
     name: 'ESA Letter for Travel',
     description: 'Documentation for traveling with your Emotional Support Animal on airlines.',
     price: 149,
-    image: '/images/products/esa-travel.jpg',
+    image: getAssetUrl('images/products/esa-travel.jpg'),
     badge: 'Travel',
     features: [
       'Airline approved format',
@@ -42,7 +43,7 @@ export const products: Product[] = [
     name: 'ESA Complete Package',
     description: 'Comprehensive ESA package including housing and travel letters plus ID card.',
     price: 249,
-    image: '/images/products/esa-combo.jpg',
+    image: getAssetUrl('images/products/esa-combo.jpg'),
     badge: 'Best Value',
     popular: true,
     features: [
@@ -61,7 +62,7 @@ export const products: Product[] = [
     description: 'Official registration for your Psychiatric Service Dog with documentation and ID.',
     price: 79,
     maxPrice: 199,
-    image: '/images/products/psd-registration.jpg',
+    image: getAssetUrl('images/products/psd-registration.jpg'),
     badge: 'Service Dog',
     features: [
       'Official registration',
@@ -77,7 +78,7 @@ export const products: Product[] = [
     name: 'PSD Training & Documentation',
     description: 'Complete training guide and documentation package for Psychiatric Service Dogs.',
     price: 129,
-    image: '/images/products/psd-training.jpg',
+    image: getAssetUrl('images/products/psd-training.jpg'),
     badge: 'Training',
     features: [
       'Training curriculum',
@@ -93,7 +94,7 @@ export const products: Product[] = [
     name: 'PSD Complete Kit',
     description: 'Everything you need: registration, ID, vest, and comprehensive documentation.',
     price: 299,
-    image: '/images/products/psd-kit.jpg',
+    image: getAssetUrl('images/products/psd-kit.jpg'),
     badge: 'Complete',
     popular: true,
     features: [

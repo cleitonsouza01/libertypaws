@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/routing'
 import { Mail } from 'lucide-react'
+import { getImageUrl } from '@/lib/assets'
 
 export function Footer() {
   const t = useTranslations('footer')
@@ -16,7 +17,7 @@ export function Footer() {
             <Link href="/" className="flex items-center gap-2">
               <div className="relative h-10 w-10">
                 <Image
-                  src="/images/logo.png"
+                  src={getImageUrl('images/logo.png')}
                   alt="Liberty Paws International"
                   fill
                   className="object-contain"

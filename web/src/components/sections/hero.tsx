@@ -6,10 +6,11 @@ import { ArrowRight, Shield, Heart } from 'lucide-react'
 import { motion, AnimatePresence } from 'motion/react'
 import { Button } from '@/components/ui/button'
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { getVideoUrl } from '@/lib/assets'
 
 const heroVideos = [
-  '/videos/hero-airport-checkpoint.mp4',
-  '/videos/hero-airplane-travel.mp4',
+  getVideoUrl('videos/hero-airport-checkpoint.mp4'),
+  getVideoUrl('videos/hero-airplane-travel.mp4'),
 ]
 
 export function Hero() {

@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { Shield, Clock, FileCheck, HeartHandshake } from 'lucide-react'
 import { motion } from 'motion/react'
+import { getImageUrl } from '@/lib/assets'
 
 const icons = {
   shield: Shield,
@@ -13,10 +14,10 @@ const icons = {
 }
 
 const images = {
-  shield: '/images/trust/trust-official.jpg',
-  clock: '/images/trust/trust-delivery.jpg',
-  file: '/images/trust/trust-quality.jpg',
-  heart: '/images/trust/trust-support.jpg',
+  shield: getImageUrl('images/trust/trust-official.jpg'),
+  clock: getImageUrl('images/trust/trust-delivery.jpg'),
+  file: getImageUrl('images/trust/trust-quality.jpg'),
+  heart: getImageUrl('images/trust/trust-support.jpg'),
 }
 
 export function TrustBar() {
