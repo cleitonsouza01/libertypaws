@@ -406,80 +406,416 @@ Based on current branding with warm/friendly adjustments:
 
 ## 7. AI Asset Generation Plan
 
-### 7.1 Image Generation Specifications
+> ⚠️ **CRITICAL**: Image generation uses Replicate (PAID service, no refunds). Each prompt has been optimized for google/nano-banana (Gemini 2.5 Flash Image) to maximize success rate on first generation.
+
+### 7.1 Model & Configuration
 
 | Setting | Value |
 |---------|-------|
-| **Model** | `google/imagen-4-ultra-fast` or equivalent |
+| **Model** | `google/nano-banana` (Gemini 2.5 Flash Image) |
 | **Output Path** | `public/images/[category]/` |
 | **Format** | `.webp` (preferred), `.png` (fallback) |
 | **Naming** | `[category]-[descriptor].webp` |
 
-### 7.2 Home Page Images (10 images)
+### 7.2 Prompt Engineering Guidelines (google/nano-banana)
 
-| Filename | Prompt | Aspect |
-|----------|--------|--------|
-| `hero-dog-owner.webp` | "Happy dog owner walking with golden retriever wearing service dog vest in sunny park, warm friendly atmosphere, professional photography, shallow depth of field" | 16:9 |
-| `hero-esa-comfort.webp` | "Person relaxing at home with emotional support dog on couch, cozy warm lighting, authentic genuine moment, lifestyle photography" | 16:9 |
-| `trust-official.webp` | "Official certificate and ID card on wooden desk with golden retriever paw visible, professional documentation, warm lighting" | 1:1 |
-| `trust-quality.webp` | "Close-up of premium service dog vest with embroidered patches, high quality materials, professional product shot" | 1:1 |
-| `trust-shipping.webp` | "Service dog kit package being delivered to happy family at front door, warm suburban setting" | 1:1 |
-| `trust-support.webp` | "Friendly customer service representative helping customer on phone, warm office environment, professional" | 1:1 |
-| `category-service-dog.webp` | "Confident service dog (labrador) wearing vest with handler in public space, professional helpful demeanor" | 4:3 |
-| `category-esa.webp` | "Person cuddling with emotional support dog (small breed) on bed, cozy bedroom setting, emotional connection" | 4:3 |
-| `category-documents.webp` | "Professional certificate and ID card laid out on desk with pen, official documentation look" | 4:3 |
-| `category-accessories.webp` | "Service dog collar and leash arranged neatly on light background, product photography" | 4:3 |
+**Optimal Prompt Structure:**
+```
+[SUBJECT]: Primary subject with specific attributes (breed, clothing, expression)
+[COMPOSITION]: Framing, background environment, perspective, spacing
+[LIGHTING/CAMERA]: Light quality, camera lens terms, time of day
+[STYLE]: Mood adjectives, photography style, color palette
+[CONSTRAINTS]: Positive framing only (describe what IS there, not what isn't)
+```
 
-### 7.3 Product Images (32 images - 2 per product)
+**Effective Camera/Lens Terms:**
+- `85mm portrait lens` - Flattering portraits with background separation
+- `wide-angle shot` - Environmental context, spacious feel
+- `shallow depth of field` - Subject focus with blurred background
+- `soft natural window light` - Warm, inviting indoor shots
+- `golden hour lighting` - Warm outdoor shots
+- `overhead flat lay` - Product arrangements
 
-Each of the 16 products needs:
-- **Main Image**: Product kit/item on clean background with warm styling
-- **Lifestyle Image**: Product in use context
+**Critical Rules:**
+1. ❌ **AVOID text in images** - Model has spelling inconsistencies
+2. ❌ **AVOID small faces** - Model struggles with fine facial details
+3. ✅ **Use specific dog breeds** - Golden Retriever, Labrador, Cavalier King Charles
+4. ✅ **Describe scene positively** - "clean background" not "no clutter"
+5. ✅ **Be conversational but precise** - Natural language with specific details
 
-| Category | Products | Image Types |
-|----------|----------|-------------|
-| Service Dog Kits (4) | Deluxe, Complete, Document, Comprehensive | Product shot + handler using |
-| ESA Kits (5) | Complete, Document, Housing, Comprehensive, Special | Product shot + owner with pet |
-| Certificates (2) | Service Dog, ESA | Certificate close-up + framed display |
-| ID Cards (2) | Service Dog, ESA | Card detail + in wallet/lanyard |
-| Accessories (2) | Collar, Leash | Product shot + on dog |
-| Forms (1) | DOT Travel Form | Document + travel context |
+---
 
-### 7.4 Contact Page Images (2 images)
+### 7.3 Phase 1 Validation Batch (14 Images)
 
-| Filename | Prompt | Aspect |
-|----------|--------|--------|
-| `contact-hero.webp` | "Friendly person with laptop helping customer, with happy dog nearby, warm home office setting" | 16:9 |
-| `contact-support.webp` | "Customer service team member smiling with headset, service dog resting at feet, professional friendly" | 4:3 |
+> Generate these 14 images first. Review quality before proceeding to remaining assets.
 
-### 7.5 Asset Summary
+---
 
-| Page/Category | Images |
-|---------------|--------|
-| Home | 10 |
-| Products (overview) | 4 |
-| Product Details | 32 |
-| Contact | 2 |
-| **TOTAL** | **48** |
+#### 7.3.1 HOME PAGE IMAGES (10 Images)
 
-### 7.6 Generation Priority
+**HOME-01: Hero Main**
+| Field | Value |
+|-------|-------|
+| **Filename** | `hero-main.webp` |
+| **Aspect Ratio** | 16:9 (1920x1080) |
+| **Purpose** | Main hero banner - emotional connection |
 
 ```
-★★★ CRITICAL (Generate First):
-├── Home hero images (2)
-├── Trust bar icons (4)
-├── Category images (4)
-└── Featured product images (8)
-
-★★☆ IMPORTANT (Generate Second):
-├── Remaining product main images (8)
-├── Contact page images (2)
-└── Product lifestyle images (16)
-
-★☆☆ ENHANCEMENT (Generate Last):
-├── Remaining product lifestyle images (4)
-└── Decorative backgrounds
+PROMPT:
+A joyful middle-aged woman walking confidently through a sunny park path with her
+golden retriever wearing a navy blue service dog vest. The dog walks attentively
+beside her, looking up with a calm, trained expression. Warm golden hour sunlight
+filters through trees creating dappled light patterns. Shot with 85mm portrait lens,
+shallow depth of field blurring the green park background. Lifestyle photography
+style, warm color palette with greens and golden tones, genuine candid moment
+capturing the bond between handler and service dog.
 ```
+
+---
+
+**HOME-02: Hero Secondary**
+| Field | Value |
+|-------|-------|
+| **Filename** | `hero-esa.webp` |
+| **Aspect Ratio** | 16:9 (1920x1080) |
+| **Purpose** | Alternative hero for ESA focus |
+
+```
+PROMPT:
+A young woman in her late twenties relaxing on a cream-colored modern sofa in a
+bright living room, with a small Cavalier King Charles Spaniel curled up against
+her. Soft natural window light illuminates the cozy scene. She has a peaceful,
+content expression while gently petting the dog. The room has warm minimalist
+decor with a knit blanket and indoor plants visible. Shot with 50mm lens, medium
+depth of field. Lifestyle photography capturing genuine emotional comfort and
+companionship, warm inviting color palette with cream, beige, and soft natural tones.
+```
+
+---
+
+**HOME-03: Trust - Official Registration**
+| Field | Value |
+|-------|-------|
+| **Filename** | `trust-official.webp` |
+| **Aspect Ratio** | 1:1 (800x800) |
+| **Purpose** | Trust bar icon - official documentation |
+
+```
+PROMPT:
+Overhead flat lay photograph of official-looking documents on a warm oak wood desk.
+A navy blue folder partially open revealing a cream-colored certificate with an
+embossed gold seal. Beside it, a professional ID card with a navy and gold color
+scheme. A golden retriever's paw rests gently at the edge of frame. Soft diffused
+natural light from above, clean organized composition. Professional product
+photography style, warm wood tones contrasting with official navy and gold accents,
+conveying authenticity and legitimacy.
+```
+
+---
+
+**HOME-04: Trust - Quality Materials**
+| Field | Value |
+|-------|-------|
+| **Filename** | `trust-quality.webp` |
+| **Aspect Ratio** | 1:1 (800x800) |
+| **Purpose** | Trust bar icon - premium quality |
+
+```
+PROMPT:
+Close-up macro photograph of a premium navy blue service dog vest fabric showing
+detailed stitching and high-quality material texture. A reflective embroidered
+patch in red and gold is partially visible. The fabric has a durable, professional
+appearance with reinforced edges. Shot with macro lens, shallow depth of field
+focusing on the texture and craftsmanship. Studio lighting with soft shadows,
+product photography style emphasizing premium materials and attention to detail,
+navy blue and gold color palette.
+```
+
+---
+
+**HOME-05: Trust - Fast Delivery**
+| Field | Value |
+|-------|-------|
+| **Filename** | `trust-delivery.webp` |
+| **Aspect Ratio** | 1:1 (800x800) |
+| **Purpose** | Trust bar icon - shipping/delivery |
+
+```
+PROMPT:
+A neatly packaged brown kraft box with a red ribbon sitting on a welcoming front
+porch of a suburban home. Warm afternoon sunlight creates inviting shadows. A
+friendly yellow Labrador sits beside the package, looking expectantly at the door.
+The porch has warm wood tones and a cheerful welcome mat. Shot with 35mm lens,
+environmental portrait style. Lifestyle photography capturing the excitement of
+package arrival, warm earthy color palette with brown, cream, and touches of red,
+conveying reliability and care in delivery.
+```
+
+---
+
+**HOME-06: Trust - Multilingual Support**
+| Field | Value |
+|-------|-------|
+| **Filename** | `trust-support.webp` |
+| **Aspect Ratio** | 1:1 (800x800) |
+| **Purpose** | Trust bar icon - customer support |
+
+```
+PROMPT:
+A friendly customer service representative in her thirties sitting at a clean
+modern desk with a laptop, wearing a headset and smiling warmly while working.
+A calm golden retriever lies peacefully on a dog bed beside the desk. The office
+space has warm wood accents, a green plant, and soft natural light from a nearby
+window. Shot with 50mm lens at f/2.8, shallow depth of field. Professional
+lifestyle photography, warm and approachable atmosphere, earth tones with pops
+of green, conveying helpful and caring customer service.
+```
+
+---
+
+**HOME-07: Category - Service Dogs**
+| Field | Value |
+|-------|-------|
+| **Filename** | `category-service-dog.webp` |
+| **Aspect Ratio** | 4:3 (1200x900) |
+| **Purpose** | Category card - Service Dog products |
+
+```
+PROMPT:
+A confident black Labrador Retriever wearing a professional navy blue service dog
+vest with red accents, walking beside its handler through a bright shopping mall
+corridor. The dog has an alert, focused expression showing its trained demeanor.
+The handler is partially visible from waist down. The mall has modern architecture
+with natural light streaming through skylights. Shot with 85mm lens, shallow depth
+of field blurring the mall background. Documentary style photography capturing a
+working service dog in public, professional and dignified atmosphere, cool modern
+tones with navy blue accents.
+```
+
+---
+
+**HOME-08: Category - ESA**
+| Field | Value |
+|-------|-------|
+| **Filename** | `category-esa.webp` |
+| **Aspect Ratio** | 4:3 (1200x900) |
+| **Purpose** | Category card - ESA products |
+
+```
+PROMPT:
+A young man in his twenties sitting in a cozy reading nook by a large window,
+with a fluffy white Bichon Frise emotional support dog resting on his lap. He
+has a calm, peaceful expression while gently stroking the dog. Soft afternoon
+light creates a warm, serene atmosphere. The space has comfortable cushions,
+a knit blanket, and books visible. Shot with 50mm lens, medium depth of field.
+Lifestyle photography capturing emotional comfort and companionship, warm cozy
+color palette with cream, white, and soft natural tones, intimate and comforting mood.
+```
+
+---
+
+**HOME-09: Category - Documents**
+| Field | Value |
+|-------|-------|
+| **Filename** | `category-documents.webp` |
+| **Aspect Ratio** | 4:3 (1200x900) |
+| **Purpose** | Category card - Documents & Certificates |
+
+```
+PROMPT:
+An elegant flat lay arrangement on a warm walnut wood desk featuring official
+pet registration documents. A cream-colored certificate with an embossed gold
+seal lies beside a professional ID card in a clear protective sleeve. A quality
+fountain pen and a small potted succulent add sophisticated touches. Soft
+diffused overhead lighting creates gentle shadows. Professional product
+photography with clean, organized composition, warm wood tones with navy,
+cream, and gold accents, conveying professionalism and authenticity.
+```
+
+---
+
+**HOME-10: Category - Accessories**
+| Field | Value |
+|-------|-------|
+| **Filename** | `category-accessories.webp` |
+| **Aspect Ratio** | 4:3 (1200x900) |
+| **Purpose** | Category card - Collars & Leashes |
+
+```
+PROMPT:
+A beautifully arranged flat lay of premium pet accessories on a clean white
+marble surface. A navy blue collar with gold hardware, a matching navy leash
+neatly coiled, and a small bone-shaped tag are artfully positioned. Soft
+studio lighting with minimal shadows creates a clean, premium aesthetic.
+Professional e-commerce product photography style, minimalist composition
+with intentional negative space, navy blue and gold against white marble,
+conveying quality craftsmanship and premium materials.
+```
+
+---
+
+#### 7.3.2 PRODUCTS PAGE IMAGES (4 Images)
+
+**PROD-01: Featured Products Banner**
+| Field | Value |
+|-------|-------|
+| **Filename** | `products-hero.webp` |
+| **Aspect Ratio** | 21:9 (2100x900) |
+| **Purpose** | Products page hero banner |
+
+```
+PROMPT:
+A wide panoramic lifestyle scene of a happy family in their living room with
+their golden retriever service dog wearing a navy vest. The mother sits on a
+sofa reviewing documents while the father plays with their child on the floor
+near the attentive dog. Warm afternoon light streams through large windows.
+The modern home has comfortable furnishings in neutral tones. Shot with 24mm
+wide-angle lens, deep depth of field capturing the entire scene. Lifestyle
+photography showcasing family life with a service animal, warm inviting
+atmosphere, earth tones with navy accents, conveying trust and family values.
+```
+
+---
+
+**PROD-02: Service Dog Kits Collection**
+| Field | Value |
+|-------|-------|
+| **Filename** | `collection-service-dog-kits.webp` |
+| **Aspect Ratio** | 16:9 (1600x900) |
+| **Purpose** | Service Dog Kits section header |
+
+```
+PROMPT:
+A professional product arrangement showing service dog registration kit
+components on a clean cream linen backdrop. A navy blue folder, ID card in
+clear sleeve, certificate with gold seal, and a folded service dog vest are
+arranged in an elegant diagonal composition. Soft studio lighting from the
+left creates gentle shadows and depth. A black Labrador's snout enters the
+frame from the right corner, sniffing curiously at the items. Professional
+e-commerce photography, clean and organized layout, navy blue and gold
+against cream, conveying completeness and professionalism.
+```
+
+---
+
+**PROD-03: ESA Kits Collection**
+| Field | Value |
+|-------|-------|
+| **Filename** | `collection-esa-kits.webp` |
+| **Aspect Ratio** | 16:9 (1600x900) |
+| **Purpose** | ESA Kits section header |
+
+```
+PROMPT:
+A warm lifestyle flat lay of ESA registration kit components arranged on a
+cozy knit blanket. Documents including a certificate with an embossed seal,
+an ID card, and informational materials are spread out naturally. A small
+Cavalier King Charles Spaniel lies peacefully at the edge of the frame, its
+soft fur visible. Warm natural window light creates a homey, comfortable
+atmosphere. Lifestyle product photography with an organic, lived-in feel,
+warm cream and beige tones with touches of red and gold, conveying comfort
+and emotional support.
+```
+
+---
+
+**PROD-04: Accessories Collection**
+| Field | Value |
+|-------|-------|
+| **Filename** | `collection-accessories.webp` |
+| **Aspect Ratio** | 16:9 (1600x900) |
+| **Purpose** | Accessories section header |
+
+```
+PROMPT:
+A premium product photography arrangement of pet accessories on a slate gray
+surface. A navy blue ESA collar with brushed gold buckle, a matching woven
+leash, and coordinating accessories are positioned with intentional spacing.
+Clean studio lighting creates soft reflections on the hardware. The
+composition has a luxury fashion accessory aesthetic. Professional e-commerce
+photography with minimalist styling, slate gray background with navy blue
+and gold products, conveying premium quality and sophisticated design.
+```
+
+---
+
+### 7.4 Phase 1 Validation Summary
+
+| Batch | Count | Purpose |
+|-------|-------|---------|
+| Home Page | 10 | Hero (2), Trust Bar (4), Categories (4) |
+| Products Page | 4 | Hero (1), Collection Headers (3) |
+| **TOTAL PHASE 1** | **14** | Manual review before continuing |
+
+**Validation Checklist After Generation:**
+- [ ] Check image quality and clarity
+- [ ] Verify no unwanted text artifacts
+- [ ] Confirm color palette matches brand (navy, lime, cream)
+- [ ] Assess dog breed accuracy
+- [ ] Review composition and framing
+- [ ] Test images at intended display sizes
+
+---
+
+### 7.5 Phase 2: Product Detail Images (Pending Validation)
+
+> ⏸️ **HOLD**: Generate only after Phase 1 validation is approved.
+
+| Category | Products | Images Each | Total |
+|----------|----------|-------------|-------|
+| Service Dog Kits | 4 | 2 (main + lifestyle) | 8 |
+| ESA Kits | 5 | 2 (main + lifestyle) | 10 |
+| Certificates | 2 | 2 (main + display) | 4 |
+| ID Cards | 2 | 2 (main + in-use) | 4 |
+| Accessories | 2 | 2 (main + on-dog) | 4 |
+| Forms | 1 | 2 (main + context) | 2 |
+| **SUBTOTAL** | 16 | - | 32 |
+
+### 7.6 Phase 3: Contact & Misc Images (Pending Validation)
+
+| Image | Purpose | Aspect |
+|-------|---------|--------|
+| `contact-hero.webp` | Contact page banner | 16:9 |
+| `contact-team.webp` | Support team visual | 4:3 |
+| **SUBTOTAL** | - | 2 |
+
+### 7.7 Complete Asset Summary
+
+| Phase | Images | Status |
+|-------|--------|--------|
+| Phase 1: Validation Batch | 14 | 🎯 Generate First |
+| Phase 2: Product Details | 32 | ⏸️ After Validation |
+| Phase 3: Contact & Misc | 2 | ⏸️ After Validation |
+| **TOTAL** | **48** | - |
+
+### 7.8 Generation Execution Commands
+
+```bash
+# Phase 1: Generate validation batch (14 images)
+# Use Replicate MCP with google/nano-banana model
+# Wait up to 120 seconds per image
+# Generate sequentially to monitor quality
+
+# Example API parameters:
+{
+  "model": "google/nano-banana",
+  "input": {
+    "prompt": "[OPTIMIZED PROMPT FROM ABOVE]",
+    "aspect_ratio": "[ASPECT FROM SPEC]"
+  }
+}
+```
+
+### 7.9 Cost Estimation
+
+| Phase | Images | Est. Cost/Image | Total Est. |
+|-------|--------|-----------------|------------|
+| Phase 1 | 14 | ~$0.04 | ~$0.56 |
+| Phase 2 | 32 | ~$0.04 | ~$1.28 |
+| Phase 3 | 2 | ~$0.04 | ~$0.08 |
+| **TOTAL** | 48 | - | **~$1.92** |
+
+> Note: Costs are estimates based on typical Replicate pricing. Actual costs may vary.
 
 ---
 
