@@ -39,32 +39,32 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
       viewport={{ once: true }}
       transition={{ delay: index * 0.1 }}
       className={cn(
-        'group relative flex flex-col overflow-hidden rounded-2xl border border-border-light bg-white transition-all duration-300',
-        'hover:border-brand-lime/30 hover:shadow-lg',
-        product.popular && 'ring-2 ring-brand-lime'
+        'card bg-base-200 shadow-sm transition-all duration-300',
+        'hover:shadow-lg',
+        product.popular && 'ring-2 ring-primary'
       )}
     >
-      {/* Popular badge */}
-      {product.popular && (
-        <div className="absolute right-4 top-4 z-10">
-          <Badge variant="featured">
-            <Star className="h-3 w-3" />
-            {t('popular')}
-          </Badge>
-        </div>
-      )}
-
-      {/* Category badge */}
-      {product.badge && (
-        <div className="absolute left-4 top-4 z-10">
-          <Badge variant={product.category === 'esa' ? 'secondary' : 'outline'}>
-            {product.badge}
-          </Badge>
-        </div>
-      )}
-
       {/* Image */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-bg-cream">
+      <figure className="relative aspect-[4/3] overflow-hidden bg-base-100">
+        {/* Popular badge */}
+        {product.popular && (
+          <div className="absolute right-4 top-4 z-10">
+            <Badge variant="featured" className="gap-1">
+              <Star className="h-3 w-3" />
+              {t('popular')}
+            </Badge>
+          </div>
+        )}
+
+        {/* Category badge */}
+        {product.badge && (
+          <div className="absolute left-4 top-4 z-10">
+            <Badge variant={product.category === 'esa' ? 'secondary' : 'outline'}>
+              {product.badge}
+            </Badge>
+          </div>
+        )}
+
         <Image
           src={product.image}
           alt={product.name}
@@ -72,37 +72,37 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           className="object-cover transition-transform duration-300 group-hover:scale-105"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
-      </div>
+      </figure>
 
       {/* Content */}
-      <div className="flex flex-1 flex-col p-6">
+      <div className="card-body">
         {/* Category */}
-        <p className="mb-2 text-xs font-medium uppercase tracking-wider text-brand-lime">
+        <p className="text-xs font-medium uppercase tracking-wider text-primary">
           {t(`categories.${product.category}`)}
         </p>
 
         {/* Name */}
-        <h3 className="mb-2 text-lg font-bold text-brand-navy">
+        <h2 className="card-title text-secondary">
           {product.name}
-        </h3>
+        </h2>
 
         {/* Description */}
-        <p className="mb-4 flex-1 text-sm text-text-muted line-clamp-2">
+        <p className="text-sm text-base-content/60 line-clamp-2">
           {product.description}
         </p>
 
         {/* Features */}
-        <ul className="mb-4 space-y-2">
+        <ul className="space-y-2 my-2">
           {product.features.slice(0, 3).map((feature, i) => (
-            <li key={i} className="flex items-start gap-2 text-sm text-text-muted">
-              <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-lime" />
+            <li key={i} className="flex items-start gap-2 text-sm text-base-content/60">
+              <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
               <span>{feature}</span>
             </li>
           ))}
         </ul>
 
         {/* Price and CTA */}
-        <div className="mt-auto flex items-center justify-between border-t border-border-light pt-4">
+        <div className="card-actions items-center justify-between border-t border-base-300 pt-4">
           <Price
             amount={product.price}
             maxAmount={product.maxPrice}

@@ -2,14 +2,14 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const badgeVariants = cva(
-  'inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold',
+  'badge',
   {
     variants: {
       variant: {
-        default: 'bg-brand-lime/10 text-brand-lime',
-        featured: 'bg-brand-red text-white',
-        secondary: 'bg-gray-100 text-gray-700',
-        outline: 'border border-brand-lime text-brand-lime',
+        default: 'badge-primary badge-soft',
+        featured: 'badge-error',
+        secondary: 'badge-ghost',
+        outline: 'badge-outline badge-primary',
       },
     },
     defaultVariants: {

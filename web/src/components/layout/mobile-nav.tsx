@@ -23,11 +23,11 @@ export function MobileNav({ isOpen, onClose, links }: MobileNavProps) {
           animate={{ opacity: 1, height: 'auto' }}
           exit={{ opacity: 0, height: 0 }}
           transition={{ duration: 0.2 }}
-          className="border-t border-border-light bg-white md:hidden"
+          className="absolute top-full left-0 right-0 border-t border-base-300 bg-base-200 md:hidden"
         >
-          <nav className="flex flex-col px-4 py-4">
+          <ul className="menu p-4 gap-1">
             {links.map((link, index) => (
-              <motion.div
+              <motion.li
                 key={link.href}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -36,24 +36,24 @@ export function MobileNav({ isOpen, onClose, links }: MobileNavProps) {
                 <Link
                   href={link.href}
                   onClick={onClose}
-                  className="block py-3 text-lg font-medium text-brand-navy transition-colors hover:text-brand-lime"
+                  className="text-lg font-medium text-secondary"
                 >
                   {link.label}
                 </Link>
-              </motion.div>
+              </motion.li>
             ))}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: links.length * 0.05 }}
-              className="mt-4 pt-4 border-t border-border-light"
-            >
-              <Button variant="primary" className="w-full" onClick={onClose}>
-                <Search className="h-4 w-4" />
-                {t('searchRegistration')}
-              </Button>
-            </motion.div>
-          </nav>
+          </ul>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: links.length * 0.05 }}
+            className="px-4 pb-4 border-t border-base-300 pt-4"
+          >
+            <Button variant="primary" className="btn-block" onClick={onClose}>
+              <Search className="h-4 w-4" />
+              {t('searchRegistration')}
+            </Button>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>

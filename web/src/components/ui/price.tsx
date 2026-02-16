@@ -29,14 +29,14 @@ export function Price({
   }
 
   return (
-    <span className={cn('font-bold text-brand-navy', sizeClasses[size], className)}>
+    <span className={cn('font-bold text-secondary', sizeClasses[size], className)}>
       {showFrom && maxAmount && (
-        <span className="text-sm font-normal text-text-muted mr-1">From</span>
+        <span className="text-sm font-normal text-base-content/60 mr-1">From</span>
       )}
       {formatPrice(amount)}
       {maxAmount && maxAmount !== amount && (
         <>
-          <span className="text-text-muted mx-1">-</span>
+          <span className="text-base-content/60 mx-1">-</span>
           {formatPrice(maxAmount)}
         </>
       )}

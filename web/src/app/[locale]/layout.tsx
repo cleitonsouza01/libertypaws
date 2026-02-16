@@ -65,8 +65,8 @@ export default async function LocaleLayout({
   const messages = await getMessages()
 
   return (
-    <html lang={locale} className={inter.variable}>
-      <body className="min-h-screen bg-bg-cream font-sans antialiased">
+    <html lang={locale} className={inter.variable} data-theme="libertypaws">
+      <body className="min-h-screen bg-base-100 font-sans antialiased">
         <NextIntlClientProvider messages={messages}>
           <div className="flex min-h-screen flex-col">
             <Header />

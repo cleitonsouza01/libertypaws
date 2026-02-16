@@ -21,10 +21,10 @@ export function Header() {
   ]
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border-light bg-white/95 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:h-20 md:px-6 lg:px-8">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
+    <header className="navbar sticky top-0 z-40 bg-base-200/95 backdrop-blur-md border-b border-base-300 px-4 md:px-6 lg:px-8">
+      {/* Logo - navbar-start */}
+      <div className="navbar-start">
+        <Link href="/" className="btn btn-ghost gap-2 px-1">
           <div className="relative h-10 w-10 md:h-12 md:w-12">
             <Image
               src={getImageUrl('images/logo.png')}
@@ -34,25 +34,30 @@ export function Header() {
               priority
             />
           </div>
-          <span className="font-bold text-brand-navy md:text-lg">
+          <span className="font-bold text-secondary md:text-lg">
             Liberty Paws
           </span>
         </Link>
+      </div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-8 md:flex">
+      {/* Desktop Navigation - navbar-center */}
+      <div className="navbar-center hidden md:flex">
+        <ul className="menu menu-horizontal px-1 gap-2">
           {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-sm font-medium text-text-muted transition-colors hover:text-brand-navy"
-            >
-              {link.label}
-            </Link>
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                className="text-sm font-medium"
+              >
+                {link.label}
+              </Link>
+            </li>
           ))}
-        </nav>
+        </ul>
+      </div>
 
-        {/* Desktop Right Side */}
+      {/* Desktop Right Side - navbar-end */}
+      <div className="navbar-end">
         <div className="hidden items-center gap-4 md:flex">
           <LanguageSwitcher />
           <Button variant="primary" size="sm">
@@ -67,7 +72,7 @@ export function Header() {
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="rounded-lg p-2 text-brand-navy hover:bg-gray-100"
+            className="btn btn-ghost btn-square"
             aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
           >
             {isMobileMenuOpen ? (

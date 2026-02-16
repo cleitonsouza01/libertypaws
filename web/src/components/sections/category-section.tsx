@@ -19,7 +19,7 @@ export function CategorySection({ variant = 'esa', reverse = false }: CategorySe
   const isEsa = variant === 'esa'
 
   return (
-    <section className={cn('py-16 md:py-24', isEsa ? 'bg-white' : 'bg-bg-cream')}>
+    <section className={cn('py-16 md:py-24', isEsa ? 'bg-base-200' : 'bg-base-100')}>
       <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
         <div
           className={cn(
@@ -38,23 +38,23 @@ export function CategorySection({ variant = 'esa', reverse = false }: CategorySe
             <div
               className={cn(
                 'mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl',
-                isEsa ? 'bg-brand-lime/10' : 'bg-brand-navy/10'
+                isEsa ? 'bg-primary/10' : 'bg-secondary/10'
               )}
             >
               {isEsa ? (
-                <Heart className="h-7 w-7 text-brand-lime" />
+                <Heart className="h-7 w-7 text-primary" />
               ) : (
-                <Shield className="h-7 w-7 text-brand-navy" />
+                <Shield className="h-7 w-7 text-secondary" />
               )}
             </div>
 
             {/* Title */}
-            <h2 className="mb-4 text-3xl font-bold text-brand-navy md:text-4xl">
+            <h2 className="mb-4 text-3xl font-bold text-secondary md:text-4xl">
               {t(`${variant}.title`)}
             </h2>
 
             {/* Description */}
-            <p className="mb-6 text-lg text-text-muted">
+            <p className="mb-6 text-lg text-base-content/60">
               {t(`${variant}.description`)}
             </p>
 
@@ -65,7 +65,7 @@ export function CategorySection({ variant = 'esa', reverse = false }: CategorySe
                   <div
                     className={cn(
                       'mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full',
-                      isEsa ? 'bg-brand-lime/20 text-brand-lime' : 'bg-brand-navy/20 text-brand-navy'
+                      isEsa ? 'bg-primary/20 text-primary' : 'bg-secondary/20 text-secondary'
                     )}
                   >
                     <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
@@ -76,7 +76,7 @@ export function CategorySection({ variant = 'esa', reverse = false }: CategorySe
                       />
                     </svg>
                   </div>
-                  <span className="text-text-muted">{t(`${variant}.benefits.${i}`)}</span>
+                  <span className="text-base-content/70">{t(`${variant}.benefits.${i}`)}</span>
                 </li>
               ))}
             </ul>
@@ -105,8 +105,8 @@ export function CategorySection({ variant = 'esa', reverse = false }: CategorySe
               className={cn(
                 'relative aspect-[4/3] overflow-hidden rounded-3xl',
                 isEsa
-                  ? 'bg-gradient-to-br from-brand-lime/20 to-brand-lime/5'
-                  : 'bg-gradient-to-br from-brand-navy/20 to-brand-navy/5'
+                  ? 'bg-gradient-to-br from-primary/20 to-primary/5'
+                  : 'bg-gradient-to-br from-secondary/20 to-secondary/5'
               )}
             >
               <Image
@@ -122,7 +122,7 @@ export function CategorySection({ variant = 'esa', reverse = false }: CategorySe
             <div
               className={cn(
                 'absolute -z-10 h-full w-full rounded-3xl',
-                isEsa ? '-bottom-4 -right-4 bg-brand-lime/10' : '-bottom-4 -left-4 bg-brand-navy/10'
+                isEsa ? '-bottom-4 -right-4 bg-primary/10' : '-bottom-4 -left-4 bg-secondary/10'
               )}
             />
           </motion.div>

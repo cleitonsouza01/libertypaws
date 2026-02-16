@@ -10,7 +10,7 @@ export function CtaBanner() {
   const t = useTranslations('home.cta')
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-r from-brand-lime to-brand-lime-dark py-16 md:py-20">
+    <section className="hero relative overflow-hidden bg-gradient-to-r from-primary to-[#4a6101] py-16 md:py-20">
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-10">
         <svg
@@ -35,58 +35,56 @@ export function CtaBanner() {
         </svg>
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
-        <div className="flex flex-col items-center text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-4 text-3xl font-bold text-white md:text-4xl lg:text-5xl"
-          >
-            {t('title')}
-          </motion.h2>
+      <div className="hero-content relative mx-auto max-w-7xl px-4 md:px-6 lg:px-8 flex-col text-center">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-4 text-3xl font-bold text-primary-content md:text-4xl lg:text-5xl"
+        >
+          {t('title')}
+        </motion.h2>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="mb-8 max-w-2xl text-lg text-white/90"
-          >
-            {t('subtitle')}
-          </motion.p>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="mb-8 max-w-2xl text-lg text-primary-content/90"
+        >
+          {t('subtitle')}
+        </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="flex flex-col gap-4 sm:flex-row"
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="flex flex-col gap-4 sm:flex-row"
+        >
+          <Button
+            variant="secondary"
+            size="lg"
+            className="bg-white text-primary hover:bg-white/90"
+            asChild
           >
-            <Button
-              variant="secondary"
-              size="lg"
-              className="bg-white text-brand-lime hover:bg-white/90"
-              asChild
-            >
-              <Link href="/products">
-                {t('primaryButton')}
-                <ArrowRight className="h-5 w-5" />
-              </Link>
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="border-white/30 text-white hover:bg-white/10"
-              asChild
-            >
-              <Link href="/contact">
-                <Phone className="h-5 w-5" />
-                {t('secondaryButton')}
-              </Link>
-            </Button>
-          </motion.div>
-        </div>
+            <Link href="/products">
+              {t('primaryButton')}
+              <ArrowRight className="h-5 w-5" />
+            </Link>
+          </Button>
+          <Button
+            variant="outline"
+            size="lg"
+            className="border-white/30 text-primary-content hover:bg-white/10"
+            asChild
+          >
+            <Link href="/contact">
+              <Phone className="h-5 w-5" />
+              {t('secondaryButton')}
+            </Link>
+          </Button>
+        </motion.div>
       </div>
     </section>
   )

@@ -49,7 +49,7 @@ export function Testimonials() {
   const t = useTranslations('home.testimonials')
 
   return (
-    <section className="bg-bg-cream py-16 md:py-24">
+    <section className="bg-base-100 py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -58,10 +58,10 @@ export function Testimonials() {
           viewport={{ once: true }}
           className="mb-12 text-center md:mb-16"
         >
-          <h2 className="mb-4 text-3xl font-bold text-brand-navy md:text-4xl">
+          <h2 className="mb-4 text-3xl font-bold text-secondary md:text-4xl">
             {t('title')}
           </h2>
-          <p className="mx-auto max-w-2xl text-lg text-text-muted">
+          <p className="mx-auto max-w-2xl text-lg text-base-content/60">
             {t('subtitle')}
           </p>
         </motion.div>
@@ -75,48 +75,55 @@ export function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="relative rounded-2xl bg-white p-6 shadow-sm"
+              className="card bg-base-200 shadow-sm relative"
             >
-              {/* Quote icon */}
-              <div className="absolute -top-3 right-6">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-lime/10">
-                  <Quote className="h-5 w-5 text-brand-lime" />
+              <div className="card-body">
+                {/* Quote icon */}
+                <div className="absolute -top-3 right-6">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+                    <Quote className="h-5 w-5 text-primary" />
+                  </div>
                 </div>
-              </div>
 
-              {/* Rating */}
-              <div className="mb-4 flex gap-1">
-                {Array.from({ length: testimonial.rating }).map((_, i) => (
-                  <Star
-                    key={i}
-                    className="h-5 w-5 fill-yellow-400 text-yellow-400"
-                  />
-                ))}
-              </div>
-
-              {/* Text */}
-              <p className="mb-6 text-text-muted">
-                &ldquo;{t(testimonial.textKey)}&rdquo;
-              </p>
-
-              {/* Author */}
-              <div className="flex items-center gap-4">
-                <div className="relative h-12 w-12 overflow-hidden rounded-full bg-bg-cream">
-                  <Image
-                    src={testimonial.avatar}
-                    alt={t(testimonial.nameKey)}
-                    fill
-                    className="object-cover"
-                    sizes="48px"
-                  />
+                {/* Rating */}
+                <div className="rating rating-sm mb-2">
+                  {Array.from({ length: testimonial.rating }).map((_, i) => (
+                    <input
+                      key={i}
+                      type="radio"
+                      className="mask mask-star-2 bg-warning"
+                      disabled
+                      defaultChecked={i === testimonial.rating - 1}
+                    />
+                  ))}
                 </div>
-                <div>
-                  <p className="font-semibold text-brand-navy">
-                    {t(testimonial.nameKey)}
-                  </p>
-                  <p className="text-sm text-text-muted">
-                    {t(testimonial.locationKey)}
-                  </p>
+
+                {/* Text */}
+                <p className="text-base-content/70 mb-4">
+                  &ldquo;{t(testimonial.textKey)}&rdquo;
+                </p>
+
+                {/* Author */}
+                <div className="flex items-center gap-4">
+                  <div className="avatar">
+                    <div className="w-12 rounded-full bg-base-300">
+                      <Image
+                        src={testimonial.avatar}
+                        alt={t(testimonial.nameKey)}
+                        width={48}
+                        height={48}
+                        className="object-cover"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-secondary">
+                      {t(testimonial.nameKey)}
+                    </p>
+                    <p className="text-sm text-base-content/60">
+                      {t(testimonial.locationKey)}
+                    </p>
+                  </div>
                 </div>
               </div>
             </motion.div>

@@ -39,7 +39,7 @@ export function WhyChooseUs() {
   const t = useTranslations('home.whyChooseUs')
 
   return (
-    <section className="bg-brand-navy py-16 md:py-24">
+    <section className="bg-secondary py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -48,10 +48,10 @@ export function WhyChooseUs() {
           viewport={{ once: true }}
           className="mb-12 text-center md:mb-16"
         >
-          <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">
+          <h2 className="mb-4 text-3xl font-bold text-secondary-content md:text-4xl">
             {t('title')}
           </h2>
-          <p className="mx-auto max-w-2xl text-lg text-white/70">
+          <p className="mx-auto max-w-2xl text-lg text-secondary-content/70">
             {t('subtitle')}
           </p>
         </motion.div>
@@ -67,17 +67,19 @@ export function WhyChooseUs() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="group rounded-2xl bg-white/5 p-6 backdrop-blur-sm transition-all duration-300 hover:bg-white/10"
+                className="card bg-white/5 backdrop-blur-sm transition-all duration-300 hover:bg-white/10"
               >
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-lime/20">
-                  <Icon className="h-6 w-6 text-brand-lime" />
+                <div className="card-body">
+                  <div className="mb-2 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary/20">
+                    <Icon className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="card-title text-secondary-content">
+                    {t(reason.titleKey)}
+                  </h3>
+                  <p className="text-sm text-secondary-content/70">
+                    {t(reason.descKey)}
+                  </p>
                 </div>
-                <h3 className="mb-2 text-lg font-semibold text-white">
-                  {t(reason.titleKey)}
-                </h3>
-                <p className="text-sm text-white/70">
-                  {t(reason.descKey)}
-                </p>
               </motion.div>
             )
           })}

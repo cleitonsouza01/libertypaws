@@ -36,12 +36,12 @@ export function ProductGrid({
             className="mb-12 text-center"
           >
             {title && (
-              <h2 className="mb-4 text-3xl font-bold text-brand-navy md:text-4xl">
+              <h2 className="mb-4 text-3xl font-bold text-secondary md:text-4xl">
                 {title}
               </h2>
             )}
             {subtitle && (
-              <p className="mx-auto max-w-2xl text-lg text-text-muted">
+              <p className="mx-auto max-w-2xl text-lg text-base-content/60">
                 {subtitle}
               </p>
             )}

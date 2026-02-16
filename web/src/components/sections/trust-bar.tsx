@@ -31,7 +31,7 @@ export function TrustBar() {
   ]
 
   return (
-    <section className="border-y border-border-light bg-white py-8 md:py-12">
+    <section className="border-y border-base-300 bg-base-200 py-8 md:py-12">
       <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {items.map((item, index) => {
@@ -46,23 +46,25 @@ export function TrustBar() {
                 transition={{ delay: index * 0.1 }}
                 className="flex items-start gap-4"
               >
-                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl">
-                  <Image
-                    src={imageSrc}
-                    alt={t(item.titleKey)}
-                    fill
-                    className="object-cover"
-                    sizes="64px"
-                  />
-                  <div className="absolute inset-0 flex items-center justify-center bg-brand-navy/40">
-                    <Icon className="h-6 w-6 text-white" />
+                <div className="avatar">
+                  <div className="w-16 rounded-xl relative overflow-hidden">
+                    <Image
+                      src={imageSrc}
+                      alt={t(item.titleKey)}
+                      fill
+                      className="object-cover"
+                      sizes="64px"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center bg-secondary/40">
+                      <Icon className="h-6 w-6 text-white" />
+                    </div>
                   </div>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-brand-navy">
+                  <h3 className="font-semibold text-secondary">
                     {t(item.titleKey)}
                   </h3>
-                  <p className="mt-1 text-sm text-text-muted">
+                  <p className="mt-1 text-sm text-base-content/60">
                     {t(item.descKey)}
                   </p>
                 </div>

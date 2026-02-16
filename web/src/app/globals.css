@@ -1,7 +1,46 @@
 @import "tailwindcss";
+@plugin "daisyui";
+
+/* Liberty Paws custom DaisyUI theme */
+@plugin "daisyui/theme" {
+  name: "libertypaws";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-base-100: #faf8f5;
+  --color-base-200: #ffffff;
+  --color-base-300: #f5f5f5;
+  --color-base-content: #1b1b1b;
+  --color-primary: #5d7901;
+  --color-primary-content: #ffffff;
+  --color-secondary: #2b301d;
+  --color-secondary-content: #ffffff;
+  --color-accent: #3374ff;
+  --color-accent-content: #ffffff;
+  --color-neutral: #2b301d;
+  --color-neutral-content: #faf8f5;
+  --color-info: #3374ff;
+  --color-info-content: #ffffff;
+  --color-success: #5d7901;
+  --color-success-content: #ffffff;
+  --color-warning: #f59e0b;
+  --color-warning-content: #1b1b1b;
+  --color-error: #c41e3a;
+  --color-error-content: #ffffff;
+
+  --radius-selector: 2rem;
+  --radius-field: 2rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+}
 
 @theme {
-  /* Brand Colors */
+  /* Brand Colors (kept for direct usage) */
   --color-brand-navy: #2b301d;
   --color-brand-lime: #5d7901;
   --color-brand-lime-dark: #4a6101;
