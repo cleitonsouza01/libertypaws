@@ -342,7 +342,57 @@
       "currentPasswordLabel": "Current Password",
       "newPasswordLabel": "New Password",
       "confirmPasswordLabel": "Confirm New Password",
-      "updatePassword": "Update Password"
+      "updatePassword": "Update Password",
+      "ordersPage": {
+        "title": "My Orders",
+        "orderNumber": "Order",
+        "date": "Date",
+        "status": "Status",
+        "total": "Total",
+        "items": "Items",
+        "viewDetails": "View Details",
+        "trackOrder": "Track Order",
+        "statuses": {
+          "processing": "Processing",
+          "evaluated": "Evaluated",
+          "shipped": "Shipped",
+          "delivered": "Delivered",
+          "cancelled": "Cancelled"
+        },
+        "steps": {
+          "ordered": "Ordered",
+          "evaluation": "Evaluation",
+          "processing": "Processing",
+          "shipped": "Shipped",
+          "delivered": "Delivered"
+        },
+        "emptyState": "You haven't placed any orders yet.",
+        "browseProducts": "Browse Products"
+      },
+      "registrationsPage": {
+        "title": "Pet Registrations",
+        "registrationId": "Registration ID",
+        "petName": "Pet Name",
+        "petType": "Type",
+        "breed": "Breed",
+        "registeredOn": "Registered On",
+        "expiresOn": "Expires On",
+        "status": "Status",
+        "type": "Registration Type",
+        "viewCertificate": "View Certificate",
+        "renewRegistration": "Renew",
+        "statuses": {
+          "active": "Active",
+          "pending": "Pending Review",
+          "expired": "Expired"
+        },
+        "types": {
+          "esa": "Emotional Support Animal",
+          "psd": "Psychiatric Service Dog"
+        },
+        "emptyState": "You don't have any pet registrations yet.",
+        "getStarted": "Get Started"
+      }
     },
     "userMenu": {
       "account": "My Account",

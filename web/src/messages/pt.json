@@ -342,7 +342,57 @@
       "currentPasswordLabel": "Senha Atual",
       "newPasswordLabel": "Nova Senha",
       "confirmPasswordLabel": "Confirmar Nova Senha",
-      "updatePassword": "Atualizar Senha"
+      "updatePassword": "Atualizar Senha",
+      "ordersPage": {
+        "title": "Meus Pedidos",
+        "orderNumber": "Pedido",
+        "date": "Data",
+        "status": "Status",
+        "total": "Total",
+        "items": "Itens",
+        "viewDetails": "Ver Detalhes",
+        "trackOrder": "Rastrear Pedido",
+        "statuses": {
+          "processing": "Em Processamento",
+          "evaluated": "Avaliado",
+          "shipped": "Enviado",
+          "delivered": "Entregue",
+          "cancelled": "Cancelado"
+        },
+        "steps": {
+          "ordered": "Pedido Feito",
+          "evaluation": "Avaliação",
+          "processing": "Processando",
+          "shipped": "Enviado",
+          "delivered": "Entregue"
+        },
+        "emptyState": "Você ainda não fez nenhum pedido.",
+        "browseProducts": "Ver Produtos"
+      },
+      "registrationsPage": {
+        "title": "Registros de Pets",
+        "registrationId": "ID do Registro",
+        "petName": "Nome do Pet",
+        "petType": "Tipo",
+        "breed": "Raça",
+        "registeredOn": "Registrado em",
+        "expiresOn": "Expira em",
+        "status": "Status",
+        "type": "Tipo de Registro",
+        "viewCertificate": "Ver Certificado",
+        "renewRegistration": "Renovar",
+        "statuses": {
+          "active": "Ativo",
+          "pending": "Revisão Pendente",
+          "expired": "Expirado"
+        },
+        "types": {
+          "esa": "Animal de Suporte Emocional",
+          "psd": "Cão de Serviço Psiquiátrico"
+        },
+        "emptyState": "Você ainda não tem registros de pets.",
+        "getStarted": "Começar"
+      }
     },
     "userMenu": {
       "account": "Minha Conta",
