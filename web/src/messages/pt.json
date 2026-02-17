@@ -256,6 +256,102 @@
     "minLength": "Deve ter pelo menos {min} caracteres",
     "maxLength": "Não deve exceder {max} caracteres"
   },
+  "auth": {
+    "login": {
+      "title": "Bem-vindo de Volta",
+      "subtitle": "Entre na sua conta",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "Digite seu e-mail",
+      "passwordLabel": "Senha",
+      "passwordPlaceholder": "Digite sua senha",
+      "rememberMe": "Lembrar de mim",
+      "forgotPassword": "Esqueceu a senha?",
+      "submitButton": "Entrar",
+      "submitting": "Entrando...",
+      "noAccount": "Não tem uma conta?",
+      "registerLink": "Criar Conta",
+      "orContinueWith": "Ou continue com",
+      "googleButton": "Continuar com Google",
+      "error": {
+        "invalid": "E-mail ou senha inválidos",
+        "generic": "Algo deu errado. Por favor, tente novamente."
+      }
+    },
+    "register": {
+      "title": "Criar Conta",
+      "subtitle": "Junte-se à Liberty Paws hoje",
+      "nameLabel": "Nome Completo",
+      "namePlaceholder": "Digite seu nome completo",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "Digite seu e-mail",
+      "passwordLabel": "Senha",
+      "passwordPlaceholder": "Crie uma senha",
+      "confirmLabel": "Confirmar Senha",
+      "confirmPlaceholder": "Confirme sua senha",
+      "termsText": "Concordo com os <terms>Termos de Serviço</terms> e a <privacy>Política de Privacidade</privacy>",
+      "submitButton": "Criar Conta",
+      "submitting": "Criando conta...",
+      "hasAccount": "Já tem uma conta?",
+      "loginLink": "Entrar",
+      "success": "Conta criada! Verifique seu e-mail para confirmar.",
+      "error": {
+        "exists": "Já existe uma conta com este e-mail",
+        "password": "As senhas não coincidem",
+        "terms": "Você deve concordar com os termos e a política de privacidade",
+        "generic": "Algo deu errado. Por favor, tente novamente."
+      }
+    },
+    "forgot": {
+      "title": "Esqueci a Senha",
+      "subtitle": "Digite seu e-mail e enviaremos um link de recuperação",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "Digite seu e-mail",
+      "submitButton": "Enviar Link de Recuperação",
+      "submitting": "Enviando...",
+      "backToLogin": "Voltar para Entrar",
+      "success": "Verifique seu e-mail para o link de recuperação"
+    },
+    "reset": {
+      "title": "Redefinir Senha",
+      "subtitle": "Digite sua nova senha",
+      "passwordLabel": "Nova Senha",
+      "passwordPlaceholder": "Digite nova senha",
+      "confirmLabel": "Confirmar Nova Senha",
+      "confirmPlaceholder": "Confirme nova senha",
+      "submitButton": "Atualizar Senha",
+      "submitting": "Atualizando...",
+      "success": "Senha atualizada com sucesso",
+      "error": {
+        "password": "As senhas não coincidem",
+        "generic": "Algo deu errado. Por favor, tente novamente."
+      }
+    },
+    "account": {
+      "title": "Minha Conta",
+      "profile": "Perfil",
+      "orders": "Meus Pedidos",
+      "registrations": "Registros de Pets",
+      "changePassword": "Alterar Senha",
+      "logout": "Sair",
+      "editProfile": "Editar Perfil",
+      "saveChanges": "Salvar Alterações",
+      "saving": "Salvando...",
+      "saved": "Alterações salvas com sucesso",
+      "noOrders": "Sem pedidos ainda",
+      "noRegistrations": "Sem registros de pets ainda",
+      "currentPasswordLabel": "Senha Atual",
+      "newPasswordLabel": "Nova Senha",
+      "confirmPasswordLabel": "Confirmar Nova Senha",
+      "updatePassword": "Atualizar Senha"
+    },
+    "userMenu": {
+      "account": "Minha Conta",
+      "orders": "Meus Pedidos",
+      "logout": "Sair",
+      "login": "Entrar",
+      "register": "Criar Conta"
+    }
+  },
   "productDetails": {
     "esa-letter-housing": {
       "name": "Carta ESA para Moradia",

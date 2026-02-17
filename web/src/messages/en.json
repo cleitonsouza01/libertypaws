@@ -256,6 +256,102 @@
     "minLength": "Must be at least {min} characters",
     "maxLength": "Must be no more than {max} characters"
   },
+  "auth": {
+    "login": {
+      "title": "Welcome Back",
+      "subtitle": "Sign in to your account",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "Enter your email",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot password?",
+      "submitButton": "Sign In",
+      "submitting": "Signing in...",
+      "noAccount": "Don't have an account?",
+      "registerLink": "Create Account",
+      "orContinueWith": "Or continue with",
+      "googleButton": "Continue with Google",
+      "error": {
+        "invalid": "Invalid email or password",
+        "generic": "Something went wrong. Please try again."
+      }
+    },
+    "register": {
+      "title": "Create Account",
+      "subtitle": "Join Liberty Paws today",
+      "nameLabel": "Full Name",
+      "namePlaceholder": "Enter your full name",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "Enter your email",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Create a password",
+      "confirmLabel": "Confirm Password",
+      "confirmPlaceholder": "Confirm your password",
+      "termsText": "I agree to the <terms>Terms of Service</terms> and <privacy>Privacy Policy</privacy>",
+      "submitButton": "Create Account",
+      "submitting": "Creating account...",
+      "hasAccount": "Already have an account?",
+      "loginLink": "Sign In",
+      "success": "Account created! Check your email to confirm.",
+      "error": {
+        "exists": "An account with this email already exists",
+        "password": "Passwords do not match",
+        "terms": "You must agree to the terms and privacy policy",
+        "generic": "Something went wrong. Please try again."
+      }
+    },
+    "forgot": {
+      "title": "Forgot Password",
+      "subtitle": "Enter your email and we'll send a reset link",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "Enter your email",
+      "submitButton": "Send Reset Link",
+      "submitting": "Sending...",
+      "backToLogin": "Back to Sign In",
+      "success": "Check your email for a password reset link"
+    },
+    "reset": {
+      "title": "Reset Password",
+      "subtitle": "Enter your new password",
+      "passwordLabel": "New Password",
+      "passwordPlaceholder": "Enter new password",
+      "confirmLabel": "Confirm New Password",
+      "confirmPlaceholder": "Confirm new password",
+      "submitButton": "Update Password",
+      "submitting": "Updating...",
+      "success": "Password updated successfully",
+      "error": {
+        "password": "Passwords do not match",
+        "generic": "Something went wrong. Please try again."
+      }
+    },
+    "account": {
+      "title": "My Account",
+      "profile": "Profile",
+      "orders": "My Orders",
+      "registrations": "Pet Registrations",
+      "changePassword": "Change Password",
+      "logout": "Sign Out",
+      "editProfile": "Edit Profile",
+      "saveChanges": "Save Changes",
+      "saving": "Saving...",
+      "saved": "Changes saved successfully",
+      "noOrders": "No orders yet",
+      "noRegistrations": "No pet registrations yet",
+      "currentPasswordLabel": "Current Password",
+      "newPasswordLabel": "New Password",
+      "confirmPasswordLabel": "Confirm New Password",
+      "updatePassword": "Update Password"
+    },
+    "userMenu": {
+      "account": "My Account",
+      "orders": "My Orders",
+      "logout": "Sign Out",
+      "login": "Sign In",
+      "register": "Create Account"
+    }
+  },
   "productDetails": {
     "esa-letter-housing": {
       "name": "ESA Letter for Housing",

@@ -9,6 +9,7 @@ import { inter } from '@/lib/fonts'
 import { locales } from '@/i18n/config'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
+import { AuthProvider } from '@/contexts/auth-context'
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }))
@@ -68,11 +69,13 @@ export default async function LocaleLayout({
     <html lang={locale} className={inter.variable} data-theme="libertypaws">
       <body className="min-h-screen bg-base-100 font-sans antialiased">
         <NextIntlClientProvider messages={messages}>
-          <div className="flex min-h-screen flex-col">
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
+          <AuthProvider>
+            <div className="flex min-h-screen flex-col">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </div>
+          </AuthProvider>
         </NextIntlClientProvider>
         <Analytics />
         <SpeedInsights />

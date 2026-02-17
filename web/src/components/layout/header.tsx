@@ -4,15 +4,18 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/routing'
-import { Menu, X, Search } from 'lucide-react'
+import { Menu, X, Search, LogIn } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { LanguageSwitcher, LanguageSwitcherCompact } from './language-switcher'
 import { MobileNav } from './mobile-nav'
+import { UserMenu } from './user-menu'
+import { useAuth } from '@/contexts/auth-context'
 import { getImageUrl } from '@/lib/assets'
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const t = useTranslations('nav')
+  const { isAuthenticated, isLoading } = useAuth()
 
   const navLinks = [
     { href: '/', label: t('home') },
@@ -58,12 +61,22 @@ export function Header() {
 
       {/* Desktop Right Side - navbar-end */}
       <div className="navbar-end">
-        <div className="hidden items-center gap-4 md:flex">
+        <div className="hidden items-center gap-3 md:flex">
           <LanguageSwitcher />
-          <Button variant="primary" size="sm">
-            <Search className="h-4 w-4" />
-            {t('searchRegistration')}
-          </Button>
+          {!isLoading && (
+            <>
+              {isAuthenticated ? (
+                <UserMenu />
+              ) : (
+                <Link href="/auth/login">
+                  <Button variant="primary" size="sm">
+                    <LogIn className="h-4 w-4" />
+                    Sign In
+                  </Button>
+                </Link>
+              )}
+            </>
+          )}
         </div>
 
         {/* Mobile Right Side */}

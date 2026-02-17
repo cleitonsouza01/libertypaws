@@ -256,6 +256,102 @@
     "minLength": "Debe tener al menos {min} caracteres",
     "maxLength": "No debe exceder {max} caracteres"
   },
+  "auth": {
+    "login": {
+      "title": "Bienvenido de Nuevo",
+      "subtitle": "Inicia sesión en tu cuenta",
+      "emailLabel": "Correo Electrónico",
+      "emailPlaceholder": "Ingresa tu correo",
+      "passwordLabel": "Contraseña",
+      "passwordPlaceholder": "Ingresa tu contraseña",
+      "rememberMe": "Recordarme",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "submitButton": "Iniciar Sesión",
+      "submitting": "Iniciando sesión...",
+      "noAccount": "¿No tienes una cuenta?",
+      "registerLink": "Crear Cuenta",
+      "orContinueWith": "O continuar con",
+      "googleButton": "Continuar con Google",
+      "error": {
+        "invalid": "Correo o contraseña inválidos",
+        "generic": "Algo salió mal. Por favor intenta de nuevo."
+      }
+    },
+    "register": {
+      "title": "Crear Cuenta",
+      "subtitle": "Únete a Liberty Paws hoy",
+      "nameLabel": "Nombre Completo",
+      "namePlaceholder": "Ingresa tu nombre completo",
+      "emailLabel": "Correo Electrónico",
+      "emailPlaceholder": "Ingresa tu correo",
+      "passwordLabel": "Contraseña",
+      "passwordPlaceholder": "Crea una contraseña",
+      "confirmLabel": "Confirmar Contraseña",
+      "confirmPlaceholder": "Confirma tu contraseña",
+      "termsText": "Acepto los <terms>Términos de Servicio</terms> y la <privacy>Política de Privacidad</privacy>",
+      "submitButton": "Crear Cuenta",
+      "submitting": "Creando cuenta...",
+      "hasAccount": "¿Ya tienes una cuenta?",
+      "loginLink": "Iniciar Sesión",
+      "success": "¡Cuenta creada! Revisa tu correo para confirmar.",
+      "error": {
+        "exists": "Ya existe una cuenta con este correo",
+        "password": "Las contraseñas no coinciden",
+        "terms": "Debes aceptar los términos y la política de privacidad",
+        "generic": "Algo salió mal. Por favor intenta de nuevo."
+      }
+    },
+    "forgot": {
+      "title": "Olvidé mi Contraseña",
+      "subtitle": "Ingresa tu correo y te enviaremos un enlace de recuperación",
+      "emailLabel": "Correo Electrónico",
+      "emailPlaceholder": "Ingresa tu correo",
+      "submitButton": "Enviar Enlace de Recuperación",
+      "submitting": "Enviando...",
+      "backToLogin": "Volver a Iniciar Sesión",
+      "success": "Revisa tu correo para el enlace de recuperación"
+    },
+    "reset": {
+      "title": "Restablecer Contraseña",
+      "subtitle": "Ingresa tu nueva contraseña",
+      "passwordLabel": "Nueva Contraseña",
+      "passwordPlaceholder": "Ingresa nueva contraseña",
+      "confirmLabel": "Confirmar Nueva Contraseña",
+      "confirmPlaceholder": "Confirma nueva contraseña",
+      "submitButton": "Actualizar Contraseña",
+      "submitting": "Actualizando...",
+      "success": "Contraseña actualizada exitosamente",
+      "error": {
+        "password": "Las contraseñas no coinciden",
+        "generic": "Algo salió mal. Por favor intenta de nuevo."
+      }
+    },
+    "account": {
+      "title": "Mi Cuenta",
+      "profile": "Perfil",
+      "orders": "Mis Pedidos",
+      "registrations": "Registros de Mascotas",
+      "changePassword": "Cambiar Contraseña",
+      "logout": "Cerrar Sesión",
+      "editProfile": "Editar Perfil",
+      "saveChanges": "Guardar Cambios",
+      "saving": "Guardando...",
+      "saved": "Cambios guardados exitosamente",
+      "noOrders": "Sin pedidos aún",
+      "noRegistrations": "Sin registros de mascotas aún",
+      "currentPasswordLabel": "Contraseña Actual",
+      "newPasswordLabel": "Nueva Contraseña",
+      "confirmPasswordLabel": "Confirmar Nueva Contraseña",
+      "updatePassword": "Actualizar Contraseña"
+    },
+    "userMenu": {
+      "account": "Mi Cuenta",
+      "orders": "Mis Pedidos",
+      "logout": "Cerrar Sesión",
+      "login": "Iniciar Sesión",
+      "register": "Crear Cuenta"
+    }
+  },
   "productDetails": {
     "esa-letter-housing": {
       "name": "Carta ESA para Vivienda",
