@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { motion } from 'motion/react'
-import { Mail, MessageSquare, Clock, ChevronDown, Send, Loader2 } from 'lucide-react'
+import { Mail, Phone, MessageCircle, Clock, ChevronDown, Send, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
@@ -113,9 +113,9 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-base-100">
       {/* Hero Section */}
-      <section className="bg-primary-800 py-16 text-white">
+      <section className="bg-secondary py-16 text-secondary-content">
         <div className="container mx-auto px-4 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -128,7 +128,7 @@ export default function ContactPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="mx-auto max-w-2xl text-lg text-primary-100"
+            className="mx-auto max-w-2xl text-lg text-secondary-content/80"
           >
             {t('subtitle')}
           </motion.p>
@@ -144,13 +144,14 @@ export default function ContactPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
             >
-              <div className="rounded-2xl bg-white p-8 shadow-lg">
+              <div className="card bg-base-200 shadow-lg">
+                <div className="card-body">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Name */}
-                  <div>
-                    <label htmlFor="name" className="mb-2 block text-sm font-medium text-gray-700">
+                  <fieldset className="fieldset">
+                    <legend className="fieldset-legend">
                       {t('form.name')} *
-                    </label>
+                    </legend>
                     <input
                       type="text"
                       id="name"
@@ -159,18 +160,18 @@ export default function ContactPage() {
                       onChange={handleChange}
                       placeholder={t('form.namePlaceholder')}
                       className={cn(
-                        'w-full rounded-lg border px-4 py-3 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500',
-                        errors.name ? 'border-red-500' : 'border-gray-300'
+                        'input w-full',
+                        errors.name && 'input-error'
                       )}
                     />
-                    {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
-                  </div>
+                    {errors.name && <p className="mt-1 text-sm text-error">{errors.name}</p>}
+                  </fieldset>
 
                   {/* Email */}
-                  <div>
-                    <label htmlFor="email" className="mb-2 block text-sm font-medium text-gray-700">
+                  <fieldset className="fieldset">
+                    <legend className="fieldset-legend">
                       {t('form.email')} *
-                    </label>
+                    </legend>
                     <input
                       type="email"
                       id="email"
@@ -179,18 +180,18 @@ export default function ContactPage() {
                       onChange={handleChange}
                       placeholder={t('form.emailPlaceholder')}
                       className={cn(
-                        'w-full rounded-lg border px-4 py-3 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500',
-                        errors.email ? 'border-red-500' : 'border-gray-300'
+                        'input w-full',
+                        errors.email && 'input-error'
                       )}
                     />
-                    {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
-                  </div>
+                    {errors.email && <p className="mt-1 text-sm text-error">{errors.email}</p>}
+                  </fieldset>
 
                   {/* Phone */}
-                  <div>
-                    <label htmlFor="phone" className="mb-2 block text-sm font-medium text-gray-700">
+                  <fieldset className="fieldset">
+                    <legend className="fieldset-legend">
                       {t('form.phone')}
-                    </label>
+                    </legend>
                     <input
                       type="tel"
                       id="phone"
@@ -198,23 +199,23 @@ export default function ContactPage() {
                       value={formData.phone}
                       onChange={handleChange}
                       placeholder={t('form.phonePlaceholder')}
-                      className="w-full rounded-lg border border-gray-300 px-4 py-3 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="input w-full"
                     />
-                  </div>
+                  </fieldset>
 
                   {/* Subject */}
-                  <div>
-                    <label htmlFor="subject" className="mb-2 block text-sm font-medium text-gray-700">
+                  <fieldset className="fieldset">
+                    <legend className="fieldset-legend">
                       {t('form.subject')} *
-                    </label>
+                    </legend>
                     <select
                       id="subject"
                       name="subject"
                       value={formData.subject}
                       onChange={handleChange}
                       className={cn(
-                        'w-full rounded-lg border px-4 py-3 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500',
-                        errors.subject ? 'border-red-500' : 'border-gray-300'
+                        'select w-full',
+                        errors.subject && 'select-error'
                       )}
                     >
                       <option value="">{t('form.subjectPlaceholder')}</option>
@@ -224,14 +225,14 @@ export default function ContactPage() {
                         </option>
                       ))}
                     </select>
-                    {errors.subject && <p className="mt-1 text-sm text-red-500">{errors.subject}</p>}
-                  </div>
+                    {errors.subject && <p className="mt-1 text-sm text-error">{errors.subject}</p>}
+                  </fieldset>
 
                   {/* Message */}
-                  <div>
-                    <label htmlFor="message" className="mb-2 block text-sm font-medium text-gray-700">
+                  <fieldset className="fieldset">
+                    <legend className="fieldset-legend">
                       {t('form.message')} *
-                    </label>
+                    </legend>
                     <textarea
                       id="message"
                       name="message"
@@ -240,12 +241,12 @@ export default function ContactPage() {
                       placeholder={t('form.messagePlaceholder')}
                       rows={5}
                       className={cn(
-                        'w-full resize-none rounded-lg border px-4 py-3 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500',
-                        errors.message ? 'border-red-500' : 'border-gray-300'
+                        'textarea w-full',
+                        errors.message && 'textarea-error'
                       )}
                     />
-                    {errors.message && <p className="mt-1 text-sm text-red-500">{errors.message}</p>}
-                  </div>
+                    {errors.message && <p className="mt-1 text-sm text-error">{errors.message}</p>}
+                  </fieldset>
 
                   {/* Submit Button */}
                   <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
@@ -267,7 +268,8 @@ export default function ContactPage() {
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="rounded-lg bg-green-100 p-4 text-center text-green-700"
+                      role="alert"
+                      className="alert alert-success text-center"
                     >
                       {t('form.success')}
                     </motion.div>
@@ -277,12 +279,14 @@ export default function ContactPage() {
                     <motion.div
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="rounded-lg bg-red-100 p-4 text-center text-red-700"
+                      role="alert"
+                      className="alert alert-error text-center"
                     >
                       {t('form.error')}
                     </motion.div>
                   )}
                 </form>
+                </div>
               </div>
             </motion.div>
 
@@ -294,53 +298,75 @@ export default function ContactPage() {
               className="space-y-8"
             >
               {/* Contact Info */}
-              <div className="rounded-2xl bg-white p-8 shadow-lg">
-                <h2 className="mb-6 text-2xl font-bold text-gray-900">{t('info.title')}</h2>
+              <div className="card bg-base-200 shadow-lg">
+                <div className="card-body">
+                <h2 className="card-title text-2xl font-bold text-secondary">{t('info.title')}</h2>
                 <div className="space-y-4">
                   <div className="flex items-start gap-4">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary-100">
-                      <Mail className="h-6 w-6 text-primary-600" />
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                      <Mail className="h-6 w-6 text-primary" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900">{t('info.email')}</h3>
-                      <p className="text-gray-600">support@libertypaws.com</p>
+                      <h3 className="font-semibold text-secondary">{t('info.email')}</h3>
+                      <p className="text-base-content/60">support@libertypaws.com</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary-100">
-                      <MessageSquare className="h-6 w-6 text-primary-600" />
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                      <Phone className="h-6 w-6 text-primary" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900">Live Chat</h3>
-                      <p className="text-gray-600">Available 9am - 5pm EST</p>
+                      <h3 className="font-semibold text-secondary">{t('info.phone')}</h3>
+                      <a href="tel:+15618846581" className="link link-hover text-base-content/60">
+                        {t('info.phoneNumber')}
+                      </a>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary-100">
-                      <Clock className="h-6 w-6 text-primary-600" />
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-success/10">
+                      <MessageCircle className="h-6 w-6 text-success" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900">Response Time</h3>
-                      <p className="text-gray-600">{t('info.response')}</p>
+                      <h3 className="font-semibold text-secondary">{t('info.whatsapp')}</h3>
+                      <a
+                        href="https://wa.me/15618846581"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="link link-hover text-base-content/60"
+                      >
+                        {t('info.whatsappText')}
+                      </a>
                     </div>
                   </div>
+                  <div className="flex items-start gap-4">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                      <Clock className="h-6 w-6 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-secondary">{t('info.liveChat')}</h3>
+                      <p className="text-base-content/60">{t('info.liveChatHours')}</p>
+                      <p className="text-xs text-base-content/40 mt-1">{t('info.response')}</p>
+                    </div>
+                  </div>
+                </div>
                 </div>
               </div>
 
               {/* FAQ */}
-              <div className="rounded-2xl bg-white p-8 shadow-lg">
-                <h2 className="mb-6 text-2xl font-bold text-gray-900">{t('faq.title')}</h2>
+              <div className="card bg-base-200 shadow-lg">
+                <div className="card-body">
+                <h2 className="card-title text-2xl font-bold text-secondary">{t('faq.title')}</h2>
                 <div className="space-y-4">
                   {faqItems.map((item) => (
-                    <div key={item.id} className="border-b border-gray-200 pb-4 last:border-0">
+                    <div key={item.id} className="border-b border-base-300 pb-4 last:border-0">
                       <button
                         onClick={() => setOpenFaq(openFaq === item.id ? null : item.id)}
                         className="flex w-full items-center justify-between text-left"
                       >
-                        <span className="font-medium text-gray-900">{item.question}</span>
+                        <span className="font-medium text-base-content">{item.question}</span>
                         <ChevronDown
                           className={cn(
-                            'h-5 w-5 shrink-0 text-gray-500 transition-transform',
+                            'h-5 w-5 shrink-0 text-base-content/40 transition-transform',
                             openFaq === item.id && 'rotate-180'
                           )}
                         />
@@ -350,13 +376,14 @@ export default function ContactPage() {
                           initial={{ opacity: 0, height: 0 }}
                           animate={{ opacity: 1, height: 'auto' }}
                           exit={{ opacity: 0, height: 0 }}
-                          className="mt-3 text-gray-600"
+                          className="mt-3 text-base-content/60"
                         >
                           {item.answer}
                         </motion.div>
                       )}
                     </div>
                   ))}
+                </div>
                 </div>
               </div>
             </motion.div>

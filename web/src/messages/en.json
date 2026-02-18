@@ -201,6 +201,12 @@
     "info": {
       "title": "Contact Information",
       "email": "Email",
+      "phone": "Phone",
+      "phoneNumber": "(561) 884-6581",
+      "whatsapp": "WhatsApp",
+      "whatsappText": "Chat with us on WhatsApp",
+      "liveChat": "Live Chat",
+      "liveChatHours": "Available 9am - 5pm EST",
       "response": "We typically respond within 24-48 hours"
     },
     "faq": {
@@ -236,9 +242,12 @@
     },
     "contact": {
       "title": "Contact Us",
-      "email": "support@libertypaws.com"
+      "email": "support@libertypaws.com",
+      "phone": "(561) 884-6581",
+      "whatsapp": "WhatsApp"
     },
-    "copyright": "© {year} Liberty Paws International. All rights reserved."
+    "copyright": "© {year} Liberty Paws International. All rights reserved.",
+    "craftedBy": "Crafted by"
   },
   "common": {
     "loading": "Loading...",

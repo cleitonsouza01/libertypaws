@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/routing'
-import { Mail } from 'lucide-react'
+import { Mail, Phone, MessageCircle } from 'lucide-react'
 import { getImageUrl } from '@/lib/assets'
 
 export function Footer() {
@@ -62,12 +62,38 @@ export function Footer() {
             <Mail className="h-4 w-4" />
             <span>{t('contact.email')}</span>
           </div>
+          <a href="tel:+15618846581" className="link link-hover flex items-center gap-2 text-sm">
+            <Phone className="h-4 w-4" />
+            <span>{t('contact.phone')}</span>
+          </a>
+          <a
+            href="https://wa.me/15618846581"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link link-hover flex items-center gap-2 text-sm"
+          >
+            <MessageCircle className="h-4 w-4" />
+            <span>{t('contact.whatsapp')}</span>
+          </a>
         </nav>
       </div>
 
       {/* Copyright */}
       <div className="footer footer-center border-t border-base-300 p-4 text-base-content">
-        <p className="text-sm">{t('copyright', { year: currentYear })}</p>
+        <div className="flex flex-col items-center gap-1">
+          <p className="text-sm">{t('copyright', { year: currentYear })}</p>
+          <p className="text-xs text-base-content/40">
+            {t('craftedBy')}{' '}
+            <a
+              href="https://sunokrom.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link link-hover"
+            >
+              sunokrom.com
+            </a>
+          </p>
+        </div>
       </div>
     </footer>
   )
