@@ -438,5 +438,35 @@
       "name": "PSD Complete Kit",
       "description": "Everything you need for your Psychiatric Service Dog: full registration, official ID card, service dog vest, and comprehensive documentation. The ultimate package for complete service dog support."
     }
+  },
+  "searchRegistration": {
+    "title": "Verify Registration",
+    "subtitle": "Enter your registration ID to verify your pet's documentation status",
+    "inputLabel": "Registration ID",
+    "inputPlaceholder": "Enter your registration number",
+    "searchButton": "Search",
+    "searching": "Searching...",
+    "notFound": {
+      "title": "Registration Not Found",
+      "message": "No registration was found with the provided ID. Please check the number and try again.",
+      "tryAgain": "Try Another ID"
+    },
+    "result": {
+      "title": "Registration Verified",
+      "subtitle": "This registration is valid and active in our system",
+      "registrationType": "Registration Type",
+      "serviceDog": "Service Dog",
+      "handlerName": "Handler's Name",
+      "dogName": "Dog's Name",
+      "breed": "Breed",
+      "idNumber": "ID Number",
+      "validThru": "Valid Thru",
+      "status": "Status",
+      "active": "Active",
+      "verifiedBadge": "Verified",
+      "accessRequired": "Access Required by Law",
+      "searchAnother": "Search Another ID",
+      "verificationNote": "For 24/7 online verification, visit www.libertypawsinternational.com"
+    }
   }
 }

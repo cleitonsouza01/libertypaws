@@ -438,5 +438,35 @@
       "name": "Kit PSD Completo",
       "description": "Todo lo que necesitas para tu Perro de Servicio Psiquiátrico: registro completo, tarjeta de identificación oficial, chaleco de perro de servicio y documentación completa. El paquete definitivo para soporte completo de perro de servicio."
     }
+  },
+  "searchRegistration": {
+    "title": "Verificar Registro",
+    "subtitle": "Ingrese su ID de registro para verificar el estado de la documentación de su mascota",
+    "inputLabel": "ID de Registro",
+    "inputPlaceholder": "Ingrese su número de registro",
+    "searchButton": "Buscar",
+    "searching": "Buscando...",
+    "notFound": {
+      "title": "Registro No Encontrado",
+      "message": "No se encontró ningún registro con el ID proporcionado. Verifique el número e intente nuevamente.",
+      "tryAgain": "Intentar Otro ID"
+    },
+    "result": {
+      "title": "Registro Verificado",
+      "subtitle": "Este registro es válido y está activo en nuestro sistema",
+      "registrationType": "Tipo de Registro",
+      "serviceDog": "Perro de Servicio",
+      "handlerName": "Nombre del Responsable",
+      "dogName": "Nombre del Perro",
+      "breed": "Raza",
+      "idNumber": "Número de ID",
+      "validThru": "Válido Hasta",
+      "status": "Estado",
+      "active": "Activo",
+      "verifiedBadge": "Verificado",
+      "accessRequired": "Acceso Requerido por Ley",
+      "searchAnother": "Buscar Otro ID",
+      "verificationNote": "Para verificación en línea 24/7, visite www.libertypawsinternational.com"
+    }
   }
 }

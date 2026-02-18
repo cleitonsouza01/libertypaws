@@ -57,6 +57,10 @@ export function Header() {
             </li>
           ))}
         </ul>
+        <Link href="/search-registration" className="btn btn-outline btn-primary btn-sm ml-2 gap-1.5">
+          <Search className="h-3.5 w-3.5" />
+          {t('searchRegistration')}
+        </Link>
       </div>
 
       {/* Desktop Right Side - navbar-end */}

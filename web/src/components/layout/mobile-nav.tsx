@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/routing'
-import { LogIn, UserPlus, User, LogOut } from 'lucide-react'
+import { LogIn, UserPlus, User, LogOut, Search } from 'lucide-react'
 import { motion, AnimatePresence } from 'motion/react'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/contexts/auth-context'
@@ -15,6 +15,7 @@ interface MobileNavProps {
 
 export function MobileNav({ isOpen, onClose, links }: MobileNavProps) {
   const t = useTranslations('auth.userMenu')
+  const tNav = useTranslations('nav')
   const { user, isAuthenticated, signOut } = useAuth()
 
   return (
@@ -67,13 +68,29 @@ export function MobileNav({ isOpen, onClose, links }: MobileNavProps) {
               </motion.li>
             ))}
 
+            {/* Search Registration - highlighted */}
+            <motion.li
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: links.length * 0.05 }}
+            >
+              <Link
+                href="/search-registration"
+                onClick={onClose}
+                className="btn btn-outline btn-primary btn-sm justify-start gap-2 text-base font-medium"
+              >
+                <Search className="h-4 w-4" />
+                {tNav('searchRegistration')}
+              </Link>
+            </motion.li>
+
             {/* Auth links */}
             {isAuthenticated ? (
               <>
                 <motion.li
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: links.length * 0.05 }}
+                  transition={{ delay: (links.length + 1) * 0.05 }}
                 >
                   <Link
                     href="/account"
@@ -87,7 +104,7 @@ export function MobileNav({ isOpen, onClose, links }: MobileNavProps) {
                 <motion.li
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: (links.length + 1) * 0.05 }}
+                  transition={{ delay: (links.length + 2) * 0.05 }}
                 >
                   <button
                     onClick={() => {
@@ -107,7 +124,7 @@ export function MobileNav({ isOpen, onClose, links }: MobileNavProps) {
                 <motion.li
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: links.length * 0.05 }}
+                  transition={{ delay: (links.length + 1) * 0.05 }}
                 >
                   <Link
                     href="/auth/login"
@@ -121,7 +138,7 @@ export function MobileNav({ isOpen, onClose, links }: MobileNavProps) {
                 <motion.li
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: (links.length + 1) * 0.05 }}
+                  transition={{ delay: (links.length + 2) * 0.05 }}
                 >
                   <Link
                     href="/auth/register"

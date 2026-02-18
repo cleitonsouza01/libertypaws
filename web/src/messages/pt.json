@@ -438,5 +438,35 @@
       "name": "Kit PSD Completo",
       "description": "Tudo o que você precisa para seu Cão de Serviço Psiquiátrico: registro completo, cartão de identificação oficial, colete de cão de serviço e documentação completa. O pacote definitivo para suporte completo de cão de serviço."
     }
+  },
+  "searchRegistration": {
+    "title": "Verificar Registro",
+    "subtitle": "Digite seu ID de registro para verificar o status da documentação do seu pet",
+    "inputLabel": "ID de Registro",
+    "inputPlaceholder": "Digite seu número de registro",
+    "searchButton": "Buscar",
+    "searching": "Buscando...",
+    "notFound": {
+      "title": "Registro Não Encontrado",
+      "message": "Nenhum registro foi encontrado com o ID fornecido. Verifique o número e tente novamente.",
+      "tryAgain": "Tentar Outro ID"
+    },
+    "result": {
+      "title": "Registro Verificado",
+      "subtitle": "Este registro é válido e está ativo em nosso sistema",
+      "registrationType": "Tipo de Registro",
+      "serviceDog": "Cão de Serviço",
+      "handlerName": "Nome do Responsável",
+      "dogName": "Nome do Cão",
+      "breed": "Raça",
+      "idNumber": "Número de ID",
+      "validThru": "Válido Até",
+      "status": "Status",
+      "active": "Ativo",
+      "verifiedBadge": "Verificado",
+      "accessRequired": "Acesso Exigido por Lei",
+      "searchAnother": "Buscar Outro ID",
+      "verificationNote": "Para verificação online 24/7, visite www.libertypawsinternational.com"
+    }
   }
 }
