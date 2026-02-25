@@ -7,15 +7,39 @@ import { Search, ShieldCheck, CheckCircle, XCircle, ArrowLeft, Calendar, Dog, Us
 import { Button } from '@/components/ui/button'
 import { getImageUrl } from '@/lib/assets'
 
-const MOCK_REGISTRATION = {
-  id: '2984533',
-  type: 'Service Dog',
-  handlerName: 'Felipe Moisés Varela da Camara',
-  dogName: 'Lui',
-  breed: 'Golden Retriever',
-  validThru: 'January 30, 2028',
-  status: 'active' as const,
+interface MockRegistration {
+  id: string
+  type: string
+  handlerName: string
+  dogName: string
+  breed: string
+  validThru: string
+  status: 'active'
+  photo: string
 }
+
+const MOCK_REGISTRATIONS: MockRegistration[] = [
+  {
+    id: '2984533',
+    type: 'Service Dog',
+    handlerName: 'Felipe Moisés Varela da Camara',
+    dogName: 'Lui',
+    breed: 'Golden Retriever',
+    validThru: 'January 30, 2028',
+    status: 'active',
+    photo: '/images/mock-dog-lui.jpg',
+  },
+  {
+    id: '2984544',
+    type: 'Service Dog',
+    handlerName: 'Luciene Maciel Sandes',
+    dogName: 'Drogon',
+    breed: 'French Bulldog',
+    validThru: 'February 28, 2027',
+    status: 'active',
+    photo: '/images/mock-dog-drogon.jpg',
+  },
+]
 
 type SearchState = 'idle' | 'searching' | 'found' | 'not-found'
 
@@ -102,9 +126,9 @@ function NotFoundResult({ onReset }: { onReset: () => void }) {
   )
 }
 
-function RegistrationResult({ onReset }: { onReset: () => void }) {
+function RegistrationResult({ registration, onReset }: { registration: MockRegistration; onReset: () => void }) {
   const t = useTranslations('searchRegistration.result')
-  const reg = MOCK_REGISTRATION
+  const reg = registration
 
   return (
     <div className="container mx-auto max-w-3xl px-4 py-12">
@@ -150,7 +174,7 @@ function RegistrationResult({ onReset }: { onReset: () => void }) {
               <div className="avatar">
                 <div className="w-40 rounded-xl bg-base-300">
                   <Image
-                    src="/images/mock-dog-lui.jpg"
+                    src={reg.photo}
                     alt={reg.dogName}
                     width={160}
                     height={160}
@@ -236,6 +260,7 @@ function RegistrationResult({ onReset }: { onReset: () => void }) {
 
 export default function SearchRegistrationPage() {
   const [state, setState] = useState<SearchState>('idle')
+  const [foundRegistration, setFoundRegistration] = useState<MockRegistration | null>(null)
 
   async function handleSearch(id: string) {
     setState('searching')
@@ -243,19 +268,23 @@ export default function SearchRegistrationPage() {
     // Mock API delay
     await new Promise((resolve) => setTimeout(resolve, 1500))
 
-    if (id === MOCK_REGISTRATION.id) {
+    const match = MOCK_REGISTRATIONS.find((r) => r.id === id)
+    if (match) {
+      setFoundRegistration(match)
       setState('found')
     } else {
+      setFoundRegistration(null)
       setState('not-found')
     }
   }
 
   function handleReset() {
     setState('idle')
+    setFoundRegistration(null)
   }
 
-  if (state === 'found') {
-    return <RegistrationResult onReset={handleReset} />
+  if (state === 'found' && foundRegistration) {
+    return <RegistrationResult registration={foundRegistration} onReset={handleReset} />
   }
 
   if (state === 'not-found') {
