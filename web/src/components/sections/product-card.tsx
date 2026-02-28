@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Price } from '@/components/ui/price'
 import { cn } from '@/lib/utils'
+import { clarityEvent, clarityTag } from '@/lib/clarity'
 
 export interface Product {
   id: string
@@ -109,7 +110,13 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
             showFrom={!!product.maxPrice}
           />
           <Button variant="primary" size="sm" asChild>
-            <Link href={`/products/${product.slug}`}>
+            <Link
+              href={`/products/${product.slug}`}
+              onClick={() => {
+                clarityTag('product_slug', product.slug)
+                clarityEvent('product_view_details')
+              }}
+            >
               {t('viewDetails')}
               <ArrowRight className="h-4 w-4" />
             </Link>

@@ -6,6 +6,7 @@ import { motion } from 'motion/react'
 import { Mail, Phone, MessageCircle, Clock, ChevronDown, Send, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { clarityEvent } from '@/lib/clarity'
 
 interface FormData {
   name: string
@@ -95,9 +96,11 @@ export default function ContactPageClient() {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1500))
 
+      clarityEvent('contact_form_submit')
       setSubmitStatus('success')
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' })
     } catch {
+      clarityEvent('contact_form_error')
       setSubmitStatus('error')
     } finally {
       setIsSubmitting(false)

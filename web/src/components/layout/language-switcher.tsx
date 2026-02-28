@@ -7,6 +7,7 @@ import { Globe, ChevronDown, Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { motion, AnimatePresence } from 'motion/react'
 import { locales as localeList, localeNames, localeFlags, type Locale } from '@/i18n/config'
+import { clarityEvent, clarityTag } from '@/lib/clarity'
 
 const locales = localeList.map((code) => ({
   code,
@@ -33,6 +34,8 @@ export function LanguageSwitcher({
   const currentLocale = locales.find((l) => l.code === locale) || locales[0]
 
   const handleLocaleChange = (newLocale: Locale) => {
+    clarityTag('to_locale', newLocale)
+    clarityEvent('locale_switch')
     router.replace(pathname, { locale: newLocale })
     setIsOpen(false)
   }

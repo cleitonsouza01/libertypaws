@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'motion/react'
 import { Button } from '@/components/ui/button'
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { getVideoUrl } from '@/lib/assets'
+import { clarityEvent } from '@/lib/clarity'
 
 const heroVideos = [
   getVideoUrl('videos/hero-airport-checkpoint.mp4'),
@@ -72,13 +73,13 @@ export function Hero() {
           {/* CTA Buttons */}
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
             <Button variant="primary" size="lg" asChild>
-              <Link href="/products">
+              <Link href="/products" onClick={() => clarityEvent('hero_cta_products')}>
                 {t('cta.primary')}
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </Button>
             <Button variant="outline" size="lg" asChild>
-              <Link href="/contact">{t('cta.secondary')}</Link>
+              <Link href="/contact" onClick={() => clarityEvent('hero_cta_contact')}>{t('cta.secondary')}</Link>
             </Button>
           </div>
 

@@ -7,6 +7,7 @@ import { Search, ShieldCheck, CheckCircle, XCircle, ArrowLeft, Calendar, Dog, Us
 import { Button } from '@/components/ui/button'
 import { getImageUrl } from '@/lib/assets'
 import { createClient } from '@/lib/supabase/client'
+import { clarityEvent } from '@/lib/clarity'
 
 interface Registration {
   registration_number: string
@@ -258,6 +259,7 @@ export default function SearchRegistrationPage() {
 
   async function handleSearch(query: string) {
     setState('searching')
+    clarityEvent('search_reg_submit')
 
     const supabase = createClient()
     const { data, error } = await supabase
@@ -270,9 +272,11 @@ export default function SearchRegistrationPage() {
       .single()
 
     if (error || !data) {
+      clarityEvent('search_reg_not_found')
       setFoundRegistration(null)
       setState('not-found')
     } else {
+      clarityEvent('search_reg_found')
       setFoundRegistration(data)
       setState('found')
     }

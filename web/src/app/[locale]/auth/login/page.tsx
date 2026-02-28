@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Link, useRouter } from '@/i18n/routing'
 import { useSearchParams } from 'next/navigation'
 import { useAuth } from '@/contexts/auth-context'
+import { clarityEvent } from '@/lib/clarity'
 import { AuthForm } from '@/components/sections/auth-form'
 import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/ui/password-input'
@@ -35,8 +36,10 @@ function LoginForm() {
 
     const result = await signIn(email, password)
     if (result.success) {
+      clarityEvent('auth_login_success')
       router.replace(next)
     } else {
+      clarityEvent('auth_login_error')
       setError(
         result.error === 'invalid_credentials'
           ? t('error.invalid')

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Link, useRouter } from '@/i18n/routing'
 import { useAuth } from '@/contexts/auth-context'
+import { clarityEvent } from '@/lib/clarity'
 import { AuthForm } from '@/components/sections/auth-form'
 import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/ui/password-input'
@@ -45,8 +46,10 @@ export default function RegisterPage() {
     setIsSubmitting(true)
     const result = await signUp(email, password, fullName)
     if (result.success) {
+      clarityEvent('auth_register_success')
       setSuccess(true)
     } else {
+      clarityEvent('auth_register_error')
       setError(
         result.error === 'email_exists'
           ? t('error.exists')
