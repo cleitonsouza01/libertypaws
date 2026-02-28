@@ -359,6 +359,7 @@
       "updatingPassword": "Atualizando...",
       "passwordUpdated": "Senha atualizada com sucesso",
       "passwordMismatch": "As novas senhas não coincidem",
+      "passwordUpdateFailed": "Erro ao atualizar a senha. Tente novamente.",
       "passwordRequirements": "A senha deve ter pelo menos 8 caracteres",
       "currentPasswordPlaceholder": "Digite sua senha atual",
       "newPasswordPlaceholder": "Digite nova senha",

@@ -6,8 +6,11 @@ import {
   useState,
   useEffect,
   useCallback,
+  useRef,
   type ReactNode,
 } from 'react'
+import { createClient } from '@/lib/supabase/client'
+import type { SupabaseClient, User } from '@supabase/supabase-js'
 
 export interface AuthUser {
   id: string
@@ -37,110 +40,198 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | null>(null)
 
-const STORAGE_KEY = 'libertypaws_auth_user'
+async function fetchProfile(
+  supabase: SupabaseClient,
+  userId: string
+): Promise<AuthUser | null> {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('id, full_name, email, avatar_url, locale')
+    .eq('id', userId)
+    .single()
 
-const MOCK_USER: AuthUser = {
-  id: 'mock-user-001',
-  email: 'demo@libertypaws.com',
-  fullName: 'Demo User',
-  avatarUrl: null,
-  locale: 'en',
+  if (error || !data) return null
+
+  return {
+    id: data.id,
+    email: data.email ?? '',
+    fullName: data.full_name ?? '',
+    avatarUrl: data.avatar_url ?? null,
+    locale: data.locale ?? 'en',
+  }
 }
 
-const MOCK_GOOGLE_USER: AuthUser = {
-  id: 'mock-google-001',
-  email: 'demo.google@gmail.com',
-  fullName: 'Google Demo User',
-  avatarUrl: null,
-  locale: 'en',
-}
-
-function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
+function mapSupabaseUser(user: User): AuthUser {
+  return {
+    id: user.id,
+    email: user.email ?? '',
+    fullName: user.user_metadata?.full_name ?? user.email?.split('@')[0] ?? '',
+    avatarUrl: user.user_metadata?.avatar_url ?? null,
+    locale: user.user_metadata?.locale ?? 'en',
+  }
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const supabaseRef = useRef<SupabaseClient>(null!)
+  if (!supabaseRef.current) {
+    supabaseRef.current = createClient()
+  }
+  const supabase = supabaseRef.current
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY)
-      if (stored) {
-        setUser(JSON.parse(stored))
+    // Get initial session
+    async function init() {
+      const { data: { user: sbUser } } = await supabase.auth.getUser()
+      if (sbUser) {
+        const profile = await fetchProfile(supabase, sbUser.id)
+        setUser(profile ?? mapSupabaseUser(sbUser))
       }
-    } catch {
-      // ignore parse errors
+      setIsLoading(false)
     }
-    setIsLoading(false)
-  }, [])
+    init()
 
-  const persistUser = useCallback((u: AuthUser | null) => {
-    setUser(u)
-    if (u) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(u))
-    } else {
-      localStorage.removeItem(STORAGE_KEY)
+    // Listen for auth state changes
+    // IMPORTANT: Do NOT await Supabase queries inside this callback.
+    // The Supabase client holds an internal lock during onAuthStateChange
+    // and making queries (which call getSession()) causes a deadlock.
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'USER_UPDATED') {
+          if (session?.user) {
+            // Set user immediately from auth metadata (no await, no deadlock)
+            setUser(mapSupabaseUser(session.user))
+            // Fetch full profile in background, outside the lock
+            const userId = session.user.id
+            setTimeout(async () => {
+              const profile = await fetchProfile(supabase, userId)
+              if (profile) setUser(profile)
+            }, 0)
+          }
+        } else if (event === 'SIGNED_OUT') {
+          setUser(null)
+        }
+      }
+    )
+
+    return () => {
+      subscription.unsubscribe()
     }
-  }, [])
+  }, [supabase])
 
   const signIn = useCallback(
-    async (email: string, _password: string): Promise<AuthResult> => {
-      await delay(1000)
-      if (email === 'error@test.com') {
+    async (email: string, password: string): Promise<AuthResult> => {
+      const { error } = await supabase.auth.signInWithPassword({ email, password })
+      if (error) {
         return { success: false, error: 'invalid_credentials' }
       }
-      const loggedUser: AuthUser = {
-        ...MOCK_USER,
-        email,
-        fullName: email.split('@')[0].replace(/[._]/g, ' '),
-      }
-      persistUser(loggedUser)
       return { success: true }
     },
-    [persistUser]
+    [supabase]
   )
 
   const signUp = useCallback(
-    async (email: string, _password: string, fullName: string): Promise<AuthResult> => {
-      await delay(1000)
-      if (email === 'error@test.com') {
-        return { success: false, error: 'email_exists' }
+    async (email: string, password: string, fullName: string): Promise<AuthResult> => {
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { full_name: fullName },
+          emailRedirectTo: `${window.location.origin}/en/auth/callback`,
+        },
+      })
+      if (error) {
+        if (error.message.toLowerCase().includes('already registered')) {
+          return { success: false, error: 'email_exists' }
+        }
+        return { success: false, error: error.message }
       }
-      // In mock mode we don't auto-login on signup (need email confirmation)
       return { success: true }
     },
-    []
+    [supabase]
   )
 
   const signInWithGoogle = useCallback(async () => {
-    await delay(1000)
-    persistUser(MOCK_GOOGLE_USER)
-  }, [persistUser])
+    const locale = window.location.pathname.split('/')[1] || 'en'
+    await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: `${window.location.origin}/${locale}/auth/callback`,
+      },
+    })
+    // Browser navigates away — this function never resolves to the caller
+  }, [supabase])
 
   const signOut = useCallback(async () => {
-    persistUser(null)
-  }, [persistUser])
+    await supabase.auth.signOut()
+    // Listener handles clearing state
+  }, [supabase])
 
-  const resetPassword = useCallback(async (_email: string): Promise<AuthResult> => {
-    await delay(1000)
-    return { success: true }
-  }, [])
-
-  const updatePassword = useCallback(async (_password: string): Promise<AuthResult> => {
-    await delay(1000)
-    return { success: true }
-  }, [])
-
-  const updateProfile = useCallback(
-    async (data: Partial<Pick<AuthUser, 'fullName' | 'locale'>>): Promise<AuthResult> => {
-      await delay(500)
-      if (user) {
-        persistUser({ ...user, ...data })
+  const resetPassword = useCallback(
+    async (email: string): Promise<AuthResult> => {
+      const locale = window.location.pathname.split('/')[1] || 'en'
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/${locale}/auth/callback?next=/auth/reset-password`,
+      })
+      if (error) {
+        return { success: false, error: error.message }
       }
       return { success: true }
     },
-    [user, persistUser]
+    [supabase]
+  )
+
+  const updatePassword = useCallback(
+    async (password: string): Promise<AuthResult> => {
+      const { error } = await supabase.auth.updateUser({ password })
+      if (error) {
+        return { success: false, error: error.message }
+      }
+      return { success: true }
+    },
+    [supabase]
+  )
+
+  const updateProfile = useCallback(
+    async (data: Partial<Pick<AuthUser, 'fullName' | 'locale'>>): Promise<AuthResult> => {
+      const { data: { user: sbUser } } = await supabase.auth.getUser()
+      if (!sbUser) {
+        return { success: false, error: 'not_authenticated' }
+      }
+
+      // Update profiles table
+      const profileUpdate: Record<string, string> = {}
+      if (data.fullName !== undefined) profileUpdate.full_name = data.fullName
+      if (data.locale !== undefined) profileUpdate.locale = data.locale
+
+      if (Object.keys(profileUpdate).length > 0) {
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .update(profileUpdate)
+          .eq('id', sbUser.id)
+
+        if (profileError) {
+          return { success: false, error: profileError.message }
+        }
+      }
+
+      // Sync metadata to auth.users
+      const metadata: Record<string, string> = {}
+      if (data.fullName !== undefined) metadata.full_name = data.fullName
+      if (data.locale !== undefined) metadata.locale = data.locale
+
+      if (Object.keys(metadata).length > 0) {
+        await supabase.auth.updateUser({ data: metadata })
+      }
+
+      // Re-fetch profile to update local state
+      const profile = await fetchProfile(supabase, sbUser.id)
+      if (profile) setUser(profile)
+
+      return { success: true }
+    },
+    [supabase]
   )
 
   return (

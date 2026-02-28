@@ -359,6 +359,7 @@
       "updatingPassword": "Actualizando...",
       "passwordUpdated": "Contraseña actualizada exitosamente",
       "passwordMismatch": "Las nuevas contraseñas no coinciden",
+      "passwordUpdateFailed": "Error al actualizar la contraseña. Intenta de nuevo.",
       "passwordRequirements": "La contraseña debe tener al menos 8 caracteres",
       "currentPasswordPlaceholder": "Ingrese su contraseña actual",
       "newPasswordPlaceholder": "Ingrese nueva contraseña",

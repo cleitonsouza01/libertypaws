@@ -7,9 +7,11 @@ import { AccountLayout } from '@/components/layout/account-layout'
 import { PasswordInput } from '@/components/ui/password-input'
 import { Button } from '@/components/ui/button'
 import { Shield, CheckCircle } from 'lucide-react'
+import { useAuth } from '@/contexts/auth-context'
 
 function ChangePasswordContent() {
   const t = useTranslations('auth.account')
+  const { updatePassword } = useAuth()
 
   const [currentPassword, setCurrentPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
@@ -35,10 +37,15 @@ function ChangePasswordContent() {
 
     setIsSubmitting(true)
 
-    // Mock API delay
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    const result = await updatePassword(newPassword)
 
     setIsSubmitting(false)
+
+    if (!result.success) {
+      setError(result.error ?? t('passwordUpdateFailed'))
+      return
+    }
+
     setSuccess(true)
     setCurrentPassword('')
     setNewPassword('')

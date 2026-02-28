@@ -1,12 +1,25 @@
+import { type NextRequest } from 'next/server'
 import createMiddleware from 'next-intl/middleware'
 import { routing } from '@/i18n/routing'
+import { updateSession } from '@/lib/supabase/middleware'
 
-export default createMiddleware(routing)
+const intlMiddleware = createMiddleware(routing)
+
+export async function middleware(request: NextRequest) {
+  // 1. Refresh Supabase auth session cookies
+  const supabaseResponse = await updateSession(request)
+
+  // 2. Run next-intl locale routing
+  const intlResponse = intlMiddleware(request)
+
+  // 3. Copy Supabase auth cookies onto the intl response
+  supabaseResponse.cookies.getAll().forEach((cookie) => {
+    intlResponse.cookies.set(cookie.name, cookie.value, cookie)
+  })
+
+  return intlResponse
+}
 
 export const config = {
-  // Match all pathnames except for
-  // - API routes
-  // - Static files (images, fonts, etc.)
-  // - Next.js internal paths
   matcher: ['/((?!api|_next|_vercel|.*\\..*).*)'],
 }
