@@ -1,7 +1,15 @@
 {
   "metadata": {
     "title": "Liberty Paws International - Service Dog & ESA Registration",
-    "description": "Professional Service Dog & Emotional Support Animal registration kits, certificates, and ID cards. Trusted by pet owners worldwide."
+    "description": "Professional Service Dog & Emotional Support Animal registration kits, certificates, and ID cards. Trusted by pet owners worldwide.",
+    "products": {
+      "title": "ESA Letters & Service Dog Registration",
+      "description": "Browse our professional ESA letters, Psychiatric Service Dog registration kits, certificates, and ID cards. Licensed mental health professionals."
+    },
+    "contact": {
+      "title": "Contact Us",
+      "description": "Get in touch with Liberty Paws International. Questions about ESA letters or Service Dog registration? Our team is here to help 24/7."
+    }
   },
   "nav": {
     "home": "Home",

@@ -1,5 +1,6 @@
+import type { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
-import { setRequestLocale } from 'next-intl/server'
+import { getMessages, setRequestLocale } from 'next-intl/server'
 import {
   Hero,
   TrustBar,
@@ -10,9 +11,26 @@ import {
   CtaBanner,
 } from '@/components/sections'
 import { popularProducts } from '@/data/products'
+import { type Locale } from '@/i18n/config'
+import { buildMetadata } from '@/lib/seo'
 
 interface HomePageProps {
   params: Promise<{ locale: string }>
+}
+
+export async function generateMetadata({
+  params,
+}: HomePageProps): Promise<Metadata> {
+  const { locale } = await params
+  const messages = await getMessages()
+  const t = messages.metadata as Record<string, string>
+
+  return buildMetadata({
+    locale: locale as Locale,
+    title: t?.title || 'Liberty Paws International - Service Dog & ESA Registration',
+    description:
+      t?.description || 'Professional Service Dog & ESA Registration',
+  })
 }
 
 export default async function HomePage({ params }: HomePageProps) {

@@ -6,10 +6,11 @@ import { hasLocale } from 'next-intl'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { inter } from '@/lib/fonts'
-import { locales } from '@/i18n/config'
+import { locales, type Locale } from '@/i18n/config'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { AuthProvider } from '@/contexts/auth-context'
+import { buildMetadata } from '@/lib/seo'
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }))
@@ -24,9 +25,16 @@ export async function generateMetadata({
   const messages = await getMessages()
   const t = messages.metadata as Record<string, string>
 
+  const title = t?.title || 'Liberty Paws International - Service Dog & ESA Registration'
+  const description =
+    t?.description || 'Professional Service Dog & ESA Registration'
+
   return {
-    title: t?.title || 'Liberty Paws International',
-    description: t?.description || 'Professional Service Dog & ESA Registration',
+    ...buildMetadata({
+      locale: locale as Locale,
+      title,
+      description,
+    }),
     icons: {
       icon: [
         { url: '/favicon.ico', sizes: 'any' },
@@ -39,12 +47,6 @@ export async function generateMetadata({
     manifest: '/site.webmanifest',
     appleWebApp: {
       title: 'Liberty Paws',
-    },
-    openGraph: {
-      title: t?.title || 'Liberty Paws International',
-      description: t?.description || 'Professional Service Dog & ESA Registration',
-      locale: locale,
-      type: 'website',
     },
   }
 }

@@ -1,7 +1,15 @@
 {
   "metadata": {
     "title": "Liberty Paws International - Registro de Perros de Servicio y ESA",
-    "description": "Kits de registro profesional para Perros de Servicio y Animales de Apoyo Emocional, certificados y tarjetas de identificación. De confianza para dueños de mascotas en todo el mundo."
+    "description": "Kits de registro profesional para Perros de Servicio y Animales de Apoyo Emocional, certificados y tarjetas de identificación. De confianza para dueños de mascotas en todo el mundo.",
+    "products": {
+      "title": "Cartas ESA y Registro de Perros de Servicio",
+      "description": "Explore nuestras cartas ESA profesionales, kits de registro de Perros de Servicio Psiquiátrico, certificados y tarjetas de identificación. Profesionales de salud mental licenciados."
+    },
+    "contact": {
+      "title": "Contáctenos",
+      "description": "Póngase en contacto con Liberty Paws International. ¿Preguntas sobre cartas ESA o registro de Perros de Servicio? Nuestro equipo está aquí para ayudar 24/7."
+    }
   },
   "nav": {
     "home": "Inicio",

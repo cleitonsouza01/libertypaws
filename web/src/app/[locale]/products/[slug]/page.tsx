@@ -1,12 +1,15 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { useTranslations } from 'next-intl'
-import { setRequestLocale } from 'next-intl/server'
+import { getMessages, setRequestLocale } from 'next-intl/server'
 import { Link } from '@/i18n/routing'
 import Image from 'next/image'
 import { ArrowLeft, Check, ShoppingCart, Shield, Clock, Award } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { products, getProductById, getRelatedProducts } from '@/data/products'
 import { ProductCard, type Product } from '@/components/sections/product-card'
+import { type Locale } from '@/i18n/config'
+import { buildMetadata } from '@/lib/seo'
 
 interface ProductPageProps {
   params: Promise<{ locale: string; slug: string }>
@@ -16,6 +19,32 @@ export function generateStaticParams() {
   return products.map((product) => ({
     slug: product.id,
   }))
+}
+
+export async function generateMetadata({
+  params,
+}: ProductPageProps): Promise<Metadata> {
+  const { locale, slug } = await params
+  const product = getProductById(slug)
+  if (!product) return {}
+
+  const messages = await getMessages()
+  const productDetails = messages.productDetails as Record<
+    string,
+    Record<string, string>
+  >
+  const t = productDetails?.[slug]
+
+  const title = t?.name || product.name
+  const description = t?.description || product.description
+
+  return buildMetadata({
+    locale: locale as Locale,
+    path: `/products/${slug}`,
+    title,
+    description,
+    ogImage: product.image,
+  })
 }
 
 export default async function ProductDetailPage({ params }: ProductPageProps) {
