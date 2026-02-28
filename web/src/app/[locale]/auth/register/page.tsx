@@ -7,13 +7,12 @@ import { useAuth } from '@/contexts/auth-context'
 import { AuthForm } from '@/components/sections/auth-form'
 import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/ui/password-input'
-import { OAuthButton } from '@/components/ui/oauth-button'
 import { Button } from '@/components/ui/button'
 import { CheckCircle } from 'lucide-react'
 
 export default function RegisterPage() {
   const t = useTranslations('auth.register')
-  const { signUp, signInWithGoogle, isAuthenticated } = useAuth()
+  const { signUp, isAuthenticated } = useAuth()
   const router = useRouter()
 
   const [fullName, setFullName] = useState('')
@@ -55,11 +54,6 @@ export default function RegisterPage() {
       )
     }
     setIsSubmitting(false)
-  }
-
-  async function handleGoogleSignIn() {
-    await signInWithGoogle()
-    router.replace('/account')
   }
 
   if (success) {
@@ -163,14 +157,6 @@ export default function RegisterPage() {
             t('submitButton')
           )}
         </Button>
-
-        <div className="divider text-xs">{t('loginLink')}</div>
-
-        <OAuthButton
-          provider="google"
-          label="Continue with Google"
-          onClick={handleGoogleSignIn}
-        />
 
         <p className="text-center text-sm text-base-content/60">
           {t('hasAccount')}{' '}

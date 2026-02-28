@@ -8,12 +8,11 @@ import { useAuth } from '@/contexts/auth-context'
 import { AuthForm } from '@/components/sections/auth-form'
 import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/ui/password-input'
-import { OAuthButton } from '@/components/ui/oauth-button'
 import { Button } from '@/components/ui/button'
 
 function LoginForm() {
   const t = useTranslations('auth.login')
-  const { signIn, signInWithGoogle, isAuthenticated } = useAuth()
+  const { signIn, isAuthenticated } = useAuth()
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -45,11 +44,6 @@ function LoginForm() {
       )
     }
     setIsSubmitting(false)
-  }
-
-  async function handleGoogleSignIn() {
-    await signInWithGoogle()
-    router.replace(next)
   }
 
   return (
@@ -109,14 +103,6 @@ function LoginForm() {
             t('submitButton')
           )}
         </Button>
-
-        <div className="divider text-xs">{t('orContinueWith')}</div>
-
-        <OAuthButton
-          provider="google"
-          label={t('googleButton')}
-          onClick={handleGoogleSignIn}
-        />
 
         <p className="text-center text-sm text-base-content/60">
           {t('noAccount')}{' '}
