@@ -1,4 +1,4 @@
-import { type NextRequest } from 'next/server'
+import { NextResponse, type NextRequest } from 'next/server'
 import createMiddleware from 'next-intl/middleware'
 import { routing } from '@/i18n/routing'
 import { updateSession } from '@/lib/supabase/middleware'
@@ -7,12 +7,25 @@ const intlMiddleware = createMiddleware(routing)
 
 export async function middleware(request: NextRequest) {
   // 1. Refresh Supabase auth session cookies
-  const supabaseResponse = await updateSession(request)
+  const { response: supabaseResponse, user } = await updateSession(request)
 
-  // 2. Run next-intl locale routing
+  // 2. Protect admin routes — redirect non-admins to home
+  const pathname = request.nextUrl.pathname
+  const adminRouteMatch = pathname.match(/^\/(en|es|pt)\/admin/)
+  if (adminRouteMatch) {
+    const isAdmin = user?.app_metadata?.role === 'admin'
+    if (!isAdmin) {
+      const locale = adminRouteMatch[1]
+      const url = request.nextUrl.clone()
+      url.pathname = `/${locale}`
+      return NextResponse.redirect(url)
+    }
+  }
+
+  // 3. Run next-intl locale routing
   const intlResponse = intlMiddleware(request)
 
-  // 3. Copy Supabase auth cookies onto the intl response
+  // 4. Copy Supabase auth cookies onto the intl response
   supabaseResponse.cookies.getAll().forEach((cookie) => {
     intlResponse.cookies.set(cookie.name, cookie.value, cookie)
   })

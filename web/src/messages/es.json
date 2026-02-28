@@ -374,15 +374,19 @@
         "viewDetails": "Ver Detalles",
         "trackOrder": "Rastrear Pedido",
         "statuses": {
+          "pending": "Pendiente",
+          "paid": "Pagado",
           "processing": "En Proceso",
-          "evaluated": "Evaluado",
           "shipped": "Enviado",
           "delivered": "Entregado",
-          "cancelled": "Cancelado"
+          "completed": "Completado",
+          "cancelled": "Cancelado",
+          "refunded": "Reembolsado",
+          "failed": "Fallido"
         },
         "steps": {
           "ordered": "Ordenado",
-          "evaluation": "Evaluación",
+          "paid": "Pagado",
           "processing": "Procesando",
           "shipped": "Enviado",
           "delivered": "Entregado"
@@ -477,6 +481,218 @@
       "accessRequired": "Acceso Requerido por Ley",
       "searchAnother": "Buscar Otro ID",
       "verificationNote": "Para verificación en línea 24/7, visite www.libertypawsinternational.com"
+    }
+  },
+  "admin": {
+    "nav": {
+      "title": "Panel Admin",
+      "dashboard": "Panel",
+      "users": "Usuarios",
+      "orders": "Pedidos",
+      "registrations": "Registros",
+      "messages": "Mensajes",
+      "services": "Servicios",
+      "coupons": "Cupones",
+      "reviews": "Reseñas",
+      "backToSite": "Volver al Sitio"
+    },
+    "dashboard": {
+      "title": "Panel de Control",
+      "totalUsers": "Total Usuarios",
+      "totalOrders": "Total Pedidos",
+      "totalRevenue": "Ingresos Totales",
+      "unreadMessages": "Mensajes Sin Leer",
+      "pendingRegistrations": "Pendientes de Revisión",
+      "totalRegistrations": "Total Registros",
+      "activeServices": "Servicios Activos",
+      "activeCoupons": "Cupones Activos",
+      "recentActivity": "Actividad Reciente",
+      "noRecentActivity": "Sin actividad reciente"
+    },
+    "users": {
+      "title": "Usuarios",
+      "name": "Nombre",
+      "email": "Correo",
+      "locale": "Idioma",
+      "joined": "Registrado",
+      "lastUpdated": "Última Actualización",
+      "detail": "Detalle del Usuario",
+      "notFound": "Usuario no encontrado",
+      "backToList": "Volver a Usuarios"
+    },
+    "orders": {
+      "title": "Pedidos",
+      "orderNumber": "Pedido #",
+      "status": "Estado",
+      "customer": "Cliente",
+      "total": "Total",
+      "date": "Fecha",
+      "items": "Artículos",
+      "itemName": "Artículo",
+      "qty": "Cant",
+      "unitPrice": "Precio Unit.",
+      "subtotal": "Subtotal",
+      "adminNotes": "Notas Admin",
+      "notesPlaceholder": "Agregar notas internas sobre este pedido...",
+      "saveNotes": "Guardar Notas",
+      "filterByStatus": "Filtrar por estado",
+      "confirmStatusChange": "Confirmar Cambio de Estado",
+      "confirmStatusMessage": "¿Cambiar estado del pedido a {status}?",
+      "notFound": "Pedido no encontrado",
+      "backToList": "Volver a Pedidos",
+      "statuses": {
+        "pending": "Pendiente",
+        "paid": "Pagado",
+        "processing": "Procesando",
+        "shipped": "Enviado",
+        "delivered": "Entregado",
+        "completed": "Completado",
+        "cancelled": "Cancelado",
+        "refunded": "Reembolsado",
+        "failed": "Fallido"
+      },
+      "actions": {
+        "paid": "Marcar Pagado",
+        "processing": "Iniciar Procesamiento",
+        "shipped": "Marcar Enviado",
+        "delivered": "Marcar Entregado",
+        "completed": "Marcar Completado",
+        "cancelled": "Cancelar Pedido",
+        "refunded": "Reembolsar Pedido"
+      }
+    },
+    "registrations": {
+      "title": "Registros",
+      "regNumber": "Reg #",
+      "status": "Estado",
+      "petName": "Nombre Mascota",
+      "petType": "Tipo Mascota",
+      "breed": "Raza",
+      "type": "Tipo",
+      "owner": "Dueño",
+      "date": "Fecha",
+      "expires": "Expira",
+      "petInfo": "Información de Mascota",
+      "filterByStatus": "Filtrar por estado",
+      "approve": "Aprobar",
+      "reject": "Rechazar",
+      "suspend": "Suspender",
+      "notFound": "Registro no encontrado",
+      "backToList": "Volver a Registros",
+      "statuses": {
+        "pendingReview": "Pendiente de Revisión",
+        "active": "Activo",
+        "suspended": "Suspendido",
+        "revoked": "Revocado",
+        "expired": "Expirado"
+      },
+      "confirm": {
+        "approve": {
+          "title": "Aprobar Registro",
+          "message": "¿Está seguro de aprobar este registro?"
+        },
+        "reject": {
+          "title": "Rechazar Registro",
+          "message": "¿Está seguro de rechazar este registro?"
+        },
+        "suspend": {
+          "title": "Suspender Registro",
+          "message": "¿Está seguro de suspender este registro?"
+        }
+      }
+    },
+    "messages": {
+      "title": "Mensajes",
+      "from": "De",
+      "subject": "Asunto",
+      "email": "Correo",
+      "status": "Estado",
+      "date": "Fecha",
+      "filterByStatus": "Filtrar por estado",
+      "markReplied": "Marcar como Respondido",
+      "close": "Cerrar Mensaje",
+      "adminNotes": "Notas Admin",
+      "notesPlaceholder": "Agregar notas internas...",
+      "saveNotes": "Guardar Notas",
+      "notFound": "Mensaje no encontrado",
+      "backToList": "Volver a Mensajes",
+      "statuses": {
+        "new": "Nuevo",
+        "read": "Leído",
+        "replied": "Respondido",
+        "closed": "Cerrado"
+      }
+    },
+    "services": {
+      "title": "Servicios",
+      "name": "Nombre",
+      "description": "Descripción",
+      "price": "Precio",
+      "category": "Categoría",
+      "active": "Activo",
+      "featured": "Destacado",
+      "features": "Características",
+      "featuresPlaceholder": "Una característica por línea",
+      "tags": "Etiquetas",
+      "tagsPlaceholder": "Etiquetas separadas por coma",
+      "addService": "Agregar Servicio",
+      "editService": "Editar Servicio",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "saveError": "Error al guardar. Inténtelo de nuevo.",
+      "notFound": "Servicio no encontrado",
+      "backToList": "Volver a Servicios"
+    },
+    "coupons": {
+      "title": "Cupones",
+      "code": "Código",
+      "description": "Descripción",
+      "discount": "Descuento",
+      "discountType": "Tipo de Descuento",
+      "discountValue": "Valor del Descuento",
+      "percentage": "Porcentaje",
+      "fixedAmount": "Monto Fijo",
+      "minOrder": "Pedido Mínimo",
+      "maxUses": "Máx. Usos",
+      "uses": "Usos",
+      "currentUses": "Usos Actuales",
+      "status": "Estado",
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "startsAt": "Inicio",
+      "expiresAt": "Expiración",
+      "expires": "Expira",
+      "addCoupon": "Agregar Cupón",
+      "editCoupon": "Editar Cupón",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "saveError": "Error al guardar. Inténtelo de nuevo.",
+      "notFound": "Cupón no encontrado",
+      "backToList": "Volver a Cupones"
+    },
+    "reviews": {
+      "title": "Reseñas",
+      "rating": "Calificación",
+      "reviewTitle": "Título",
+      "customer": "Cliente",
+      "service": "Servicio",
+      "published": "Publicado",
+      "adminResponse": "Respuesta del Admin",
+      "responsePlaceholder": "Escriba una respuesta a esta reseña...",
+      "saveResponse": "Guardar Respuesta",
+      "cancel": "Cancelar"
+    },
+    "common": {
+      "search": "Buscar...",
+      "noData": "No se encontraron datos",
+      "totalItems": "{count} elementos en total",
+      "confirm": "Confirmar",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "delete": "Eliminar",
+      "edit": "Editar",
+      "back": "Volver",
+      "actions": "Acciones"
     }
   }
 }

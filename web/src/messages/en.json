@@ -374,15 +374,19 @@
         "viewDetails": "View Details",
         "trackOrder": "Track Order",
         "statuses": {
+          "pending": "Pending",
+          "paid": "Paid",
           "processing": "Processing",
-          "evaluated": "Evaluated",
           "shipped": "Shipped",
           "delivered": "Delivered",
-          "cancelled": "Cancelled"
+          "completed": "Completed",
+          "cancelled": "Cancelled",
+          "refunded": "Refunded",
+          "failed": "Failed"
         },
         "steps": {
           "ordered": "Ordered",
-          "evaluation": "Evaluation",
+          "paid": "Paid",
           "processing": "Processing",
           "shipped": "Shipped",
           "delivered": "Delivered"
@@ -477,6 +481,218 @@
       "accessRequired": "Access Required by Law",
       "searchAnother": "Search Another ID",
       "verificationNote": "For 24/7 online verification, visit www.libertypawsinternational.com"
+    }
+  },
+  "admin": {
+    "nav": {
+      "title": "Admin Panel",
+      "dashboard": "Dashboard",
+      "users": "Users",
+      "orders": "Orders",
+      "registrations": "Registrations",
+      "messages": "Messages",
+      "services": "Services",
+      "coupons": "Coupons",
+      "reviews": "Reviews",
+      "backToSite": "Back to Site"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "totalUsers": "Total Users",
+      "totalOrders": "Total Orders",
+      "totalRevenue": "Total Revenue",
+      "unreadMessages": "Unread Messages",
+      "pendingRegistrations": "Pending Reviews",
+      "totalRegistrations": "Total Registrations",
+      "activeServices": "Active Services",
+      "activeCoupons": "Active Coupons",
+      "recentActivity": "Recent Activity",
+      "noRecentActivity": "No recent activity"
+    },
+    "users": {
+      "title": "Users",
+      "name": "Name",
+      "email": "Email",
+      "locale": "Locale",
+      "joined": "Joined",
+      "lastUpdated": "Last Updated",
+      "detail": "User Detail",
+      "notFound": "User not found",
+      "backToList": "Back to Users"
+    },
+    "orders": {
+      "title": "Orders",
+      "orderNumber": "Order #",
+      "status": "Status",
+      "customer": "Customer",
+      "total": "Total",
+      "date": "Date",
+      "items": "Items",
+      "itemName": "Item",
+      "qty": "Qty",
+      "unitPrice": "Unit Price",
+      "subtotal": "Subtotal",
+      "adminNotes": "Admin Notes",
+      "notesPlaceholder": "Add internal notes about this order...",
+      "saveNotes": "Save Notes",
+      "filterByStatus": "Filter by status",
+      "confirmStatusChange": "Confirm Status Change",
+      "confirmStatusMessage": "Change order status to {status}?",
+      "notFound": "Order not found",
+      "backToList": "Back to Orders",
+      "statuses": {
+        "pending": "Pending",
+        "paid": "Paid",
+        "processing": "Processing",
+        "shipped": "Shipped",
+        "delivered": "Delivered",
+        "completed": "Completed",
+        "cancelled": "Cancelled",
+        "refunded": "Refunded",
+        "failed": "Failed"
+      },
+      "actions": {
+        "paid": "Mark Paid",
+        "processing": "Start Processing",
+        "shipped": "Mark Shipped",
+        "delivered": "Mark Delivered",
+        "completed": "Mark Completed",
+        "cancelled": "Cancel Order",
+        "refunded": "Refund Order"
+      }
+    },
+    "registrations": {
+      "title": "Registrations",
+      "regNumber": "Reg #",
+      "status": "Status",
+      "petName": "Pet Name",
+      "petType": "Pet Type",
+      "breed": "Breed",
+      "type": "Type",
+      "owner": "Owner",
+      "date": "Date",
+      "expires": "Expires",
+      "petInfo": "Pet Information",
+      "filterByStatus": "Filter by status",
+      "approve": "Approve",
+      "reject": "Reject",
+      "suspend": "Suspend",
+      "notFound": "Registration not found",
+      "backToList": "Back to Registrations",
+      "statuses": {
+        "pendingReview": "Pending Review",
+        "active": "Active",
+        "suspended": "Suspended",
+        "revoked": "Revoked",
+        "expired": "Expired"
+      },
+      "confirm": {
+        "approve": {
+          "title": "Approve Registration",
+          "message": "Are you sure you want to approve this registration?"
+        },
+        "reject": {
+          "title": "Reject Registration",
+          "message": "Are you sure you want to reject this registration?"
+        },
+        "suspend": {
+          "title": "Suspend Registration",
+          "message": "Are you sure you want to suspend this registration?"
+        }
+      }
+    },
+    "messages": {
+      "title": "Messages",
+      "from": "From",
+      "subject": "Subject",
+      "email": "Email",
+      "status": "Status",
+      "date": "Date",
+      "filterByStatus": "Filter by status",
+      "markReplied": "Mark as Replied",
+      "close": "Close Message",
+      "adminNotes": "Admin Notes",
+      "notesPlaceholder": "Add internal notes...",
+      "saveNotes": "Save Notes",
+      "notFound": "Message not found",
+      "backToList": "Back to Messages",
+      "statuses": {
+        "new": "New",
+        "read": "Read",
+        "replied": "Replied",
+        "closed": "Closed"
+      }
+    },
+    "services": {
+      "title": "Services",
+      "name": "Name",
+      "description": "Description",
+      "price": "Price",
+      "category": "Category",
+      "active": "Active",
+      "featured": "Featured",
+      "features": "Features",
+      "featuresPlaceholder": "One feature per line",
+      "tags": "Tags",
+      "tagsPlaceholder": "Comma-separated tags",
+      "addService": "Add Service",
+      "editService": "Edit Service",
+      "save": "Save",
+      "cancel": "Cancel",
+      "saveError": "Failed to save. Please try again.",
+      "notFound": "Service not found",
+      "backToList": "Back to Services"
+    },
+    "coupons": {
+      "title": "Coupons",
+      "code": "Code",
+      "description": "Description",
+      "discount": "Discount",
+      "discountType": "Discount Type",
+      "discountValue": "Discount Value",
+      "percentage": "Percentage",
+      "fixedAmount": "Fixed Amount",
+      "minOrder": "Min Order",
+      "maxUses": "Max Uses",
+      "uses": "Uses",
+      "currentUses": "Current Uses",
+      "status": "Status",
+      "active": "Active",
+      "inactive": "Inactive",
+      "startsAt": "Starts At",
+      "expiresAt": "Expires At",
+      "expires": "Expires",
+      "addCoupon": "Add Coupon",
+      "editCoupon": "Edit Coupon",
+      "save": "Save",
+      "cancel": "Cancel",
+      "saveError": "Failed to save. Please try again.",
+      "notFound": "Coupon not found",
+      "backToList": "Back to Coupons"
+    },
+    "reviews": {
+      "title": "Reviews",
+      "rating": "Rating",
+      "reviewTitle": "Title",
+      "customer": "Customer",
+      "service": "Service",
+      "published": "Published",
+      "adminResponse": "Admin Response",
+      "responsePlaceholder": "Write a response to this review...",
+      "saveResponse": "Save Response",
+      "cancel": "Cancel"
+    },
+    "common": {
+      "search": "Search...",
+      "noData": "No data found",
+      "totalItems": "{count} total items",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "save": "Save",
+      "delete": "Delete",
+      "edit": "Edit",
+      "back": "Back",
+      "actions": "Actions"
     }
   }
 }

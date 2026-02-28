@@ -18,6 +18,7 @@ export interface AuthUser {
   fullName: string
   avatarUrl: string | null
   locale: string
+  role?: 'admin' | 'user'
 }
 
 interface AuthResult {
@@ -29,6 +30,7 @@ interface AuthContextType {
   user: AuthUser | null
   isLoading: boolean
   isAuthenticated: boolean
+  isAdmin: boolean
   signIn: (email: string, password: string) => Promise<AuthResult>
   signUp: (email: string, password: string, fullName: string) => Promise<AuthResult>
   signInWithGoogle: () => Promise<void>
@@ -42,7 +44,8 @@ const AuthContext = createContext<AuthContextType | null>(null)
 
 async function fetchProfile(
   supabase: SupabaseClient,
-  userId: string
+  userId: string,
+  role?: 'admin' | 'user'
 ): Promise<AuthUser | null> {
   const { data, error } = await supabase
     .from('profiles')
@@ -58,6 +61,7 @@ async function fetchProfile(
     fullName: data.full_name ?? '',
     avatarUrl: data.avatar_url ?? null,
     locale: data.locale ?? 'en',
+    role,
   }
 }
 
@@ -68,6 +72,7 @@ function mapSupabaseUser(user: User): AuthUser {
     fullName: user.user_metadata?.full_name ?? user.email?.split('@')[0] ?? '',
     avatarUrl: user.user_metadata?.avatar_url ?? null,
     locale: user.user_metadata?.locale ?? 'en',
+    role: (user.app_metadata?.role as 'admin' | 'user') ?? 'user',
   }
 }
 
@@ -85,7 +90,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     async function init() {
       const { data: { user: sbUser } } = await supabase.auth.getUser()
       if (sbUser) {
-        const profile = await fetchProfile(supabase, sbUser.id)
+        const role = (sbUser.app_metadata?.role as 'admin' | 'user') ?? 'user'
+        const profile = await fetchProfile(supabase, sbUser.id, role)
         setUser(profile ?? mapSupabaseUser(sbUser))
       }
       setIsLoading(false)
@@ -104,8 +110,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setUser(mapSupabaseUser(session.user))
             // Fetch full profile in background, outside the lock
             const userId = session.user.id
+            const userRole = (session.user.app_metadata?.role as 'admin' | 'user') ?? 'user'
             setTimeout(async () => {
-              const profile = await fetchProfile(supabase, userId)
+              const profile = await fetchProfile(supabase, userId, userRole)
               if (profile) setUser(profile)
             }, 0)
           }
@@ -226,7 +233,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       // Re-fetch profile to update local state
-      const profile = await fetchProfile(supabase, sbUser.id)
+      const currentRole = (sbUser.app_metadata?.role as 'admin' | 'user') ?? 'user'
+      const profile = await fetchProfile(supabase, sbUser.id, currentRole)
       if (profile) setUser(profile)
 
       return { success: true }
@@ -240,6 +248,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         user,
         isLoading,
         isAuthenticated: !!user,
+        isAdmin: user?.role === 'admin',
         signIn,
         signUp,
         signInWithGoogle,
