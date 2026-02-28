@@ -6,7 +6,7 @@ import { useLocale } from 'next-intl'
 import { useAuth } from '@/contexts/auth-context'
 import { clarityTag, clarityIdentify } from '@/lib/clarity'
 
-const CLARITY_ID = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID
+const CLARITY_ID = process.env.NEXT_PUBLIC_MICROSOFT_CLARITY_PROJECT_ID
 
 export function ClarityScript() {
   const locale = useLocale()
