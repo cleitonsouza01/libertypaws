@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { locales, type Locale } from '@/i18n/config'
 
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || 'https://libertypawsinternational.com'
+  process.env.NEXT_PUBLIC_SITE_URL || 'https://www.libertypawsinternational.com'
 
 const OG_LOCALE_MAP: Record<Locale, string> = {
   en: 'en_US',
