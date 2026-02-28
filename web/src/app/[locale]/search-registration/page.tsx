@@ -6,40 +6,20 @@ import { useTranslations } from 'next-intl'
 import { Search, ShieldCheck, CheckCircle, XCircle, ArrowLeft, Calendar, Dog, User, Hash } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { getImageUrl } from '@/lib/assets'
+import { createClient } from '@/lib/supabase/client'
 
-interface MockRegistration {
-  id: string
-  type: string
-  handlerName: string
-  dogName: string
-  breed: string
-  validThru: string
-  status: 'active'
-  photo: string
+interface Registration {
+  registration_number: string
+  pet_name: string
+  pet_breed: string
+  pet_species: string
+  handler_name: string
+  registration_type: string
+  registration_date: string
+  expiry_date: string | null
+  pet_photo_url: string | null
+  status: string
 }
-
-const MOCK_REGISTRATIONS: MockRegistration[] = [
-  {
-    id: '2984533',
-    type: 'Service Dog',
-    handlerName: 'Felipe Moisés Varela da Camara',
-    dogName: 'Lui',
-    breed: 'Golden Retriever',
-    validThru: 'January 30, 2028',
-    status: 'active',
-    photo: '/images/mock-dog-lui.jpg',
-  },
-  {
-    id: '2984544',
-    type: 'Service Dog',
-    handlerName: 'Luciene Maciel Sandes',
-    dogName: 'Drogon',
-    breed: 'French Bulldog',
-    validThru: 'February 28, 2027',
-    status: 'active',
-    photo: '/images/mock-dog-drogon.jpg',
-  },
-]
 
 type SearchState = 'idle' | 'searching' | 'found' | 'not-found'
 
@@ -126,9 +106,17 @@ function NotFoundResult({ onReset }: { onReset: () => void }) {
   )
 }
 
-function RegistrationResult({ registration, onReset }: { registration: MockRegistration; onReset: () => void }) {
+function RegistrationResult({ registration, onReset }: { registration: Registration; onReset: () => void }) {
   const t = useTranslations('searchRegistration.result')
   const reg = registration
+
+  const typeLabel = reg.registration_type === 'esa'
+    ? t('esaAnimal')
+    : t('serviceDog')
+
+  const validThru = reg.expiry_date
+    ? new Date(reg.expiry_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    : t('lifetime')
 
   return (
     <div className="container mx-auto max-w-3xl px-4 py-12">
@@ -158,7 +146,7 @@ function RegistrationResult({ registration, onReset }: { registration: MockRegis
             </div>
             <div>
               <p className="text-lg font-bold text-secondary-content uppercase tracking-wider">
-                {t('registrationType')}: {t('serviceDog')}
+                {t('registrationType')}: {typeLabel}
               </p>
               <p className="text-xs text-secondary-content/80 uppercase tracking-wide">
                 {t('accessRequired')}
@@ -169,27 +157,33 @@ function RegistrationResult({ registration, onReset }: { registration: MockRegis
 
         <div className="card-body">
           <div className="flex flex-col gap-6 sm:flex-row">
-            {/* Dog photo placeholder */}
+            {/* Pet photo */}
             <div className="flex flex-col items-center gap-2 sm:w-48 shrink-0">
               <div className="avatar">
                 <div className="w-40 rounded-xl bg-base-300">
-                  <Image
-                    src={reg.photo}
-                    alt={reg.dogName}
-                    width={160}
-                    height={160}
-                    className="object-cover"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement
-                      target.style.display = 'none'
-                      target.parentElement!.innerHTML = `<div class="flex h-40 w-40 items-center justify-center bg-base-300 rounded-xl"><span class="text-5xl">🐕</span></div>`
-                    }}
-                  />
+                  {reg.pet_photo_url ? (
+                    <Image
+                      src={reg.pet_photo_url}
+                      alt={reg.pet_name}
+                      width={160}
+                      height={160}
+                      className="object-cover"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement
+                        target.style.display = 'none'
+                        target.parentElement!.innerHTML = `<div class="flex h-40 w-40 items-center justify-center bg-base-300 rounded-xl"><span class="text-5xl">🐕</span></div>`
+                      }}
+                    />
+                  ) : (
+                    <div className="flex h-40 w-40 items-center justify-center bg-base-300 rounded-xl">
+                      <span className="text-5xl">{reg.pet_species === 'cat' ? '🐈' : '🐕'}</span>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="text-center">
                 <p className="text-xs text-base-content/50 uppercase">{t('dogName')}</p>
-                <p className="font-bold text-secondary">{reg.dogName}</p>
+                <p className="font-bold text-secondary">{reg.pet_name}</p>
               </div>
             </div>
 
@@ -199,7 +193,7 @@ function RegistrationResult({ registration, onReset }: { registration: MockRegis
                 <User className="h-4 w-4 text-primary shrink-0" />
                 <div>
                   <p className="text-xs text-base-content/50 uppercase">{t('handlerName')}</p>
-                  <p className="font-semibold">{reg.handlerName}</p>
+                  <p className="font-semibold">{reg.handler_name}</p>
                 </div>
               </div>
 
@@ -207,7 +201,7 @@ function RegistrationResult({ registration, onReset }: { registration: MockRegis
                 <Dog className="h-4 w-4 text-primary shrink-0" />
                 <div>
                   <p className="text-xs text-base-content/50 uppercase">{t('breed')}</p>
-                  <p className="font-semibold">{reg.breed}</p>
+                  <p className="font-semibold">{reg.pet_breed}</p>
                 </div>
               </div>
 
@@ -215,7 +209,7 @@ function RegistrationResult({ registration, onReset }: { registration: MockRegis
                 <Calendar className="h-4 w-4 text-primary shrink-0" />
                 <div>
                   <p className="text-xs text-base-content/50 uppercase">{t('validThru')}</p>
-                  <p className="font-semibold">{reg.validThru}</p>
+                  <p className="font-semibold">{validThru}</p>
                 </div>
               </div>
 
@@ -223,7 +217,7 @@ function RegistrationResult({ registration, onReset }: { registration: MockRegis
                 <Hash className="h-4 w-4 text-primary shrink-0" />
                 <div>
                   <p className="text-xs text-base-content/50 uppercase">{t('idNumber')}</p>
-                  <p className="font-semibold font-mono">{reg.id}</p>
+                  <p className="font-semibold font-mono">{reg.registration_number}</p>
                 </div>
               </div>
 
@@ -260,21 +254,27 @@ function RegistrationResult({ registration, onReset }: { registration: MockRegis
 
 export default function SearchRegistrationPage() {
   const [state, setState] = useState<SearchState>('idle')
-  const [foundRegistration, setFoundRegistration] = useState<MockRegistration | null>(null)
+  const [foundRegistration, setFoundRegistration] = useState<Registration | null>(null)
 
-  async function handleSearch(id: string) {
+  async function handleSearch(query: string) {
     setState('searching')
 
-    // Mock API delay
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    const supabase = createClient()
+    const { data, error } = await supabase
+      .from('pet_registrations')
+      .select('registration_number, pet_name, pet_breed, pet_species, handler_name, registration_type, registration_date, expiry_date, pet_photo_url, status')
+      .ilike('registration_number', query)
+      .eq('is_public', true)
+      .eq('status', 'active')
+      .limit(1)
+      .single()
 
-    const match = MOCK_REGISTRATIONS.find((r) => r.id === id)
-    if (match) {
-      setFoundRegistration(match)
-      setState('found')
-    } else {
+    if (error || !data) {
       setFoundRegistration(null)
       setState('not-found')
+    } else {
+      setFoundRegistration(data)
+      setState('found')
     }
   }
 

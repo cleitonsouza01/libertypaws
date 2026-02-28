@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from '@/i18n/routing'
+import { Link } from '@/i18n/routing'
 import { createClient } from '@/lib/supabase/client'
 import { fetchPaginatedRegistrations } from '@/lib/admin/queries'
 import { approveRegistration, rejectRegistration } from '@/lib/admin/actions'
@@ -10,7 +11,7 @@ import { DataTable, type Column } from '@/components/admin/data-table'
 import { SearchFilterBar } from '@/components/admin/search-filter-bar'
 import { AdminPagination } from '@/components/admin/admin-pagination'
 import { StatusBadge } from '@/components/admin/status-badge'
-import { Check, X } from 'lucide-react'
+import { Check, X, Plus } from 'lucide-react'
 import type { AdminRegistration, PaginatedResult } from '@/types/admin'
 
 export default function AdminRegistrationsPage() {
@@ -111,7 +112,13 @@ export default function AdminRegistrationsPage() {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-bold text-secondary">{t('title')}</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold text-secondary">{t('title')}</h1>
+        <Link href="/admin/registrations/new" className="btn btn-primary btn-sm gap-1">
+          <Plus className="h-4 w-4" />
+          {t('addRegistration')}
+        </Link>
+      </div>
 
       <SearchFilterBar
         search={search}
