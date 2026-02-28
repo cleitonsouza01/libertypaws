@@ -10,6 +10,7 @@ import { AuthForm } from '@/components/sections/auth-form'
 import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/ui/password-input'
 import { Button } from '@/components/ui/button'
+import { Mail } from 'lucide-react'
 
 function LoginForm() {
   const t = useTranslations('auth.login')
@@ -23,6 +24,7 @@ function LoginForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const next = searchParams.get('next') || '/account'
+  const justRegistered = searchParams.get('registered') === 'true'
 
   if (isAuthenticated) {
     router.replace(next)
@@ -40,11 +42,15 @@ function LoginForm() {
       router.replace(next)
     } else {
       clarityEvent('auth_login_error')
-      setError(
-        result.error === 'invalid_credentials'
-          ? t('error.invalid')
-          : t('error.generic')
-      )
+      if (result.error === 'email_not_confirmed') {
+        setError('email_not_confirmed')
+      } else {
+        setError(
+          result.error === 'invalid_credentials'
+            ? t('error.invalid')
+            : t('error.generic')
+        )
+      }
     }
     setIsSubmitting(false)
   }
@@ -52,11 +58,23 @@ function LoginForm() {
   return (
     <AuthForm title={t('title')} subtitle={t('subtitle')}>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        {error && (
+        {justRegistered && !error && (
+          <div role="status" className="alert alert-info alert-soft text-sm">
+            <Mail className="h-4 w-4" />
+            <span>{t('registeredBanner')}</span>
+          </div>
+        )}
+
+        {error === 'email_not_confirmed' ? (
+          <div role="alert" className="alert alert-warning alert-soft text-sm">
+            <Mail className="h-4 w-4" />
+            <span>{t('error.emailNotConfirmed')}</span>
+          </div>
+        ) : error ? (
           <div role="alert" className="alert alert-error alert-soft text-sm">
             {error}
           </div>
-        )}
+        ) : null}
 
         <Input
           type="email"

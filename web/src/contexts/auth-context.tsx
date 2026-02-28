@@ -131,6 +131,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     async (email: string, password: string): Promise<AuthResult> => {
       const { error } = await supabase.auth.signInWithPassword({ email, password })
       if (error) {
+        if (error.message.toLowerCase().includes('email not confirmed')) {
+          return { success: false, error: 'email_not_confirmed' }
+        }
         return { success: false, error: 'invalid_credentials' }
       }
       return { success: true }

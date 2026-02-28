@@ -289,8 +289,10 @@
       "registerLink": "Crear Cuenta",
       "orContinueWith": "O continuar con",
       "googleButton": "Continuar con Google",
+      "registeredBanner": "¡Cuenta creada! Por favor revisa tu correo y haz clic en el enlace de confirmación antes de iniciar sesión.",
       "error": {
         "invalid": "Correo o contraseña inválidos",
+        "emailNotConfirmed": "Tu correo aún no ha sido confirmado. Por favor revisa tu bandeja de entrada (y la carpeta de spam) para encontrar el enlace de confirmación que te enviamos al registrarte.",
         "generic": "Algo salió mal. Por favor intenta de nuevo."
       }
     },

@@ -65,7 +65,7 @@ export default function RegisterPage() {
         <div className="flex flex-col items-center gap-4 py-4">
           <CheckCircle className="h-16 w-16 text-success" />
           <p className="text-center text-base-content/80">{t('success')}</p>
-          <Link href="/auth/login" className="btn btn-primary">
+          <Link href="/auth/login?registered=true" className="btn btn-primary">
             {t('loginLink')}
           </Link>
         </div>
