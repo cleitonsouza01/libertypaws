@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
-import { Search, ShieldCheck, CheckCircle, XCircle, ArrowLeft, Calendar, Dog, User, Hash } from 'lucide-react'
+import { motion, AnimatePresence } from 'motion/react'
+import { Search, ShieldCheck, CheckCircle, XCircle, ArrowLeft, Calendar, Dog, User, Hash, Database, Fingerprint, ScanLine } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { getImageUrl } from '@/lib/assets'
 import { createClient } from '@/lib/supabase/client'
@@ -102,6 +103,94 @@ function NotFoundResult({ onReset }: { onReset: () => void }) {
           <ArrowLeft className="h-4 w-4" />
           {t('tryAgain')}
         </button>
+      </div>
+    </div>
+  )
+}
+
+const SEARCH_STEPS = [
+  { icon: Database, key: 'step1' },
+  { icon: Fingerprint, key: 'step2' },
+  { icon: ScanLine, key: 'step3' },
+] as const
+
+function SearchingAnimation() {
+  const t = useTranslations('searchRegistration.searchAnimation')
+  const [activeStep, setActiveStep] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % SEARCH_STEPS.length)
+    }, 700)
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <div className="hero min-h-[60vh]">
+      <div className="hero-content flex-col text-center">
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="flex flex-col items-center gap-6"
+        >
+          {/* Animated scanning circle */}
+          <div className="relative flex h-24 w-24 items-center justify-center">
+            <motion.div
+              className="absolute inset-0 rounded-full border-4 border-primary/20"
+              animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.2, 0.5] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+            />
+            <motion.div
+              className="absolute inset-2 rounded-full border-2 border-primary/40"
+              animate={{ scale: [1, 1.15, 1], opacity: [0.7, 0.3, 0.7] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut', delay: 0.2 }}
+            />
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+            >
+              <Search className="h-10 w-10 text-primary" />
+            </motion.div>
+          </div>
+
+          <div>
+            <h2 className="text-2xl font-bold text-secondary">{t('title')}</h2>
+            <p className="mt-1 text-base-content/60">{t('subtitle')}</p>
+          </div>
+
+          {/* Step indicators */}
+          <div className="flex flex-col gap-3 mt-2">
+            {SEARCH_STEPS.map((step, i) => {
+              const Icon = step.icon
+              const isActive = i === activeStep
+              const isDone = i < activeStep
+
+              return (
+                <motion.div
+                  key={step.key}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.15 }}
+                  className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors duration-300 ${
+                    isActive ? 'bg-primary/10 text-primary' : isDone ? 'text-success' : 'text-base-content/30'
+                  }`}
+                >
+                  {isDone ? (
+                    <CheckCircle className="h-5 w-5 text-success" />
+                  ) : isActive ? (
+                    <motion.div animate={{ rotate: [0, 10, -10, 0] }} transition={{ duration: 0.5, repeat: Infinity }}>
+                      <Icon className="h-5 w-5" />
+                    </motion.div>
+                  ) : (
+                    <Icon className="h-5 w-5" />
+                  )}
+                  <span className="text-sm font-medium">{t(step.key)}</span>
+                  {isActive && <span className="loading loading-dots loading-xs" />}
+                </motion.div>
+              )
+            })}
+          </div>
+        </motion.div>
       </div>
     </div>
   )
@@ -261,8 +350,10 @@ export default function SearchRegistrationPage() {
     setState('searching')
     clarityEvent('search_reg_submit')
 
+    const minDelay = new Promise((r) => setTimeout(r, 2500))
+
     const supabase = createClient()
-    const { data, error } = await supabase
+    const queryPromise = supabase
       .from('pet_registrations')
       .select('registration_number, pet_name, pet_breed, pet_species, handler_name, registration_type, registration_date, expiry_date, pet_photo_url, status')
       .ilike('registration_number', query)
@@ -270,6 +361,8 @@ export default function SearchRegistrationPage() {
       .eq('status', 'active')
       .limit(1)
       .single()
+
+    const [{ data, error }] = await Promise.all([queryPromise, minDelay])
 
     if (error || !data) {
       clarityEvent('search_reg_not_found')
@@ -287,13 +380,25 @@ export default function SearchRegistrationPage() {
     setFoundRegistration(null)
   }
 
-  if (state === 'found' && foundRegistration) {
-    return <RegistrationResult registration={foundRegistration} onReset={handleReset} />
-  }
-
-  if (state === 'not-found') {
-    return <NotFoundResult onReset={handleReset} />
-  }
-
-  return <SearchForm onSearch={handleSearch} isSearching={state === 'searching'} />
+  return (
+    <AnimatePresence mode="wait">
+      {state === 'searching' ? (
+        <motion.div key="searching" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+          <SearchingAnimation />
+        </motion.div>
+      ) : state === 'found' && foundRegistration ? (
+        <motion.div key="found" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+          <RegistrationResult registration={foundRegistration} onReset={handleReset} />
+        </motion.div>
+      ) : state === 'not-found' ? (
+        <motion.div key="not-found" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
+          <NotFoundResult onReset={handleReset} />
+        </motion.div>
+      ) : (
+        <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+          <SearchForm onSearch={handleSearch} isSearching={false} />
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
 }

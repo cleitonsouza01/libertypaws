@@ -57,8 +57,15 @@ export interface AdminRegistration {
   pet_name: string
   pet_species: string
   pet_breed: string
+  pet_color: string | null
+  pet_weight: string | null
+  pet_date_of_birth: string | null
+  pet_photo_url: string | null
+  handler_name: string
   registration_type: 'esa' | 'psd'
   status: RegistrationStatus
+  is_public: boolean
+  registration_date: string
   created_at: string
   updated_at: string
   expiry_date: string | null

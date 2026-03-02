@@ -28,11 +28,13 @@ export async function POST(request: Request) {
     petColor,
     petWeight,
     petDateOfBirth,
+    handlerName,
     petPhotoUrl,
     expiryDate,
     registrationDate,
     adminNotes,
     locale,
+    registrationNumber: providedRegNumber,
   } = body
 
   if (!email || !fullName || !petName || !petBreed || !petSpecies || !registrationType || !serviceId) {
@@ -131,16 +133,38 @@ export async function POST(request: Request) {
       )
     }
 
-    // 8. Generate registration number
-    const { data: registrationNumber, error: regNumError } = await admin.rpc(
-      'generate_registration_number',
-      { reg_type: registrationType.toUpperCase() }
-    )
-    if (regNumError) {
-      return NextResponse.json(
-        { error: `Failed to generate registration number: ${regNumError.message}` },
-        { status: 500 }
+    // 8. Resolve registration number (use provided or generate)
+    let registrationNumber: string
+
+    if (providedRegNumber && providedRegNumber.trim()) {
+      // Check uniqueness of the provided number
+      const { data: existing } = await admin
+        .from('pet_registrations')
+        .select('id')
+        .eq('registration_number', providedRegNumber.trim())
+        .limit(1)
+        .single()
+
+      if (existing) {
+        return NextResponse.json(
+          { error: `Registration number ${providedRegNumber.trim()} already exists` },
+          { status: 409 }
+        )
+      }
+
+      registrationNumber = providedRegNumber.trim()
+    } else {
+      const { data: generatedNumber, error: regNumError } = await admin.rpc(
+        'generate_registration_number',
+        { reg_type: registrationType.toUpperCase() }
       )
+      if (regNumError) {
+        return NextResponse.json(
+          { error: `Failed to generate registration number: ${regNumError.message}` },
+          { status: 500 }
+        )
+      }
+      registrationNumber = generatedNumber
     }
 
     // 9. Insert pet registration
@@ -152,7 +176,7 @@ export async function POST(request: Request) {
       pet_name: petName,
       pet_breed: petBreed,
       pet_species: petSpecies,
-      handler_name: fullName,
+      handler_name: handlerName || fullName,
       registration_type: registrationType,
       status: 'active',
       is_public: true,

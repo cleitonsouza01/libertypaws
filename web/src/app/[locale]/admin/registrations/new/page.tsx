@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { useRouter, Link } from '@/i18n/routing'
 import { createClient } from '@/lib/supabase/client'
-import { ArrowLeft } from 'lucide-react'
+import { PhotoUpload } from '@/components/admin/photo-upload'
+import { ArrowLeft, RefreshCw } from 'lucide-react'
 
 interface Service {
   id: string
@@ -17,6 +18,22 @@ export default function AdminNewRegistrationPage() {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const [services, setServices] = useState<Service[]>([])
+  const [petPhotoUrl, setPetPhotoUrl] = useState('')
+  const [registrationNumber, setRegistrationNumber] = useState('')
+  const [generatingNumber, setGeneratingNumber] = useState(false)
+
+  async function fetchRegistrationNumber() {
+    setGeneratingNumber(true)
+    try {
+      const res = await fetch('/api/admin/registrations/generate-number')
+      if (res.ok) {
+        const data = await res.json()
+        setRegistrationNumber(data.registrationNumber)
+      }
+    } finally {
+      setGeneratingNumber(false)
+    }
+  }
 
   useEffect(() => {
     async function loadServices() {
@@ -29,6 +46,7 @@ export default function AdminNewRegistrationPage() {
       if (data) setServices(data)
     }
     loadServices()
+    fetchRegistrationNumber()
   }, [])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -47,7 +65,13 @@ export default function AdminNewRegistrationPage() {
       registrationType: form.get('registrationType') as string,
       serviceId: form.get('serviceId') as string,
       locale: form.get('locale') as string,
+      registrationNumber: registrationNumber.trim() || undefined,
     }
+
+    const handlerName = (form.get('handlerName') as string)?.trim()
+    if (handlerName) payload.handlerName = handlerName
+
+    if (petPhotoUrl) payload.petPhotoUrl = petPhotoUrl
 
     const petColor = (form.get('petColor') as string)?.trim()
     if (petColor) payload.petColor = petColor
@@ -127,6 +151,16 @@ export default function AdminNewRegistrationPage() {
                 />
               </fieldset>
             </div>
+
+            <fieldset className="fieldset">
+              <legend className="fieldset-legend">{t('handlerName')}</legend>
+              <input
+                name="handlerName"
+                type="text"
+                className="input input-bordered w-full"
+              />
+              <p className="text-xs text-base-content/50 mt-1">{t('handlerNameHint')}</p>
+            </fieldset>
 
             <fieldset className="fieldset">
               <legend className="fieldset-legend">{t('locale')}</legend>
@@ -225,9 +259,48 @@ export default function AdminNewRegistrationPage() {
             </div>
 
             <fieldset className="fieldset">
+              <legend className="fieldset-legend">{t('petPhoto')}</legend>
+              <PhotoUpload value={petPhotoUrl} onChange={setPetPhotoUrl} />
+            </fieldset>
+
+            <fieldset className="fieldset">
               <legend className="fieldset-legend">{t('expires')}</legend>
               <input name="expiryDate" type="date" className="input input-bordered w-full" />
               <p className="text-xs text-base-content/50 mt-1">{t('expiryHint')}</p>
+            </fieldset>
+          </div>
+        </div>
+
+        {/* Registration Details */}
+        <div className="card bg-base-200 shadow-sm">
+          <div className="card-body space-y-4">
+            <h2 className="card-title text-lg">{t('registrationDetails')}</h2>
+
+            <fieldset className="fieldset">
+              <legend className="fieldset-legend">{t('registrationNumberLabel')}</legend>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  className="input input-bordered w-full font-mono"
+                  value={registrationNumber}
+                  onChange={(e) => setRegistrationNumber(e.target.value)}
+                  placeholder="0000000"
+                />
+                <button
+                  type="button"
+                  className="btn btn-ghost btn-sm gap-1"
+                  onClick={fetchRegistrationNumber}
+                  disabled={generatingNumber}
+                >
+                  {generatingNumber ? (
+                    <span className="loading loading-spinner loading-xs" />
+                  ) : (
+                    <RefreshCw className="h-3.5 w-3.5" />
+                  )}
+                  {t('generateNew')}
+                </button>
+              </div>
+              <p className="text-xs text-base-content/50 mt-1">{t('registrationNumberHint')}</p>
             </fieldset>
           </div>
         </div>

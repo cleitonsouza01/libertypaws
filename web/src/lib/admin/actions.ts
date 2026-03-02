@@ -103,6 +103,19 @@ export async function updateRegistrationStatus(
   if (error) throw error
 }
 
+export async function toggleRegistrationPublic(
+  supabase: SupabaseClient,
+  regId: string,
+  isPublic: boolean
+) {
+  const { error } = await supabase
+    .from('pet_registrations')
+    .update({ is_public: isPublic, updated_at: new Date().toISOString() })
+    .eq('id', regId)
+
+  if (error) throw error
+}
+
 // ── Message actions ─────────────────────────────────────────────────
 
 export async function updateMessageStatus(

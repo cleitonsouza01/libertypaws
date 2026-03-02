@@ -302,6 +302,9 @@ export async function fetchRegistrationDetail(
     .select('*, profiles!pet_registrations_customer_id_fkey(full_name, email)')
     .eq('id', regId)
     .single()
+  // Note: select('*') already fetches all columns including
+  // handler_name, pet_color, pet_weight, pet_date_of_birth,
+  // registration_date, is_public, pet_photo_url
 
   if (error || !data) return null
 

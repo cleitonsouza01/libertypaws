@@ -5,10 +5,11 @@ import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/routing'
 import { createClient } from '@/lib/supabase/client'
 import { fetchRegistrationDetail } from '@/lib/admin/queries'
-import { approveRegistration, rejectRegistration, updateRegistrationStatus } from '@/lib/admin/actions'
+import { approveRegistration, rejectRegistration, updateRegistrationStatus, toggleRegistrationPublic } from '@/lib/admin/actions'
 import { StatusBadge } from '@/components/admin/status-badge'
 import { ConfirmDialog } from '@/components/admin/confirm-dialog'
-import { ArrowLeft, Mail, User, PawPrint } from 'lucide-react'
+import { ArrowLeft, Mail, User, PawPrint, Palette, Weight, Calendar, Eye, EyeOff, ImageIcon } from 'lucide-react'
+import Image from 'next/image'
 import type { AdminRegistration, RegistrationStatus } from '@/types/admin'
 
 export default function AdminRegistrationDetailPage({
@@ -91,33 +92,71 @@ export default function AdminRegistrationDetailPage({
             <PawPrint className="h-5 w-5 text-primary" />
             {t('petInfo')}
           </h3>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <div>
-              <p className="text-xs font-medium uppercase text-base-content/40">{t('petName')}</p>
-              <p className="text-sm font-medium">{reg.pet_name}</p>
-            </div>
-            <div>
-              <p className="text-xs font-medium uppercase text-base-content/40">{t('petType')}</p>
-              <p className="text-sm">{reg.pet_species}</p>
-            </div>
-            <div>
-              <p className="text-xs font-medium uppercase text-base-content/40">{t('breed')}</p>
-              <p className="text-sm">{reg.pet_breed}</p>
-            </div>
-            <div>
-              <p className="text-xs font-medium uppercase text-base-content/40">{t('type')}</p>
-              <span className="badge badge-sm badge-outline">{reg.registration_type.toUpperCase()}</span>
-            </div>
-            <div>
-              <p className="text-xs font-medium uppercase text-base-content/40">{t('date')}</p>
-              <p className="text-sm">{new Date(reg.created_at).toLocaleDateString()}</p>
-            </div>
-            {reg.expiry_date && (
-              <div>
-                <p className="text-xs font-medium uppercase text-base-content/40">{t('expires')}</p>
-                <p className="text-sm">{new Date(reg.expiry_date).toLocaleDateString()}</p>
+          <div className="flex flex-col gap-4 sm:flex-row">
+            {reg.pet_photo_url && (
+              <div className="shrink-0">
+                <Image
+                  src={reg.pet_photo_url}
+                  alt={reg.pet_name}
+                  width={120}
+                  height={120}
+                  className="rounded-lg object-cover border border-base-300"
+                  style={{ width: 120, height: 120 }}
+                />
               </div>
             )}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 flex-1">
+              <div>
+                <p className="text-xs font-medium uppercase text-base-content/40">{t('petName')}</p>
+                <p className="text-sm font-medium">{reg.pet_name}</p>
+              </div>
+              <div>
+                <p className="text-xs font-medium uppercase text-base-content/40">{t('petType')}</p>
+                <p className="text-sm">{reg.pet_species}</p>
+              </div>
+              <div>
+                <p className="text-xs font-medium uppercase text-base-content/40">{t('breed')}</p>
+                <p className="text-sm">{reg.pet_breed}</p>
+              </div>
+              {reg.pet_color && (
+                <div>
+                  <p className="text-xs font-medium uppercase text-base-content/40">{t('color')}</p>
+                  <p className="text-sm inline-flex items-center gap-1">
+                    <Palette className="h-3 w-3" /> {reg.pet_color}
+                  </p>
+                </div>
+              )}
+              {reg.pet_weight && (
+                <div>
+                  <p className="text-xs font-medium uppercase text-base-content/40">{t('weight')}</p>
+                  <p className="text-sm inline-flex items-center gap-1">
+                    <Weight className="h-3 w-3" /> {reg.pet_weight} lbs
+                  </p>
+                </div>
+              )}
+              {reg.pet_date_of_birth && (
+                <div>
+                  <p className="text-xs font-medium uppercase text-base-content/40">{t('dateOfBirth')}</p>
+                  <p className="text-sm inline-flex items-center gap-1">
+                    <Calendar className="h-3 w-3" /> {new Date(reg.pet_date_of_birth).toLocaleDateString()}
+                  </p>
+                </div>
+              )}
+              <div>
+                <p className="text-xs font-medium uppercase text-base-content/40">{t('type')}</p>
+                <span className="badge badge-sm badge-outline">{reg.registration_type.toUpperCase()}</span>
+              </div>
+              <div>
+                <p className="text-xs font-medium uppercase text-base-content/40">{t('registrationDate')}</p>
+                <p className="text-sm">{new Date(reg.registration_date).toLocaleDateString()}</p>
+              </div>
+              {reg.expiry_date && (
+                <div>
+                  <p className="text-xs font-medium uppercase text-base-content/40">{t('expires')}</p>
+                  <p className="text-sm">{new Date(reg.expiry_date).toLocaleDateString()}</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -133,7 +172,36 @@ export default function AdminRegistrationDetailPage({
             <span className="inline-flex items-center gap-1">
               <Mail className="h-3 w-3" /> {reg.user_email}
             </span>
+            {reg.handler_name && reg.handler_name !== reg.user_name && (
+              <span className="inline-flex items-center gap-1">
+                <User className="h-3 w-3 text-primary" /> {t('handlerName')}: {reg.handler_name}
+              </span>
+            )}
           </div>
+        </div>
+      </div>
+
+      {/* Visibility */}
+      <div className="card bg-base-200 shadow-sm">
+        <div className="card-body flex-row items-center justify-between">
+          <div>
+            <h3 className="card-title text-base inline-flex items-center gap-2">
+              {reg.is_public ? <Eye className="h-5 w-5 text-success" /> : <EyeOff className="h-5 w-5 text-base-content/40" />}
+              {t('isPublic')}
+            </h3>
+            <p className="text-xs text-base-content/50">{t('isPublicHint')}</p>
+          </div>
+          <input
+            type="checkbox"
+            className="toggle toggle-primary"
+            checked={reg.is_public}
+            onChange={async (e) => {
+              const newVal = e.target.checked
+              const supabase = createClient()
+              await toggleRegistrationPublic(supabase, reg.id, newVal)
+              setReg({ ...reg, is_public: newVal })
+            }}
+          />
         </div>
       </div>
 
