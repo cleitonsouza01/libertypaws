@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, use } from 'react'
+import { useState, useEffect, useCallback, use } from 'react'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/routing'
 import { createClient } from '@/lib/supabase/client'
@@ -8,9 +8,56 @@ import { fetchRegistrationDetail } from '@/lib/admin/queries'
 import { approveRegistration, rejectRegistration, updateRegistrationStatus, toggleRegistrationPublic } from '@/lib/admin/actions'
 import { StatusBadge } from '@/components/admin/status-badge'
 import { ConfirmDialog } from '@/components/admin/confirm-dialog'
-import { ArrowLeft, Mail, User, PawPrint, Palette, Weight, Calendar, Eye, EyeOff, ImageIcon } from 'lucide-react'
+import { PhotoUpload } from '@/components/admin/photo-upload'
+import { ArrowLeft, Mail, User, PawPrint, Eye, EyeOff, Save, CheckCircle } from 'lucide-react'
 import Image from 'next/image'
 import type { AdminRegistration, RegistrationStatus } from '@/types/admin'
+
+// Fields the admin can edit
+interface EditableFields {
+  registration_number: string
+  pet_name: string
+  pet_breed: string
+  pet_species: string
+  pet_color: string
+  pet_weight: string
+  pet_date_of_birth: string
+  pet_photo_url: string
+  handler_name: string
+  registration_type: 'esa' | 'psd'
+  registration_date: string
+  expiry_date: string
+}
+
+function extractEditable(reg: AdminRegistration): EditableFields {
+  return {
+    registration_number: reg.registration_number,
+    pet_name: reg.pet_name,
+    pet_breed: reg.pet_breed,
+    pet_species: reg.pet_species,
+    pet_color: reg.pet_color ?? '',
+    pet_weight: reg.pet_weight ?? '',
+    pet_date_of_birth: reg.pet_date_of_birth ?? '',
+    pet_photo_url: reg.pet_photo_url ?? '',
+    handler_name: reg.handler_name,
+    registration_type: reg.registration_type,
+    registration_date: reg.registration_date,
+    expiry_date: reg.expiry_date ?? '',
+  }
+}
+
+function getChangedFields(
+  original: EditableFields,
+  current: EditableFields
+): Record<string, unknown> {
+  const changes: Record<string, unknown> = {}
+  for (const key of Object.keys(original) as (keyof EditableFields)[]) {
+    if (original[key] !== current[key]) {
+      changes[key] = current[key]
+    }
+  }
+  return changes
+}
 
 export default function AdminRegistrationDetailPage({
   params,
@@ -24,15 +71,74 @@ export default function AdminRegistrationDetailPage({
   const [saving, setSaving] = useState(false)
   const [confirmAction, setConfirmAction] = useState<'approve' | 'reject' | 'suspend' | null>(null)
 
+  // Editable form state
+  const [form, setForm] = useState<EditableFields | null>(null)
+  const [original, setOriginal] = useState<EditableFields | null>(null)
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [saveError, setSaveError] = useState('')
+
+  const isDirty = original && form
+    ? Object.keys(getChangedFields(original, form)).length > 0
+    : false
+
   useEffect(() => {
     async function load() {
       const supabase = createClient()
       const data = await fetchRegistrationDetail(supabase, id)
       setReg(data)
+      if (data) {
+        const editable = extractEditable(data)
+        setForm(editable)
+        setOriginal(editable)
+      }
       setLoading(false)
     }
     load()
   }, [id])
+
+  const updateField = useCallback(<K extends keyof EditableFields>(key: K, value: EditableFields[K]) => {
+    setForm((prev) => prev ? { ...prev, [key]: value } : prev)
+    setSaveStatus('idle')
+  }, [])
+
+  async function handleSave() {
+    if (!form || !original || !reg) return
+
+    const changes = getChangedFields(original, form)
+    if (Object.keys(changes).length === 0) return
+
+    setSaving(true)
+    setSaveStatus('idle')
+    setSaveError('')
+
+    try {
+      const res = await fetch(`/api/admin/registrations/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(changes),
+      })
+
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.error || 'Unknown error')
+      }
+
+      // Update local state to reflect saved values
+      const updatedReg = { ...reg }
+      for (const [key, value] of Object.entries(changes)) {
+        ;(updatedReg as Record<string, unknown>)[key] = value || null
+      }
+      setReg(updatedReg)
+      setOriginal({ ...form })
+      setSaveStatus('success')
+      setTimeout(() => setSaveStatus('idle'), 3000)
+    } catch (err) {
+      setSaveError(err instanceof Error ? err.message : t('updateError'))
+      setSaveStatus('error')
+    } finally {
+      setSaving(false)
+    }
+  }
 
   async function handleAction(action: 'approve' | 'reject' | 'suspend') {
     if (!reg) return
@@ -62,7 +168,7 @@ export default function AdminRegistrationDetailPage({
     )
   }
 
-  if (!reg) {
+  if (!reg || !form) {
     return (
       <div className="text-center py-12">
         <p className="text-base-content/60">{t('notFound')}</p>
@@ -74,7 +180,8 @@ export default function AdminRegistrationDetailPage({
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-24">
+      {/* Header */}
       <div className="flex items-center gap-3">
         <Link href="/admin/registrations" className="btn btn-ghost btn-sm btn-circle">
           <ArrowLeft className="h-4 w-4" />
@@ -85,83 +192,183 @@ export default function AdminRegistrationDetailPage({
         <StatusBadge status={reg.status} />
       </div>
 
-      {/* Pet info */}
+      {/* Success / Error alerts */}
+      {saveStatus === 'success' && (
+        <div role="alert" className="alert alert-success alert-soft text-sm">
+          <CheckCircle className="h-4 w-4" />
+          {t('updateSuccess')}
+        </div>
+      )}
+      {saveStatus === 'error' && (
+        <div role="alert" className="alert alert-error alert-soft text-sm">
+          {saveError || t('updateError')}
+        </div>
+      )}
+
+      {/* Pet info — editable */}
       <div className="card bg-base-200 shadow-sm">
-        <div className="card-body">
+        <div className="card-body space-y-4">
           <h3 className="card-title text-base">
             <PawPrint className="h-5 w-5 text-primary" />
             {t('petInfo')}
           </h3>
+
           <div className="flex flex-col gap-4 sm:flex-row">
-            {reg.pet_photo_url && (
-              <div className="shrink-0">
-                <Image
-                  src={reg.pet_photo_url}
-                  alt={reg.pet_name}
-                  width={120}
-                  height={120}
-                  className="rounded-lg object-cover border border-base-300"
-                  style={{ width: 120, height: 120 }}
+            {/* Pet photo */}
+            <div className="shrink-0">
+              <PhotoUpload
+                value={form.pet_photo_url}
+                onChange={(url) => updateField('pet_photo_url', url)}
+              />
+            </div>
+
+            <div className="flex-1 space-y-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <fieldset className="fieldset">
+                  <legend className="fieldset-legend">{t('petName')} *</legend>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full"
+                    value={form.pet_name}
+                    onChange={(e) => updateField('pet_name', e.target.value)}
+                    required
+                  />
+                </fieldset>
+
+                <fieldset className="fieldset">
+                  <legend className="fieldset-legend">{t('breed')} *</legend>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full"
+                    value={form.pet_breed}
+                    onChange={(e) => updateField('pet_breed', e.target.value)}
+                    required
+                  />
+                </fieldset>
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <fieldset className="fieldset">
+                  <legend className="fieldset-legend">{t('petSpecies')} *</legend>
+                  <select
+                    className="select select-bordered w-full"
+                    value={form.pet_species}
+                    onChange={(e) => updateField('pet_species', e.target.value)}
+                  >
+                    <option value="dog">{t('speciesDog')}</option>
+                    <option value="cat">{t('speciesCat')}</option>
+                    <option value="other">{t('speciesOther')}</option>
+                  </select>
+                </fieldset>
+
+                <fieldset className="fieldset">
+                  <legend className="fieldset-legend">{t('registrationType')} *</legend>
+                  <select
+                    className="select select-bordered w-full"
+                    value={form.registration_type}
+                    onChange={(e) => updateField('registration_type', e.target.value as 'esa' | 'psd')}
+                  >
+                    <option value="esa">{t('typeEsa')}</option>
+                    <option value="psd">{t('typePsd')}</option>
+                  </select>
+                </fieldset>
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <fieldset className="fieldset">
+                  <legend className="fieldset-legend">{t('petColor')}</legend>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full"
+                    value={form.pet_color}
+                    onChange={(e) => updateField('pet_color', e.target.value)}
+                  />
+                </fieldset>
+
+                <fieldset className="fieldset">
+                  <legend className="fieldset-legend">{t('petWeight')}</legend>
+                  <input
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    className="input input-bordered w-full"
+                    value={form.pet_weight}
+                    onChange={(e) => updateField('pet_weight', e.target.value)}
+                  />
+                </fieldset>
+              </div>
+
+              <fieldset className="fieldset">
+                <legend className="fieldset-legend">{t('dateOfBirth')}</legend>
+                <input
+                  type="date"
+                  className="input input-bordered w-full sm:w-auto"
+                  value={form.pet_date_of_birth}
+                  onChange={(e) => updateField('pet_date_of_birth', e.target.value)}
                 />
-              </div>
-            )}
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 flex-1">
-              <div>
-                <p className="text-xs font-medium uppercase text-base-content/40">{t('petName')}</p>
-                <p className="text-sm font-medium">{reg.pet_name}</p>
-              </div>
-              <div>
-                <p className="text-xs font-medium uppercase text-base-content/40">{t('petType')}</p>
-                <p className="text-sm">{reg.pet_species}</p>
-              </div>
-              <div>
-                <p className="text-xs font-medium uppercase text-base-content/40">{t('breed')}</p>
-                <p className="text-sm">{reg.pet_breed}</p>
-              </div>
-              {reg.pet_color && (
-                <div>
-                  <p className="text-xs font-medium uppercase text-base-content/40">{t('color')}</p>
-                  <p className="text-sm inline-flex items-center gap-1">
-                    <Palette className="h-3 w-3" /> {reg.pet_color}
-                  </p>
-                </div>
-              )}
-              {reg.pet_weight && (
-                <div>
-                  <p className="text-xs font-medium uppercase text-base-content/40">{t('weight')}</p>
-                  <p className="text-sm inline-flex items-center gap-1">
-                    <Weight className="h-3 w-3" /> {reg.pet_weight} lbs
-                  </p>
-                </div>
-              )}
-              {reg.pet_date_of_birth && (
-                <div>
-                  <p className="text-xs font-medium uppercase text-base-content/40">{t('dateOfBirth')}</p>
-                  <p className="text-sm inline-flex items-center gap-1">
-                    <Calendar className="h-3 w-3" /> {new Date(reg.pet_date_of_birth).toLocaleDateString()}
-                  </p>
-                </div>
-              )}
-              <div>
-                <p className="text-xs font-medium uppercase text-base-content/40">{t('type')}</p>
-                <span className="badge badge-sm badge-outline">{reg.registration_type.toUpperCase()}</span>
-              </div>
-              <div>
-                <p className="text-xs font-medium uppercase text-base-content/40">{t('registrationDate')}</p>
-                <p className="text-sm">{new Date(reg.registration_date).toLocaleDateString()}</p>
-              </div>
-              {reg.expiry_date && (
-                <div>
-                  <p className="text-xs font-medium uppercase text-base-content/40">{t('expires')}</p>
-                  <p className="text-sm">{new Date(reg.expiry_date).toLocaleDateString()}</p>
-                </div>
-              )}
+              </fieldset>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Owner info */}
+      {/* Registration details — editable */}
+      <div className="card bg-base-200 shadow-sm">
+        <div className="card-body space-y-4">
+          <h3 className="card-title text-base">{t('registrationDetails')}</h3>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <fieldset className="fieldset">
+              <legend className="fieldset-legend">{t('registrationNumberLabel')}</legend>
+              <input
+                type="text"
+                className="input input-bordered w-full font-mono"
+                value={form.registration_number}
+                onChange={(e) => updateField('registration_number', e.target.value)}
+                required
+              />
+              <p className="text-xs text-base-content/50 mt-1">{t('registrationNumberHint')}</p>
+            </fieldset>
+
+            <fieldset className="fieldset">
+              <legend className="fieldset-legend">{t('handlerName')} *</legend>
+              <input
+                type="text"
+                className="input input-bordered w-full"
+                value={form.handler_name}
+                onChange={(e) => updateField('handler_name', e.target.value)}
+                required
+              />
+            </fieldset>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <fieldset className="fieldset">
+              <legend className="fieldset-legend">{t('registrationDate')}</legend>
+              <input
+                type="date"
+                className="input input-bordered w-full"
+                value={form.registration_date}
+                onChange={(e) => updateField('registration_date', e.target.value)}
+                required
+              />
+            </fieldset>
+
+            <fieldset className="fieldset">
+              <legend className="fieldset-legend">{t('expires')}</legend>
+              <input
+                type="date"
+                className="input input-bordered w-full"
+                value={form.expiry_date}
+                onChange={(e) => updateField('expiry_date', e.target.value)}
+              />
+              <p className="text-xs text-base-content/50 mt-1">{t('expiryHint')}</p>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+
+      {/* Owner info — read-only */}
       <div className="card bg-base-200 shadow-sm">
         <div className="card-body">
           <h3 className="card-title text-base">{t('owner')}</h3>
@@ -172,11 +379,6 @@ export default function AdminRegistrationDetailPage({
             <span className="inline-flex items-center gap-1">
               <Mail className="h-3 w-3" /> {reg.user_email}
             </span>
-            {reg.handler_name && reg.handler_name !== reg.user_name && (
-              <span className="inline-flex items-center gap-1">
-                <User className="h-3 w-3 text-primary" /> {t('handlerName')}: {reg.handler_name}
-              </span>
-            )}
           </div>
         </div>
       </div>
@@ -205,7 +407,7 @@ export default function AdminRegistrationDetailPage({
         </div>
       </div>
 
-      {/* Actions */}
+      {/* Status actions */}
       <div className="flex flex-wrap gap-2">
         {reg.status === 'pending_review' && (
           <>
@@ -245,6 +447,27 @@ export default function AdminRegistrationDetailPage({
         onConfirm={() => confirmAction && handleAction(confirmAction)}
         onCancel={() => setConfirmAction(null)}
       />
+
+      {/* Sticky save bar */}
+      {isDirty && (
+        <div className="fixed bottom-0 inset-x-0 z-50 border-t border-base-300 bg-base-100/95 backdrop-blur-sm px-4 py-3 shadow-lg">
+          <div className="container mx-auto flex items-center justify-between max-w-5xl">
+            <p className="text-sm font-medium text-warning">{t('unsavedChanges')}</p>
+            <button
+              className="btn btn-primary btn-sm gap-2"
+              onClick={handleSave}
+              disabled={saving}
+            >
+              {saving ? (
+                <span className="loading loading-spinner loading-xs" />
+              ) : (
+                <Save className="h-4 w-4" />
+              )}
+              {t('saveChanges')}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

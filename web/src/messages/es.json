@@ -423,7 +423,7 @@
         },
         "types": {
           "esa": "Animal de Soporte Emocional",
-          "psd": "Perro de Servicio Psiquiátrico"
+          "psd": "Perro de Servicio"
         },
         "emptyState": "Aún no tienes registros de mascotas.",
         "getStarted": "Comenzar"
@@ -618,13 +618,18 @@
       "cancel": "Cancelar",
       "saveError": "Error al guardar. Inténtelo de nuevo.",
       "saveSuccess": "Registro creado exitosamente.",
+      "saveChanges": "Guardar Cambios",
+      "updateSuccess": "Registro actualizado exitosamente.",
+      "updateError": "Error al actualizar. Inténtelo de nuevo.",
+      "unsavedChanges": "Tienes cambios sin guardar",
+      "noChanges": "Sin cambios para guardar",
       "emailHint": "Correo del cliente (crea cuenta si es nuevo)",
       "expiryHint": "Dejar vacío para registros de por vida",
       "speciesDog": "Perro",
       "speciesCat": "Gato",
       "speciesOther": "Otro",
       "typeEsa": "ESA (Animal de Apoyo Emocional)",
-      "typePsd": "PSD (Perro de Servicio Psiquiátrico)",
+      "typePsd": "PSD (Perro de Servicio)",
       "handlerName": "Nombre del Acompañante",
       "handlerNameHint": "Se usa el nombre del cliente si se deja vacío",
       "petPhoto": "Foto de Mascota",

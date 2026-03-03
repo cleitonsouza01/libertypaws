@@ -423,7 +423,7 @@
         },
         "types": {
           "esa": "Emotional Support Animal",
-          "psd": "Psychiatric Service Dog"
+          "psd": "Service Dog"
         },
         "emptyState": "You don't have any pet registrations yet.",
         "getStarted": "Get Started"
@@ -618,13 +618,18 @@
       "cancel": "Cancel",
       "saveError": "Failed to save. Please try again.",
       "saveSuccess": "Registration created successfully.",
+      "saveChanges": "Save Changes",
+      "updateSuccess": "Registration updated successfully.",
+      "updateError": "Failed to update. Please try again.",
+      "unsavedChanges": "You have unsaved changes",
+      "noChanges": "No changes to save",
       "emailHint": "Customer email (creates account if new)",
       "expiryHint": "Leave empty for lifetime registrations",
       "speciesDog": "Dog",
       "speciesCat": "Cat",
       "speciesOther": "Other",
       "typeEsa": "ESA (Emotional Support Animal)",
-      "typePsd": "PSD (Psychiatric Service Dog)",
+      "typePsd": "PSD (Service Dog)",
       "handlerName": "Handler Name",
       "handlerNameHint": "Defaults to customer name if empty",
       "petPhoto": "Pet Photo",

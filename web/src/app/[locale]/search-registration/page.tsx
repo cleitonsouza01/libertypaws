@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { motion, AnimatePresence } from 'motion/react'
-import { Search, ShieldCheck, CheckCircle, XCircle, ArrowLeft, Calendar, Dog, User, Hash, Database, Fingerprint, ScanLine } from 'lucide-react'
+import { Search, ShieldCheck, CheckCircle, XCircle, ArrowLeft, Calendar, Dog, User, Hash, Database, Fingerprint, ScanLine, Heart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { getImageUrl } from '@/lib/assets'
 import { createClient } from '@/lib/supabase/client'
@@ -200,9 +200,12 @@ function RegistrationResult({ registration, onReset }: { registration: Registrat
   const t = useTranslations('searchRegistration.result')
   const reg = registration
 
-  const typeLabel = reg.registration_type === 'esa'
-    ? t('esaAnimal')
-    : t('serviceDog')
+  const typeLabels: Record<string, string> = {
+    esa: t('esaAnimal'),
+    psd: t('serviceDog'),
+  }
+  const typeLabel = typeLabels[reg.registration_type] ?? reg.registration_type.toUpperCase()
+  const TypeIcon = reg.registration_type === 'esa' ? Heart : ShieldCheck
 
   const validThru = reg.expiry_date
     ? new Date(reg.expiry_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
@@ -226,14 +229,7 @@ function RegistrationResult({ registration, onReset }: { registration: Registrat
         {/* Top banner */}
         <div className="bg-secondary px-6 py-4 text-center">
           <div className="flex items-center justify-center gap-3">
-            <div className="relative h-10 w-10">
-              <Image
-                src={getImageUrl('images/logo.png')}
-                alt="Liberty Paws"
-                fill
-                className="object-contain brightness-0 invert"
-              />
-            </div>
+            <TypeIcon className="h-8 w-8 text-secondary-content" />
             <div>
               <p className="text-lg font-bold text-secondary-content uppercase tracking-wider">
                 {t('registrationType')}: {typeLabel}
