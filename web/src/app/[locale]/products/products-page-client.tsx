@@ -5,15 +5,14 @@ import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { useSearchParams } from 'next/navigation'
 import { motion } from 'motion/react'
-import { ProductCard } from '@/components/sections/product-card'
-import { products } from '@/data/products'
+import { ProductCard, type Product } from '@/components/sections/product-card'
 import { cn } from '@/lib/utils'
 import { getImageUrl } from '@/lib/assets'
 
 type Category = 'all' | 'esa' | 'psd'
 type SortOption = 'featured' | 'priceLow' | 'priceHigh' | 'newest'
 
-function ProductsContent() {
+function ProductsContent({ products }: { products: Product[] }) {
   const t = useTranslations('products')
   const searchParams = useSearchParams()
 
@@ -209,11 +208,11 @@ function ProductsLoading() {
   )
 }
 
-export default function ProductsPageClient() {
+export default function ProductsPageClient({ products }: { products: Product[] }) {
   return (
     <div className="min-h-screen bg-gray-50">
       <Suspense fallback={<ProductsLoading />}>
-        <ProductsContent />
+        <ProductsContent products={products} />
       </Suspense>
     </div>
   )

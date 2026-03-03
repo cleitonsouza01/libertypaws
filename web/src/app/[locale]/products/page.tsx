@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { getMessages, setRequestLocale } from 'next-intl/server'
 import { type Locale } from '@/i18n/config'
 import { buildMetadata } from '@/lib/seo'
+import { getAllServices } from '@/lib/services/queries'
 import ProductsPageClient from './products-page-client'
 
 interface ProductsPageProps {
@@ -32,5 +33,7 @@ export default async function ProductsPage({ params }: ProductsPageProps) {
   const { locale } = await params
   setRequestLocale(locale)
 
-  return <ProductsPageClient />
+  const products = await getAllServices()
+
+  return <ProductsPageClient products={products} />
 }

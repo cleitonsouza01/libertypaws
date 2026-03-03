@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { locales, type Locale } from '@/i18n/config'
-import { products } from '@/data/products'
+import { getServiceSlugs } from '@/lib/services/queries'
 import { SITE_URL, getLanguageAlternates } from '@/lib/seo'
 
 function entry(
@@ -22,15 +22,16 @@ function entry(
   }
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages = [
     entry('', 1.0, 'weekly'),
     entry('/products', 0.9, 'weekly'),
     entry('/contact', 0.7, 'monthly'),
   ]
 
-  const productPages = products.map((product) =>
-    entry(`/products/${product.slug}`, 0.8, 'weekly')
+  const slugs = await getServiceSlugs()
+  const productPages = slugs.map((slug) =>
+    entry(`/products/${slug}`, 0.8, 'weekly')
   )
 
   return [...staticPages, ...productPages]

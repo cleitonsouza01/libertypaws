@@ -159,12 +159,62 @@ export async function updateService(
   serviceId: string,
   data: Record<string, unknown>
 ) {
+  // Separate junction-table fields from direct service columns
+  const { category, tags, ...serviceFields } = data
+
+  // Update the services table (direct columns only)
   const { error } = await supabase
     .from('services')
-    .update({ ...data, updated_at: new Date().toISOString() })
+    .update({ ...serviceFields, updated_at: new Date().toISOString() })
     .eq('id', serviceId)
 
   if (error) throw error
+
+  // Update category via service_categories junction table
+  if (typeof category === 'string') {
+    const { data: catRow } = await supabase
+      .from('categories')
+      .select('id')
+      .eq('slug', category)
+      .single()
+
+    if (catRow) {
+      // Remove existing categories for this service, then insert new one
+      await supabase
+        .from('service_categories')
+        .delete()
+        .eq('service_id', serviceId)
+
+      await supabase
+        .from('service_categories')
+        .insert({ service_id: serviceId, category_id: catRow.id })
+    }
+  }
+
+  // Update tags via service_tags junction table
+  if (Array.isArray(tags) && tags.length > 0) {
+    // Remove existing tags
+    await supabase
+      .from('service_tags')
+      .delete()
+      .eq('service_id', serviceId)
+
+    // Upsert tags and link them
+    for (const tagName of tags as string[]) {
+      const slug = tagName.toLowerCase().replace(/\s+/g, '-')
+      const { data: tagRow } = await supabase
+        .from('tags')
+        .upsert({ slug, name: tagName }, { onConflict: 'slug' })
+        .select('id')
+        .single()
+
+      if (tagRow) {
+        await supabase
+          .from('service_tags')
+          .insert({ service_id: serviceId, tag_id: tagRow.id })
+      }
+    }
+  }
 }
 
 export async function toggleServiceActive(

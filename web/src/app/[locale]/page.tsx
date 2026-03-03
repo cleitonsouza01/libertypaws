@@ -10,7 +10,7 @@ import {
   Testimonials,
   CtaBanner,
 } from '@/components/sections'
-import { popularProducts } from '@/data/products'
+import { getFeaturedServices } from '@/lib/services/queries'
 import { type Locale } from '@/i18n/config'
 import { buildMetadata } from '@/lib/seo'
 
@@ -37,6 +37,8 @@ export default async function HomePage({ params }: HomePageProps) {
   const { locale } = await params
   setRequestLocale(locale)
 
+  const featuredProducts = await getFeaturedServices()
+
   return (
     <>
       {/* Hero Section */}
@@ -46,7 +48,7 @@ export default async function HomePage({ params }: HomePageProps) {
       <TrustBar />
 
       {/* Featured Products */}
-      <FeaturedProducts />
+      <FeaturedProducts products={featuredProducts} />
 
       {/* ESA Category Section */}
       <CategorySection variant="esa" />
@@ -66,12 +68,12 @@ export default async function HomePage({ params }: HomePageProps) {
   )
 }
 
-function FeaturedProducts() {
+function FeaturedProducts({ products }: { products: import('@/components/sections/product-card').Product[] }) {
   const t = useTranslations('home.products')
 
   return (
     <ProductGrid
-      products={popularProducts}
+      products={products}
       title={t('title')}
       subtitle={t('subtitle')}
       showViewAll={true}

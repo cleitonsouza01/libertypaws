@@ -6,7 +6,7 @@ import { Link } from '@/i18n/routing'
 import Image from 'next/image'
 import { ArrowLeft, Check, ShoppingCart, Shield, Clock, Award } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { products, getProductById, getRelatedProducts } from '@/data/products'
+import { getServiceBySlug, getRelatedServices, getServiceSlugs } from '@/lib/services/queries'
 import { ProductCard, type Product } from '@/components/sections/product-card'
 import { type Locale } from '@/i18n/config'
 import { buildMetadata } from '@/lib/seo'
@@ -15,17 +15,16 @@ interface ProductPageProps {
   params: Promise<{ locale: string; slug: string }>
 }
 
-export function generateStaticParams() {
-  return products.map((product) => ({
-    slug: product.id,
-  }))
+export async function generateStaticParams() {
+  const slugs = await getServiceSlugs()
+  return slugs.map((slug) => ({ slug }))
 }
 
 export async function generateMetadata({
   params,
 }: ProductPageProps): Promise<Metadata> {
   const { locale, slug } = await params
-  const product = getProductById(slug)
+  const product = await getServiceBySlug(slug)
   if (!product) return {}
 
   const messages = await getMessages()
@@ -51,13 +50,13 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
   const { locale, slug } = await params
   setRequestLocale(locale)
 
-  const product = getProductById(slug)
+  const product = await getServiceBySlug(slug)
 
   if (!product) {
     notFound()
   }
 
-  const relatedProducts = getRelatedProducts(slug, 3)
+  const relatedProducts = await getRelatedServices(slug, 3)
 
   return <ProductDetailContent product={product} relatedProducts={relatedProducts} />
 }
