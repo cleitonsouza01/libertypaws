@@ -147,6 +147,34 @@ export async function fetchUserDetail(
   return data as unknown as AdminProfile
 }
 
+export async function fetchUserOrders(
+  supabase: SupabaseClient,
+  userId: string
+): Promise<AdminOrder[]> {
+  const { data, error } = await supabase
+    .from('orders')
+    .select('*')
+    .eq('customer_id', userId)
+    .order('created_at', { ascending: false })
+
+  if (error) return []
+  return (data ?? []) as unknown as AdminOrder[]
+}
+
+export async function fetchUserRegistrations(
+  supabase: SupabaseClient,
+  userId: string
+): Promise<AdminRegistration[]> {
+  const { data, error } = await supabase
+    .from('pet_registrations')
+    .select('*')
+    .eq('customer_id', userId)
+    .order('created_at', { ascending: false })
+
+  if (error) return []
+  return (data ?? []) as unknown as AdminRegistration[]
+}
+
 // ── Orders ──────────────────────────────────────────────────────────
 
 export async function fetchPaginatedOrders(

@@ -4,6 +4,7 @@ export interface AdminProfile {
   id: string
   email: string
   full_name: string
+  phone: string | null
   avatar_url: string | null
   locale: string
   created_at: string
