@@ -35,6 +35,8 @@ export async function POST(request: Request) {
     adminNotes,
     locale,
     registrationNumber: providedRegNumber,
+    amount,
+    paymentStatus,
   } = body
 
   if (!email || !fullName || !petName || !petBreed || !petSpecies || !registrationType || !serviceId) {
@@ -90,16 +92,29 @@ export async function POST(request: Request) {
       )
     }
 
-    // 6. Insert order (status: completed, $0)
+    // 6. Look up service price if no amount provided
+    let orderAmount = typeof amount === 'number' ? amount : parseFloat(amount)
+    if (isNaN(orderAmount) || orderAmount < 0) {
+      const { data: serviceData } = await admin
+        .from('services')
+        .select('price')
+        .eq('id', serviceId)
+        .single()
+      orderAmount = serviceData?.price ?? 0
+    }
+
+    const orderStatus = paymentStatus || 'pending'
+
+    // 7. Insert order
     const { data: order, error: orderError } = await admin
       .from('orders')
       .insert({
         order_number: orderNumber,
         customer_id: customerId,
-        status: 'completed',
-        subtotal: 0,
-        total_amount: 0,
-        completed_at: new Date().toISOString(),
+        status: orderStatus,
+        subtotal: orderAmount,
+        total_amount: orderAmount,
+        completed_at: orderStatus === 'completed' ? new Date().toISOString() : null,
         admin_notes: adminNotes || null,
         locale: locale || 'en',
       })
@@ -113,15 +128,15 @@ export async function POST(request: Request) {
       )
     }
 
-    // 7. Insert order item
+    // 8. Insert order item
     const { data: orderItem, error: itemError } = await admin
       .from('order_items')
       .insert({
         order_id: order.id,
         service_id: serviceId,
         quantity: 1,
-        unit_price: 0,
-        total_price: 0,
+        unit_price: orderAmount,
+        total_price: orderAmount,
       })
       .select('id')
       .single()
@@ -133,7 +148,7 @@ export async function POST(request: Request) {
       )
     }
 
-    // 8. Resolve registration number (use provided or generate)
+    // 9. Resolve registration number (use provided or generate)
     let registrationNumber: string
 
     if (providedRegNumber && providedRegNumber.trim()) {
@@ -167,7 +182,7 @@ export async function POST(request: Request) {
       registrationNumber = generatedNumber
     }
 
-    // 9. Insert pet registration
+    // 10. Insert pet registration
     const regData: Record<string, unknown> = {
       registration_number: registrationNumber,
       customer_id: customerId,
@@ -202,7 +217,7 @@ export async function POST(request: Request) {
       )
     }
 
-    // 10. Return success
+    // 11. Return success
     return NextResponse.json({
       registrationId: registration.id,
       registrationNumber,

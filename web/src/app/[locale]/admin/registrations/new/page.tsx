@@ -10,6 +10,9 @@ import { ArrowLeft, RefreshCw } from 'lucide-react'
 interface Service {
   id: string
   name: string
+  price: number
+  description: string
+  category: string
 }
 
 export default function AdminNewRegistrationPage() {
@@ -21,6 +24,8 @@ export default function AdminNewRegistrationPage() {
   const [petPhotoUrl, setPetPhotoUrl] = useState('')
   const [registrationNumber, setRegistrationNumber] = useState('')
   const [generatingNumber, setGeneratingNumber] = useState(false)
+  const [selectedService, setSelectedService] = useState<Service | null>(null)
+  const [amount, setAmount] = useState('')
 
   async function fetchRegistrationNumber() {
     setGeneratingNumber(true)
@@ -40,10 +45,19 @@ export default function AdminNewRegistrationPage() {
       const supabase = createClient()
       const { data } = await supabase
         .from('services')
-        .select('id, name')
+        .select('id, name, price, description, service_categories(categories(slug))')
         .eq('is_active', true)
         .order('name')
-      if (data) setServices(data)
+      if (data) {
+        const mapped: Service[] = data.map((s: Record<string, unknown>) => ({
+          id: s.id as string,
+          name: s.name as string,
+          price: (s.price as number) ?? 0,
+          description: (s.description as string) ?? '',
+          category: ((s.service_categories as Array<{ categories: { slug: string } | null }> | null)?.[0]?.categories?.slug) ?? '',
+        }))
+        setServices(mapped)
+      }
     }
     loadServices()
     fetchRegistrationNumber()
@@ -67,6 +81,12 @@ export default function AdminNewRegistrationPage() {
       locale: form.get('locale') as string,
       registrationNumber: registrationNumber.trim() || undefined,
     }
+
+    const parsedAmount = parseFloat(amount)
+    if (!isNaN(parsedAmount) && parsedAmount >= 0) payload.amount = parsedAmount
+
+    const paymentStatus = form.get('paymentStatus') as string
+    if (paymentStatus) payload.paymentStatus = paymentStatus
 
     const handlerName = (form.get('handlerName') as string)?.trim()
     if (handlerName) payload.handlerName = handlerName
@@ -312,13 +332,62 @@ export default function AdminNewRegistrationPage() {
 
             <fieldset className="fieldset">
               <legend className="fieldset-legend">{t('selectService')} *</legend>
-              <select name="serviceId" className="select select-bordered w-full" required>
+              <select
+                name="serviceId"
+                className="select select-bordered w-full"
+                required
+                onChange={(e) => {
+                  const svc = services.find((s) => s.id === e.target.value) || null
+                  setSelectedService(svc)
+                  if (svc) setAmount(svc.price.toFixed(2))
+                  else setAmount('')
+                }}
+              >
                 <option value="">{t('selectService')}</option>
                 {services.map((s) => (
                   <option key={s.id} value={s.id}>{s.name}</option>
                 ))}
               </select>
             </fieldset>
+
+            {selectedService && (
+              <div className="alert alert-info alert-soft text-sm">
+                <div className="space-y-1">
+                  {selectedService.category && (
+                    <span className="badge badge-soft badge-sm badge-primary uppercase">{selectedService.category}</span>
+                  )}
+                  <p className="font-semibold">${selectedService.price.toFixed(2)}</p>
+                  {selectedService.description && (
+                    <p className="text-base-content/60 line-clamp-2">{selectedService.description}</p>
+                  )}
+                </div>
+              </div>
+            )}
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <fieldset className="fieldset">
+                <legend className="fieldset-legend">{t('amount')}</legend>
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  className="input input-bordered w-full"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  placeholder="0.00"
+                />
+                <p className="text-xs text-base-content/50 mt-1">{t('amountHint')}</p>
+              </fieldset>
+
+              <fieldset className="fieldset">
+                <legend className="fieldset-legend">{t('paymentStatus')}</legend>
+                <select name="paymentStatus" className="select select-bordered w-full" defaultValue="pending">
+                  <option value="pending">{t('paymentPending')}</option>
+                  <option value="paid">{t('paymentPaid')}</option>
+                  <option value="completed">{t('paymentCompleted')}</option>
+                </select>
+              </fieldset>
+            </div>
 
             <fieldset className="fieldset">
               <legend className="fieldset-legend">{t('adminNotes')}</legend>
