@@ -710,7 +710,13 @@
       "cancel": "Cancelar",
       "saveError": "Error al guardar. Inténtelo de nuevo.",
       "notFound": "Servicio no encontrado",
-      "backToList": "Volver a Servicios"
+      "backToList": "Volver a Servicios",
+      "image": "Imagen del Producto",
+      "uploadPhoto": "Subir Imagen",
+      "changePhoto": "Cambiar Imagen",
+      "remove": "Eliminar",
+      "uploadError": "Error al subir la imagen",
+      "petPhotoHint": "JPEG, PNG o WebP — máx. 5 MB"
     },
     "coupons": {
       "title": "Cupones",

@@ -159,8 +159,8 @@ export async function updateService(
   serviceId: string,
   data: Record<string, unknown>
 ) {
-  // Separate junction-table fields from direct service columns
-  const { category, tags, ...serviceFields } = data
+  // Separate junction-table / media fields from direct service columns
+  const { category, tags, image_url, ...serviceFields } = data
 
   // Update the services table (direct columns only)
   const { error } = await supabase
@@ -213,6 +213,50 @@ export async function updateService(
           .from('service_tags')
           .insert({ service_id: serviceId, tag_id: tagRow.id })
       }
+    }
+  }
+
+  // Update primary image via service_media table
+  if (typeof image_url === 'string') {
+    // Strip CDN prefix to store only relative paths in DB
+    const cdnUrl = process.env.NEXT_PUBLIC_CDN_URL || ''
+    let cleanImageUrl = image_url as string
+    if (cdnUrl && cleanImageUrl.startsWith(cdnUrl)) {
+      cleanImageUrl = cleanImageUrl.slice(cdnUrl.length).replace(/^\//, '')
+    }
+
+    if (cleanImageUrl) {
+      // Upsert: update existing primary image or insert new one
+      const { data: existing } = await supabase
+        .from('service_media')
+        .select('id')
+        .eq('service_id', serviceId)
+        .eq('is_primary', true)
+        .single()
+
+      if (existing) {
+        await supabase
+          .from('service_media')
+          .update({ url: cleanImageUrl })
+          .eq('id', existing.id)
+      } else {
+        await supabase
+          .from('service_media')
+          .insert({
+            service_id: serviceId,
+            url: cleanImageUrl,
+            media_type: 'image',
+            is_primary: true,
+            sort_order: 0,
+          })
+      }
+    } else {
+      // Empty string = remove image
+      await supabase
+        .from('service_media')
+        .delete()
+        .eq('service_id', serviceId)
+        .eq('is_primary', true)
     }
   }
 }

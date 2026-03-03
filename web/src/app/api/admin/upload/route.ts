@@ -45,7 +45,9 @@ export async function POST(request: Request) {
   // 4. Read file buffer and determine extension
   const buffer = Buffer.from(await file.arrayBuffer())
   const ext = file.type === 'image/png' ? 'png' : file.type === 'image/webp' ? 'webp' : 'jpg'
-  const key = `images/pets/${randomUUID()}.${ext}`
+  const folder = (formData.get('folder') as string) || 'images/pets'
+  const safeFolder = folder.replace(/[^a-zA-Z0-9/_-]/g, '')
+  const key = `${safeFolder}/${randomUUID()}.${ext}`
 
   // 5. Upload to R2
   try {

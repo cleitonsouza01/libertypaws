@@ -410,12 +410,20 @@ export async function fetchServiceDetail(
 ): Promise<AdminService | null> {
   const { data, error } = await supabase
     .from('services')
-    .select('*')
+    .select('*, service_media(url, is_primary)')
     .eq('id', serviceId)
     .single()
 
   if (error || !data) return null
-  return data as unknown as AdminService
+
+  // Extract primary image URL from joined service_media
+  const media = (data as Record<string, unknown>).service_media as
+    | { url: string; is_primary: boolean }[]
+    | undefined
+  const primaryImage = media?.find((m) => m.is_primary)?.url ?? media?.[0]?.url ?? ''
+
+  const { service_media: _, ...rest } = data as Record<string, unknown>
+  return { ...rest, image_url: primaryImage } as unknown as AdminService
 }
 
 // ── Coupons ─────────────────────────────────────────────────────────

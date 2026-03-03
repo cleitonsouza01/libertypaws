@@ -6,6 +6,9 @@ import { useRouter, Link } from '@/i18n/routing'
 import { createClient } from '@/lib/supabase/client'
 import { fetchServiceDetail } from '@/lib/admin/queries'
 import { updateService } from '@/lib/admin/actions'
+import { revalidateServices } from '@/lib/services/revalidate'
+import { PhotoUpload } from '@/components/admin/photo-upload'
+import { getAssetUrl } from '@/lib/assets'
 import { ArrowLeft } from 'lucide-react'
 import type { AdminService } from '@/types/admin'
 
@@ -21,12 +24,16 @@ export default function AdminEditServicePage({
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
+  const [imageUrl, setImageUrl] = useState('')
 
   useEffect(() => {
     async function load() {
       const supabase = createClient()
       const data = await fetchServiceDetail(supabase, id)
       setService(data)
+      if (data?.image_url) {
+        setImageUrl(data.image_url.startsWith('http') ? data.image_url : getAssetUrl(data.image_url))
+      }
       setLoading(false)
     }
     load()
@@ -51,11 +58,13 @@ export default function AdminEditServicePage({
       is_featured: form.get('is_featured') === 'on',
       features: featuresRaw.split('\n').map((s) => s.trim()).filter(Boolean),
       tags: tagsRaw.split(',').map((s) => s.trim()).filter(Boolean),
+      image_url: imageUrl,
     }
 
     try {
       const supabase = createClient()
       await updateService(supabase, service.id, data)
+      await revalidateServices()
       router.push('/admin/services')
     } catch {
       setError(t('saveError'))
@@ -119,6 +128,18 @@ export default function AdminEditServicePage({
                 rows={4}
                 defaultValue={service.description}
                 required
+              />
+            </fieldset>
+
+            <fieldset className="fieldset">
+              <legend className="fieldset-legend">{t('image')}</legend>
+              <PhotoUpload
+                value={imageUrl}
+                onChange={setImageUrl}
+                translationKey="admin.services"
+                folder="images/services"
+                alt={service.name}
+                size={160}
               />
             </fieldset>
 

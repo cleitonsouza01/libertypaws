@@ -109,6 +109,7 @@ export interface AdminService {
   is_featured: boolean
   features: string[]
   tags: string[]
+  image_url: string
   created_at: string
   updated_at: string
 }

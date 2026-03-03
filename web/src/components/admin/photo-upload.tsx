@@ -8,10 +8,25 @@ import Image from 'next/image'
 interface PhotoUploadProps {
   value: string
   onChange: (url: string) => void
+  /** Translation namespace for labels (default: 'admin.registrations') */
+  translationKey?: string
+  /** R2 folder prefix (default: 'images/pets') */
+  folder?: string
+  /** Alt text for the preview image */
+  alt?: string
+  /** Preview size in px (default: 112) */
+  size?: number
 }
 
-export function PhotoUpload({ value, onChange }: PhotoUploadProps) {
-  const t = useTranslations('admin.registrations')
+export function PhotoUpload({
+  value,
+  onChange,
+  translationKey = 'admin.registrations',
+  folder = 'images/pets',
+  alt = 'Photo',
+  size = 112,
+}: PhotoUploadProps) {
+  const t = useTranslations(translationKey)
   const [uploading, setUploading] = useState(false)
   const [localPreview, setLocalPreview] = useState<string | null>(null)
   const [error, setError] = useState('')
@@ -29,6 +44,7 @@ export function PhotoUpload({ value, onChange }: PhotoUploadProps) {
 
     const formData = new FormData()
     formData.append('file', file)
+    formData.append('folder', folder)
 
     try {
       const res = await fetch('/api/admin/upload', {
@@ -68,17 +84,17 @@ export function PhotoUpload({ value, onChange }: PhotoUploadProps) {
       {previewSrc ? (
         <div className="flex items-end gap-3">
           <div className="avatar">
-            <div className="w-28 rounded-xl border border-base-300 bg-base-300">
+            <div className="rounded-xl border border-base-300 bg-base-300" style={{ width: size, height: size }}>
               {uploading ? (
-                <div className="flex h-28 w-28 items-center justify-center">
+                <div className="flex items-center justify-center" style={{ width: size, height: size }}>
                   <span className="loading loading-spinner loading-md text-primary" />
                 </div>
               ) : (
                 <Image
                   src={previewSrc}
-                  alt="Pet photo"
-                  width={112}
-                  height={112}
+                  alt={alt}
+                  width={size}
+                  height={size}
                   className="object-cover"
                   unoptimized={previewSrc.startsWith('blob:')}
                   onError={() => {

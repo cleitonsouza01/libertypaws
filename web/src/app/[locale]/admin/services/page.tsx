@@ -6,6 +6,7 @@ import { useRouter } from '@/i18n/routing'
 import { createClient } from '@/lib/supabase/client'
 import { fetchPaginatedServices } from '@/lib/admin/queries'
 import { toggleServiceActive, toggleServiceFeatured } from '@/lib/admin/actions'
+import { revalidateServices } from '@/lib/services/revalidate'
 import { DataTable, type Column } from '@/components/admin/data-table'
 import { SearchFilterBar } from '@/components/admin/search-filter-bar'
 import { AdminPagination } from '@/components/admin/admin-pagination'
@@ -49,6 +50,7 @@ export default function AdminServicesPage() {
     e.stopPropagation()
     const supabase = createClient()
     await toggleServiceActive(supabase, svc.id, !svc.is_active)
+    await revalidateServices()
     load()
   }
 
@@ -56,6 +58,7 @@ export default function AdminServicesPage() {
     e.stopPropagation()
     const supabase = createClient()
     await toggleServiceFeatured(supabase, svc.id, !svc.is_featured)
+    await revalidateServices()
     load()
   }
 

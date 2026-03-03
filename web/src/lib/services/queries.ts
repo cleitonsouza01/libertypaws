@@ -1,3 +1,4 @@
+import { unstable_cache } from 'next/cache'
 import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 import { getAssetUrl } from '@/lib/assets'
 import type { Product } from '@/components/sections/product-card'
@@ -61,7 +62,7 @@ const SERVICE_SELECT = `
 // ── Queries ─────────────────────────────────────────────────────────
 
 /** All active services, ordered by sort_order */
-export async function getAllServices(): Promise<Product[]> {
+async function _getAllServices(): Promise<Product[]> {
   const supabase = getClient()
 
   const { data, error } = await supabase
@@ -78,8 +79,13 @@ export async function getAllServices(): Promise<Product[]> {
   return (data as unknown as ServiceRow[]).map(mapToProduct)
 }
 
+export const getAllServices = unstable_cache(_getAllServices, ['all-services'], {
+  tags: ['services'],
+  revalidate: 3600,
+})
+
 /** Featured services (is_featured = true), for homepage */
-export async function getFeaturedServices(): Promise<Product[]> {
+async function _getFeaturedServices(): Promise<Product[]> {
   const supabase = getClient()
 
   const { data, error } = await supabase
@@ -97,8 +103,13 @@ export async function getFeaturedServices(): Promise<Product[]> {
   return (data as unknown as ServiceRow[]).map(mapToProduct)
 }
 
+export const getFeaturedServices = unstable_cache(_getFeaturedServices, ['featured-services'], {
+  tags: ['services'],
+  revalidate: 3600,
+})
+
 /** Single service by slug, for detail page and metadata */
-export async function getServiceBySlug(slug: string): Promise<Product | null> {
+async function _getServiceBySlug(slug: string): Promise<Product | null> {
   const supabase = getClient()
 
   const { data, error } = await supabase
@@ -113,12 +124,14 @@ export async function getServiceBySlug(slug: string): Promise<Product | null> {
   return mapToProduct(data as unknown as ServiceRow)
 }
 
+export const getServiceBySlug = unstable_cache(_getServiceBySlug, ['service-by-slug'], {
+  tags: ['services'],
+  revalidate: 3600,
+})
+
 /** Related services: same category, excluding current slug */
-export async function getRelatedServices(
-  slug: string,
-  limit: number = 3
-): Promise<Product[]> {
-  const service = await getServiceBySlug(slug)
+async function _getRelatedServices(slug: string, limit: number = 3): Promise<Product[]> {
+  const service = await _getServiceBySlug(slug)
   if (!service) return []
 
   const supabase = getClient()
@@ -156,8 +169,13 @@ export async function getRelatedServices(
   return (data as unknown as ServiceRow[]).map(mapToProduct)
 }
 
+export const getRelatedServices = unstable_cache(_getRelatedServices, ['related-services'], {
+  tags: ['services'],
+  revalidate: 3600,
+})
+
 /** All slugs for generateStaticParams */
-export async function getServiceSlugs(): Promise<string[]> {
+async function _getServiceSlugs(): Promise<string[]> {
   const supabase = getClient()
 
   const { data, error } = await supabase
@@ -170,3 +188,8 @@ export async function getServiceSlugs(): Promise<string[]> {
 
   return data.map((s) => s.slug)
 }
+
+export const getServiceSlugs = unstable_cache(_getServiceSlugs, ['service-slugs'], {
+  tags: ['services'],
+  revalidate: 3600,
+})
