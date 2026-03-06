@@ -20,7 +20,7 @@
   "hero": {
     "badge": "Trusted & Official",
     "title": "Your Best Friend Deserves Official Recognition",
-    "subtitle": "Professional ESA Letters and Psychiatric Service Dog registration. Get legitimate documentation from licensed mental health professionals.",
+    "subtitle": "Professional ESA Letters and Service Dog SVAN registration. Get legitimate documentation from licensed professionals.",
     "cta": {
       "primary": "View Products",
       "secondary": "Contact Us"
@@ -64,7 +64,7 @@
     "categories": {
       "esa": {
         "title": "Emotional Support Animal Letters",
-        "description": "Official ESA letters from licensed mental health professionals for housing and travel accommodations under federal law.",
+        "description": "Official ESA letters from licensed professionals for housing and travel accommodations under federal law.",
         "benefits": {
           "1": "Valid for housing under Fair Housing Act",
           "2": "Licensed mental health professional evaluation",
@@ -99,7 +99,7 @@
         },
         "professional": {
           "title": "Licensed Professionals",
-          "description": "Our network includes licensed mental health professionals in all 50 states."
+          "description": "Our network includes licensed professionals in all 50 states."
         },
         "compassionate": {
           "title": "Compassionate Care",
@@ -226,7 +226,7 @@
         },
         "q2": {
           "question": "Are your ESA letters legitimate?",
-          "answer": "Yes! All our ESA letters are written by licensed mental health professionals and comply with federal law."
+          "answer": "Yes! All our ESA letters are written by licensed professionals and comply with federal law."
         },
         "q3": {
           "question": "What if my landlord doesn't accept the letter?",
@@ -238,7 +238,7 @@
   "footer": {
     "company": {
       "title": "Liberty Paws International",
-      "description": "Professional ESA letters and service dog registration from licensed mental health professionals. Trusted by pet owners nationwide."
+      "description": "Professional ESA letters and service dog registration from licensed professionals. Trusted by pet owners nationwide."
     },
     "links": {
       "title": "Quick Links",

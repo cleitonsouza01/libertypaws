@@ -20,7 +20,7 @@
   "hero": {
     "badge": "Confiável e Oficial",
     "title": "Seu Melhor Amigo Merece Reconhecimento Oficial",
-    "subtitle": "Cartas ESA profissionais e registro de Cães de Serviço Psiquiátrico. Obtenha documentação legítima de profissionais de saúde mental licenciados.",
+    "subtitle": "Cartas ESA profissionais e registro SVAN de Cães de Serviço. Obtenha documentação legítima de profissionais licenciados.",
     "cta": {
       "primary": "Ver Produtos",
       "secondary": "Entre em Contato"
@@ -64,7 +64,7 @@
     "categories": {
       "esa": {
         "title": "Cartas de Animais de Suporte Emocional",
-        "description": "Cartas ESA oficiais de profissionais de saúde mental licenciados para acomodações de moradia e viagem conforme a lei federal.",
+        "description": "Cartas ESA oficiais de profissionais licenciados para acomodações de moradia e viagem conforme a lei federal.",
         "benefits": {
           "1": "Válida para moradia sob a Lei de Habitação Justa",
           "2": "Avaliação de profissional de saúde mental licenciado",
@@ -99,7 +99,7 @@
         },
         "professional": {
           "title": "Profissionais Licenciados",
-          "description": "Nossa rede inclui profissionais de saúde mental licenciados em todos os 50 estados."
+          "description": "Nossa rede inclui profissionais licenciados em todos os 50 estados."
         },
         "compassionate": {
           "title": "Atendimento Compassivo",
@@ -226,7 +226,7 @@
         },
         "q2": {
           "question": "Suas cartas ESA são legítimas?",
-          "answer": "Sim! Todas as nossas cartas ESA são escritas por profissionais de saúde mental licenciados e cumprem a lei federal."
+          "answer": "Sim! Todas as nossas cartas ESA são escritas por profissionais licenciados e cumprem a lei federal."
         },
         "q3": {
           "question": "E se meu proprietário não aceitar a carta?",
@@ -238,7 +238,7 @@
   "footer": {
     "company": {
       "title": "Liberty Paws International",
-      "description": "Cartas ESA profissionais e registro de cães de serviço de profissionais de saúde mental licenciados. Confiança de donos de pets em todo o país."
+      "description": "Cartas ESA profissionais e registro de cães de serviço de profissionais licenciados. Confiança de donos de pets em todo o país."
     },
     "links": {
       "title": "Links Rápidos",
