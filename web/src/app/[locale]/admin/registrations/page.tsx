@@ -2,8 +2,8 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
-import { useRouter } from '@/i18n/routing'
-import { Link } from '@/i18n/routing'
+import { useSearchParams } from 'next/navigation'
+import { useRouter, Link } from '@/i18n/routing'
 import { createClient } from '@/lib/supabase/client'
 import { fetchPaginatedRegistrations } from '@/lib/admin/queries'
 import { approveRegistration, rejectRegistration } from '@/lib/admin/actions'
@@ -11,12 +11,13 @@ import { DataTable, type Column } from '@/components/admin/data-table'
 import { SearchFilterBar } from '@/components/admin/search-filter-bar'
 import { AdminPagination } from '@/components/admin/admin-pagination'
 import { StatusBadge } from '@/components/admin/status-badge'
-import { Check, X, Plus } from 'lucide-react'
+import { Check, X, Plus, CheckCircle } from 'lucide-react'
 import type { AdminRegistration, PaginatedResult } from '@/types/admin'
 
 export default function AdminRegistrationsPage() {
   const t = useTranslations('admin.registrations')
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [result, setResult] = useState<PaginatedResult<AdminRegistration> | null>(null)
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
@@ -24,6 +25,23 @@ export default function AdminRegistrationsPage() {
   const [page, setPage] = useState(1)
   const [sortBy, setSortBy] = useState('')
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc')
+  const [toast, setToast] = useState('')
+
+  // Show toast when redirected after deletion
+  useEffect(() => {
+    if (searchParams.get('deleted') === '1') {
+      setToast(t('deleteSuccess'))
+      window.history.replaceState(null, '', window.location.pathname)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // Auto-dismiss toast
+  useEffect(() => {
+    if (!toast) return
+    const timer = setTimeout(() => setToast(''), 15000)
+    return () => clearTimeout(timer)
+  }, [toast])
 
   const load = useCallback(async () => {
     setLoading(true)
@@ -156,6 +174,19 @@ export default function AdminRegistrationsPage() {
           total={result.total}
           onPageChange={setPage}
         />
+      )}
+
+      {/* Toast notification */}
+      {toast && (
+        <div className="toast toast-end toast-bottom z-50">
+          <div className="alert alert-success shadow-lg gap-2">
+            <CheckCircle className="h-5 w-5" />
+            <span>{toast}</span>
+            <button className="btn btn-ghost btn-xs btn-circle" onClick={() => setToast('')}>
+              <X className="h-3 w-3" />
+            </button>
+          </div>
+        </div>
       )}
     </div>
   )

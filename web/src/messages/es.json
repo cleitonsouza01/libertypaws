@@ -702,8 +702,16 @@
         "suspend": {
           "title": "Suspender Registro",
           "message": "¿Está seguro de suspender este registro?"
+        },
+        "delete": {
+          "title": "Eliminar Registro",
+          "message": "Esta acción es irreversible. El registro y todos los datos asociados serán eliminados permanentemente. ¿Está seguro de continuar?"
         }
-      }
+      },
+      "delete": "Eliminar",
+      "deleting": "Eliminando...",
+      "deleteError": "No se pudo eliminar el registro. Por favor, intente de nuevo.",
+      "deleteSuccess": "Registro eliminado exitosamente."
     },
     "messages": {
       "title": "Mensajes",

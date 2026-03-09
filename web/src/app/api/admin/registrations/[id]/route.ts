@@ -124,3 +124,47 @@ export async function PATCH(
 
   return NextResponse.json({ success: true })
 }
+
+export async function DELETE(
+  _request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params
+
+  // Auth check — verify admin role
+  const supabase = await createClient()
+  const { data: { user }, error: authError } = await supabase.auth.getUser()
+
+  if (authError || !user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  if (user.app_metadata?.role !== 'admin') {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+  }
+
+  const admin = createAdminClient()
+
+  // Verify the registration exists
+  const { data: existing } = await admin
+    .from('pet_registrations')
+    .select('id')
+    .eq('id', id)
+    .single()
+
+  if (!existing) {
+    return NextResponse.json({ error: 'Registration not found' }, { status: 404 })
+  }
+
+  // Delete the registration
+  const { error: deleteError } = await admin
+    .from('pet_registrations')
+    .delete()
+    .eq('id', id)
+
+  if (deleteError) {
+    return NextResponse.json({ error: deleteError.message }, { status: 500 })
+  }
+
+  return NextResponse.json({ success: true })
+}

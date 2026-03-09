@@ -702,8 +702,16 @@
         "suspend": {
           "title": "Suspend Registration",
           "message": "Are you sure you want to suspend this registration?"
+        },
+        "delete": {
+          "title": "Delete Registration",
+          "message": "This action is irreversible. The registration and all associated data will be permanently deleted. Are you sure you want to proceed?"
         }
-      }
+      },
+      "delete": "Delete",
+      "deleting": "Deleting...",
+      "deleteError": "Failed to delete registration. Please try again.",
+      "deleteSuccess": "Registration deleted successfully."
     },
     "messages": {
       "title": "Messages",

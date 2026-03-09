@@ -2,14 +2,14 @@
 
 import { useState, useEffect, useCallback, use } from 'react'
 import { useTranslations } from 'next-intl'
-import { Link } from '@/i18n/routing'
+import { Link, useRouter } from '@/i18n/routing'
 import { createClient } from '@/lib/supabase/client'
 import { fetchRegistrationDetail } from '@/lib/admin/queries'
 import { approveRegistration, rejectRegistration, updateRegistrationStatus, toggleRegistrationPublic } from '@/lib/admin/actions'
 import { StatusBadge } from '@/components/admin/status-badge'
 import { ConfirmDialog } from '@/components/admin/confirm-dialog'
 import { PhotoUpload } from '@/components/admin/photo-upload'
-import { ArrowLeft, Mail, User, PawPrint, Eye, EyeOff, Save, CheckCircle } from 'lucide-react'
+import { ArrowLeft, Mail, User, PawPrint, Eye, EyeOff, Save, CheckCircle, Trash2 } from 'lucide-react'
 import Image from 'next/image'
 import type { AdminRegistration, RegistrationStatus } from '@/types/admin'
 
@@ -66,10 +66,13 @@ export default function AdminRegistrationDetailPage({
 }) {
   const { id } = use(params)
   const t = useTranslations('admin.registrations')
+  const router = useRouter()
   const [reg, setReg] = useState<AdminRegistration | null>(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  const [deleting, setDeleting] = useState(false)
   const [confirmAction, setConfirmAction] = useState<'approve' | 'reject' | 'suspend' | null>(null)
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 
   // Editable form state
   const [form, setForm] = useState<EditableFields | null>(null)
@@ -158,6 +161,30 @@ export default function AdminRegistrationDetailPage({
 
     setConfirmAction(null)
     setSaving(false)
+  }
+
+  async function handleDelete() {
+    setDeleting(true)
+    setSaveStatus('idle')
+    setSaveError('')
+
+    try {
+      const res = await fetch(`/api/admin/registrations/${id}`, {
+        method: 'DELETE',
+      })
+
+      if (!res.ok) {
+        const data = await res.json()
+        throw new Error(data.error || 'Unknown error')
+      }
+
+      router.push('/admin/registrations?deleted=1')
+    } catch (err) {
+      setSaveError(err instanceof Error ? err.message : t('deleteError'))
+      setSaveStatus('error')
+      setDeleting(false)
+      setShowDeleteConfirm(false)
+    }
   }
 
   if (loading) {
@@ -408,7 +435,7 @@ export default function AdminRegistrationDetailPage({
       </div>
 
       {/* Status actions */}
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         {reg.status === 'pending_review' && (
           <>
             <button
@@ -436,9 +463,20 @@ export default function AdminRegistrationDetailPage({
             {t('suspend')}
           </button>
         )}
+
+        <div className="ml-auto">
+          <button
+            className="btn btn-error btn-outline btn-sm gap-1"
+            onClick={() => setShowDeleteConfirm(true)}
+            disabled={saving || deleting}
+          >
+            <Trash2 className="h-4 w-4" />
+            {t('delete')}
+          </button>
+        </div>
       </div>
 
-      {/* Confirm dialog */}
+      {/* Confirm dialog — status actions */}
       <ConfirmDialog
         open={!!confirmAction}
         title={t(`confirm.${confirmAction ?? 'approve'}.title`)}
@@ -446,6 +484,17 @@ export default function AdminRegistrationDetailPage({
         variant={confirmAction === 'approve' ? 'primary' : 'error'}
         onConfirm={() => confirmAction && handleAction(confirmAction)}
         onCancel={() => setConfirmAction(null)}
+      />
+
+      {/* Confirm dialog — delete */}
+      <ConfirmDialog
+        open={showDeleteConfirm}
+        title={t('confirm.delete.title')}
+        message={t('confirm.delete.message')}
+        confirmLabel={deleting ? t('deleting') : t('delete')}
+        variant="error"
+        onConfirm={handleDelete}
+        onCancel={() => setShowDeleteConfirm(false)}
       />
 
       {/* Sticky save bar */}

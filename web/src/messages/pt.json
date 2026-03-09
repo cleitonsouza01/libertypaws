@@ -702,8 +702,16 @@
         "suspend": {
           "title": "Suspender Registro",
           "message": "Tem certeza que deseja suspender este registro?"
+        },
+        "delete": {
+          "title": "Excluir Registro",
+          "message": "Esta ação é irreversível. O registro e todos os dados associados serão excluídos permanentemente. Tem certeza que deseja continuar?"
         }
-      }
+      },
+      "delete": "Excluir",
+      "deleting": "Excluindo...",
+      "deleteError": "Falha ao excluir o registro. Por favor, tente novamente.",
+      "deleteSuccess": "Registro excluído com sucesso."
     },
     "messages": {
       "title": "Mensagens",
