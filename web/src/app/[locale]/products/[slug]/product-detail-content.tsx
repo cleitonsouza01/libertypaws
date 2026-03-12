@@ -28,6 +28,23 @@ export function ProductDetailContent({
 
   const categoryLabel = tCommon(`categories.${product.category}` as 'categories.esa')
 
+  // Translated features: prefer translation file, fallback to DB
+  let features: string[]
+  try {
+    features = tProduct.raw('features') as string[]
+  } catch {
+    features = product.features
+  }
+
+  // Translated variants: overlay translation on DB data
+  const translatedVariants = product.variants?.map((v) => {
+    let name = v.name
+    let description = v.description
+    try { name = tProduct(`variants.${v.slug}.name`) } catch { /* use DB value */ }
+    try { description = tProduct(`variants.${v.slug}.description`) } catch { /* use DB value */ }
+    return { ...v, name, description }
+  })
+
   // Dynamic price: show selected variant price or fallback to product range
   const priceDisplay = selectedVariant
     ? `$${selectedVariant.price.toFixed(2)}`
@@ -84,10 +101,10 @@ export function ProductDetailContent({
               <p className="mb-6 text-lg text-gray-600">{tProduct('description')}</p>
 
               {/* Variant Selector */}
-              {product.variants && product.variants.length > 0 && (
+              {translatedVariants && translatedVariants.length > 0 && (
                 <div className="mb-8">
                   <VariantSelector
-                    variants={product.variants}
+                    variants={translatedVariants}
                     selected={selectedVariantId}
                     onSelect={setSelectedVariantId}
                   />
@@ -105,7 +122,7 @@ export function ProductDetailContent({
                   {tCommon('detail.features')}
                 </h2>
                 <ul className="space-y-3">
-                  {product.features.map((feature, index) => (
+                  {features.map((feature, index) => (
                     <li key={index} className="flex items-start gap-3">
                       <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary-100">
                         <Check className="h-3 w-3 text-primary-600" />
@@ -120,15 +137,15 @@ export function ProductDetailContent({
               <div className="mb-8 grid grid-cols-3 gap-4">
                 <div className="flex flex-col items-center gap-2 rounded-lg bg-gray-100 p-4 text-center">
                   <Shield className="h-6 w-6 text-primary-600" />
-                  <span className="text-xs font-medium text-gray-700">100% Legal</span>
+                  <span className="text-xs font-medium text-gray-700">{tCommon('detail.trust.legal')}</span>
                 </div>
                 <div className="flex flex-col items-center gap-2 rounded-lg bg-gray-100 p-4 text-center">
                   <Clock className="h-6 w-6 text-primary-600" />
-                  <span className="text-xs font-medium text-gray-700">24-48h Delivery</span>
+                  <span className="text-xs font-medium text-gray-700">{tCommon('detail.trust.delivery')}</span>
                 </div>
                 <div className="flex flex-col items-center gap-2 rounded-lg bg-gray-100 p-4 text-center">
                   <Award className="h-6 w-6 text-primary-600" />
-                  <span className="text-xs font-medium text-gray-700">Licensed Pros</span>
+                  <span className="text-xs font-medium text-gray-700">{tCommon('detail.trust.licensed')}</span>
                 </div>
               </div>
 

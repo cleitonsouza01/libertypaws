@@ -183,7 +183,12 @@
         "recommended": "Recommended"
       },
       "relatedProducts": "Related Products",
-      "backToProducts": "Back to Products"
+      "backToProducts": "Back to Products",
+      "trust": {
+        "legal": "100% Legal",
+        "delivery": "24-48h Delivery",
+        "licensed": "Licensed Pros"
+      }
     }
   },
   "contact": {
@@ -445,19 +450,69 @@
   "productDetails": {
     "svan-program": {
       "name": "Service Dog Program (SVAN)",
-      "description": "Provides identification and supporting documentation for trained service dogs assisting with physical or psychological conditions. Includes official ID card, certificate, housing documentation, DOT air travel form support, relief certification, personalized harness, matching leash, and complete identification kit."
+      "description": "Provides identification and supporting documentation for trained service dogs assisting with physical or psychological conditions. Includes official ID card, certificate, housing documentation, DOT air travel form support, relief certification, personalized harness, matching leash, and complete identification kit.",
+      "features": [
+        "Service Dog Identification ID Card",
+        "Official Service Dog Certificate",
+        "Housing Documentation (Housing Form)",
+        "DOT Air Travel Form preparation support",
+        "Relief Certification",
+        "Personalized Service Dog identified harness",
+        "Matching leash",
+        "Complete identification kit"
+      ],
+      "variants": {
+        "small-medium": { "name": "Small / Medium", "description": "Sizes XXS, XS, S, M" },
+        "large": { "name": "Large", "description": "Size L" },
+        "xl": { "name": "Extra Large", "description": "Size XL" },
+        "xxl": { "name": "Double Extra Large", "description": "Size XXL" }
+      }
     },
     "esa-full-kit": {
       "name": "Emotional Support Animal (ESA) - Full Kit",
-      "description": "Professional evaluation and identification for individuals benefiting from the emotional support of their pet. Includes ESA qualification evaluation, official ESA letter, personalized certificate, pet ID card, identified harness, matching leash, and complete identification kit."
+      "description": "Professional evaluation and identification for individuals benefiting from the emotional support of their pet. Includes ESA qualification evaluation, official ESA letter, personalized certificate, pet ID card, identified harness, matching leash, and complete identification kit.",
+      "features": [
+        "Professional evaluation for ESA qualification",
+        "Official ESA letter (post-assessment)",
+        "Personalized ESA Certificate",
+        "Pet Identification ID Card",
+        "Emotional Support identified harness",
+        "Matching leash",
+        "Complete identification kit"
+      ],
+      "variants": {
+        "small": { "name": "Small", "description": "Sizes XXS, XS, S" },
+        "medium": { "name": "Medium", "description": "Size M" },
+        "large": { "name": "Large", "description": "Size L" },
+        "xl": { "name": "Extra Large", "description": "Size XL" },
+        "xxl": { "name": "Double Extra Large", "description": "Size XXL" }
+      }
     },
     "esa-letter-housing": {
       "name": "ESA Letter: Housing Support Documentation",
-      "description": "Licensed mental health professional evaluation via secure video consultation for housing and condo accommodations. Includes online video consultation, clinical ESA evaluation, official ESA letter issued after assessment, and housing compliance documentation."
+      "description": "Licensed mental health professional evaluation via secure video consultation for housing and condo accommodations. Includes online video consultation, clinical ESA evaluation, official ESA letter issued after assessment, and housing compliance documentation.",
+      "features": [
+        "Online video consultation",
+        "Clinical ESA evaluation",
+        "Official ESA Letter issued after assessment",
+        "Housing/Condominium compliance documentation",
+        "Professional guidance during evaluation"
+      ]
     },
     "travel-advisory": {
       "name": "Liberty Paws Travel Advisory",
-      "description": "Specialized veterinary guidance for international pet travel requirements and preparation. Includes veterinarian consultation, route and destination evaluation, document review, airlines coordination support, and 24-hour initial contact guarantee."
+      "description": "Specialized veterinary guidance for international pet travel requirements and preparation. Includes veterinarian consultation, route and destination evaluation, document review, airlines coordination support, and 24-hour initial contact guarantee.",
+      "features": [
+        "Specialized veterinarian consultation",
+        "Route/Destination case evaluation",
+        "Document review and guidance",
+        "Airlines coordination support",
+        "24-hour initial contact guarantee"
+      ],
+      "variants": {
+        "standard": { "name": "Standard Travel Advisory", "description": "Individual assessment and general guidance" },
+        "priority": { "name": "Priority Travel Advisory", "description": "Priority contact, accelerated case review, dedicated support" }
+      }
     }
   },
   "searchRegistration": {

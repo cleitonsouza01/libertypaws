@@ -42,6 +42,15 @@ interface ProductCardProps {
 
 export function ProductCard({ product, index = 0 }: ProductCardProps) {
   const t = useTranslations('products')
+  const tProduct = useTranslations(`productDetails.${product.id}`)
+
+  // Translated content with DB fallback
+  let name = product.name
+  let description = product.description
+  let features = product.features
+  try { name = tProduct('name') } catch { /* use DB value */ }
+  try { description = tProduct('description') } catch { /* use DB value */ }
+  try { features = tProduct.raw('features') as string[] } catch { /* use DB value */ }
 
   return (
     <motion.div
@@ -78,7 +87,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
 
         <Image
           src={product.image}
-          alt={product.name}
+          alt={name}
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-105"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -94,17 +103,17 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
 
         {/* Name */}
         <h2 className="card-title text-secondary">
-          {product.name}
+          {name}
         </h2>
 
         {/* Description */}
         <p className="text-sm text-base-content/60 line-clamp-2">
-          {product.description}
+          {description}
         </p>
 
         {/* Features */}
         <ul className="flex-grow space-y-2 my-2">
-          {product.features.slice(0, 3).map((feature, i) => (
+          {features.slice(0, 3).map((feature, i) => (
             <li key={i} className="flex items-start gap-2 text-sm text-base-content/60">
               <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
               <span>{feature}</span>

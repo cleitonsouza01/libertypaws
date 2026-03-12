@@ -183,7 +183,12 @@
         "recommended": "Recomendado"
       },
       "relatedProducts": "Produtos Relacionados",
-      "backToProducts": "Voltar aos Produtos"
+      "backToProducts": "Voltar aos Produtos",
+      "trust": {
+        "legal": "100% Legal",
+        "delivery": "Entrega 24-48h",
+        "licensed": "Profissionais Licenciados"
+      }
     }
   },
   "contact": {
@@ -445,19 +450,69 @@
   "productDetails": {
     "svan-program": {
       "name": "Programa de Cão de Serviço (SVAN)",
-      "description": "Fornece identificação e documentação de apoio para cães de serviço treinados que auxiliam em condições físicas ou psicológicas. Inclui cartão de identificação oficial, certificado, documentação de moradia, suporte de formulário DOT para viagem aérea, certificação de alívio, peitoral personalizado, guia combinada e kit de identificação completo."
+      "description": "Fornece identificação e documentação de apoio para cães de serviço treinados que auxiliam em condições físicas ou psicológicas. Inclui cartão de identificação oficial, certificado, documentação de moradia, suporte de formulário DOT para viagem aérea, certificação de alívio, peitoral personalizado, guia combinada e kit de identificação completo.",
+      "features": [
+        "Cartão de identificação de Cão de Serviço",
+        "Certificado oficial de Cão de Serviço",
+        "Documentação de moradia (Formulário de Moradia)",
+        "Suporte de preparação de formulário DOT para viagem aérea",
+        "Certificação de alívio",
+        "Peitoral personalizado de Cão de Serviço identificado",
+        "Guia combinada",
+        "Kit de identificação completo"
+      ],
+      "variants": {
+        "small-medium": { "name": "Pequeno / Médio", "description": "Tamanhos XXS, XS, S, M" },
+        "large": { "name": "Grande", "description": "Tamanho L" },
+        "xl": { "name": "Extra Grande", "description": "Tamanho XL" },
+        "xxl": { "name": "Duplo Extra Grande", "description": "Tamanho XXL" }
+      }
     },
     "esa-full-kit": {
       "name": "Animal de Suporte Emocional (ESA) - Kit Completo",
-      "description": "Avaliação profissional e identificação para pessoas que se beneficiam do suporte emocional de seu pet. Inclui avaliação de qualificação ESA, carta ESA oficial, certificado personalizado, cartão de identificação do pet, peitoral identificado, guia combinada e kit de identificação completo."
+      "description": "Avaliação profissional e identificação para pessoas que se beneficiam do suporte emocional de seu pet. Inclui avaliação de qualificação ESA, carta ESA oficial, certificado personalizado, cartão de identificação do pet, peitoral identificado, guia combinada e kit de identificação completo.",
+      "features": [
+        "Avaliação profissional para qualificação ESA",
+        "Carta ESA oficial (pós-avaliação)",
+        "Certificado ESA personalizado",
+        "Cartão de identificação do pet",
+        "Peitoral identificado de Suporte Emocional",
+        "Guia combinada",
+        "Kit de identificação completo"
+      ],
+      "variants": {
+        "small": { "name": "Pequeno", "description": "Tamanhos XXS, XS, S" },
+        "medium": { "name": "Médio", "description": "Tamanho M" },
+        "large": { "name": "Grande", "description": "Tamanho L" },
+        "xl": { "name": "Extra Grande", "description": "Tamanho XL" },
+        "xxl": { "name": "Duplo Extra Grande", "description": "Tamanho XXL" }
+      }
     },
     "esa-letter-housing": {
       "name": "Carta ESA: Documentação de Apoio para Moradia",
-      "description": "Avaliação por profissional de saúde mental licenciado via consulta de vídeo segura para acomodações de moradia e condomínio. Inclui consulta de vídeo online, avaliação clínica ESA, carta ESA oficial emitida após avaliação e documentação de conformidade de moradia."
+      "description": "Avaliação por profissional de saúde mental licenciado via consulta de vídeo segura para acomodações de moradia e condomínio. Inclui consulta de vídeo online, avaliação clínica ESA, carta ESA oficial emitida após avaliação e documentação de conformidade de moradia.",
+      "features": [
+        "Consulta de vídeo online",
+        "Avaliação clínica ESA",
+        "Carta ESA oficial emitida após avaliação",
+        "Documentação de conformidade de moradia/condomínio",
+        "Orientação profissional durante a avaliação"
+      ]
     },
     "travel-advisory": {
       "name": "Assessoria de Viagem Liberty Paws",
-      "description": "Orientação veterinária especializada para requisitos e preparação de viagem internacional com pets. Inclui consulta com veterinário, avaliação de rota e destino, revisão de documentos, suporte de coordenação com companhias aéreas e garantia de contato inicial em 24 horas."
+      "description": "Orientação veterinária especializada para requisitos e preparação de viagem internacional com pets. Inclui consulta com veterinário, avaliação de rota e destino, revisão de documentos, suporte de coordenação com companhias aéreas e garantia de contato inicial em 24 horas.",
+      "features": [
+        "Consulta com veterinário especializado",
+        "Avaliação de caso por rota/destino",
+        "Revisão e orientação de documentos",
+        "Suporte de coordenação com companhias aéreas",
+        "Garantia de contato inicial em 24 horas"
+      ],
+      "variants": {
+        "standard": { "name": "Assessoria de Viagem Padrão", "description": "Avaliação individual e orientação geral" },
+        "priority": { "name": "Assessoria de Viagem Prioritária", "description": "Contato prioritário, revisão acelerada de caso, suporte dedicado" }
+      }
     }
   },
   "searchRegistration": {
