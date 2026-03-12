@@ -11,10 +11,19 @@ import { Price } from '@/components/ui/price'
 import { cn } from '@/lib/utils'
 import { clarityEvent, clarityTag } from '@/lib/clarity'
 
+export interface ProductVariant {
+  id: string
+  slug: string
+  name: string
+  description?: string
+  price: number
+  isDefault: boolean
+}
+
 export interface Product {
   id: string
   slug: string
-  category: 'esa' | 'psd'
+  category: string
   name: string
   description: string
   price: number
@@ -23,6 +32,7 @@ export interface Product {
   badge?: string
   popular?: boolean
   features: string[]
+  variants?: ProductVariant[]
 }
 
 interface ProductCardProps {
@@ -40,7 +50,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
       viewport={{ once: true }}
       transition={{ delay: index * 0.1 }}
       className={cn(
-        'card bg-base-200 shadow-sm transition-all duration-300',
+        'card h-full bg-base-200 shadow-sm transition-all duration-300',
         'hover:shadow-lg',
         product.popular && 'ring-2 ring-primary'
       )}
@@ -76,7 +86,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
       </figure>
 
       {/* Content */}
-      <div className="card-body">
+      <div className="card-body flex flex-col">
         {/* Category */}
         <p className="text-xs font-medium uppercase tracking-wider text-primary">
           {t(`categories.${product.category}`)}
@@ -93,7 +103,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
         </p>
 
         {/* Features */}
-        <ul className="space-y-2 my-2">
+        <ul className="flex-grow space-y-2 my-2">
           {product.features.slice(0, 3).map((feature, i) => (
             <li key={i} className="flex items-start gap-2 text-sm text-base-content/60">
               <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />

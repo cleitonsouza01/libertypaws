@@ -287,6 +287,73 @@ export async function toggleServiceFeatured(
   if (error) throw error
 }
 
+// ── Service variant actions ─────────────────────────────────────────
+
+export interface VariantInput {
+  id?: string
+  slug: string
+  name: string
+  description: string
+  price: number
+  is_default: boolean
+  is_active: boolean
+  sort_order: number
+}
+
+export async function saveServiceVariants(
+  supabase: SupabaseClient,
+  serviceId: string,
+  variants: VariantInput[]
+) {
+  // Fetch existing variant IDs for this service
+  const { data: existing } = await supabase
+    .from('service_variants')
+    .select('id')
+    .eq('service_id', serviceId)
+
+  const existingIds = new Set((existing ?? []).map((v) => v.id))
+  const incomingIds = new Set(variants.filter((v) => v.id).map((v) => v.id!))
+
+  // Delete removed variants
+  const toDelete = [...existingIds].filter((id) => !incomingIds.has(id))
+  if (toDelete.length > 0) {
+    const { error } = await supabase
+      .from('service_variants')
+      .delete()
+      .in('id', toDelete)
+    if (error) throw error
+  }
+
+  // Upsert remaining variants
+  for (const variant of variants) {
+    const row = {
+      service_id: serviceId,
+      slug: variant.slug,
+      name: variant.name,
+      description: variant.description || null,
+      price: variant.price,
+      is_default: variant.is_default,
+      is_active: variant.is_active,
+      sort_order: variant.sort_order,
+    }
+
+    if (variant.id && existingIds.has(variant.id)) {
+      // Update existing
+      const { error } = await supabase
+        .from('service_variants')
+        .update({ ...row, updated_at: new Date().toISOString() })
+        .eq('id', variant.id)
+      if (error) throw error
+    } else {
+      // Insert new
+      const { error } = await supabase
+        .from('service_variants')
+        .insert(row)
+      if (error) throw error
+    }
+  }
+}
+
 // ── Coupon actions ──────────────────────────────────────────────────
 
 export async function createCoupon(

@@ -156,7 +156,8 @@
     "categories": {
       "all": "Todos os Produtos",
       "esa": "Cartas ESA",
-      "psd": "Registro PSD"
+      "psd": "Cães de Serviço",
+      "services": "Serviços Profissionais"
     },
     "filters": {
       "category": "Categoria",
@@ -176,6 +177,10 @@
       "addOns": {
         "title": "Complementos",
         "appleWallet": "Cartão Digital Apple Wallet"
+      },
+      "variants": {
+        "title": "Selecione seu Pacote",
+        "recommended": "Recomendado"
       },
       "relatedProducts": "Produtos Relacionados",
       "backToProducts": "Voltar aos Produtos"
@@ -438,29 +443,21 @@
     }
   },
   "productDetails": {
+    "svan-program": {
+      "name": "Programa de Cão de Serviço (SVAN)",
+      "description": "Fornece identificação e documentação de apoio para cães de serviço treinados que auxiliam em condições físicas ou psicológicas. Inclui cartão de identificação oficial, certificado, documentação de moradia, suporte de formulário DOT para viagem aérea, certificação de alívio, peitoral personalizado, guia combinada e kit de identificação completo."
+    },
+    "esa-full-kit": {
+      "name": "Animal de Suporte Emocional (ESA) - Kit Completo",
+      "description": "Avaliação profissional e identificação para pessoas que se beneficiam do suporte emocional de seu pet. Inclui avaliação de qualificação ESA, carta ESA oficial, certificado personalizado, cartão de identificação do pet, peitoral identificado, guia combinada e kit de identificação completo."
+    },
     "esa-letter-housing": {
-      "name": "Carta ESA para Moradia",
-      "description": "Carta oficial de Animal de Suporte Emocional para acomodações de moradia sob a Lei de Habitação Justa. Escrita por um profissional de saúde mental licenciado, esta carta garante que seu proprietário reconheça seu direito legal de viver com seu ESA."
+      "name": "Carta ESA: Documentação de Apoio para Moradia",
+      "description": "Avaliação por profissional de saúde mental licenciado via consulta de vídeo segura para acomodações de moradia e condomínio. Inclui consulta de vídeo online, avaliação clínica ESA, carta ESA oficial emitida após avaliação e documentação de conformidade de moradia."
     },
-    "esa-letter-travel": {
-      "name": "Carta ESA para Viagem",
-      "description": "Documentação para viajar com seu Animal de Suporte Emocional em companhias aéreas. Nossos profissionais licenciados fornecem documentação adequada para garantir experiências de viagem tranquilas com seu companheiro."
-    },
-    "esa-combo-package": {
-      "name": "Pacote ESA Completo",
-      "description": "Pacote ESA completo incluindo cartas de moradia e viagem, mais um cartão de identificação ESA oficial. O melhor valor para cobertura completa e tranquilidade."
-    },
-    "psd-registration": {
-      "name": "Registro de Cão de Serviço Psiquiátrico",
-      "description": "Registro oficial para seu Cão de Serviço Psiquiátrico com documentação completa e cartão de identificação. Documentação conforme a ADA para proteger seus direitos em espaços públicos."
-    },
-    "psd-training-guide": {
-      "name": "Guia de Treinamento e Documentação PSD",
-      "description": "Guia de treinamento completo e pacote de documentação para Cães de Serviço Psiquiátrico. Inclui currículo de treinamento, guia de acesso público e manual de direitos legais."
-    },
-    "psd-complete-kit": {
-      "name": "Kit PSD Completo",
-      "description": "Tudo o que você precisa para seu Cão de Serviço Psiquiátrico: registro completo, cartão de identificação oficial, colete de cão de serviço e documentação completa. O pacote definitivo para suporte completo de cão de serviço."
+    "travel-advisory": {
+      "name": "Assessoria de Viagem Liberty Paws",
+      "description": "Orientação veterinária especializada para requisitos e preparação de viagem internacional com pets. Inclui consulta com veterinário, avaliação de rota e destino, revisão de documentos, suporte de coordenação com companhias aéreas e garantia de contato inicial em 24 horas."
     }
   },
   "searchRegistration": {
@@ -759,7 +756,20 @@
       "changePhoto": "Trocar Imagem",
       "remove": "Remover",
       "uploadError": "Erro ao enviar a imagem",
-      "petPhotoHint": "JPEG, PNG ou WebP — máx. 5 MB"
+      "petPhotoHint": "JPEG, PNG ou WebP — máx. 5 MB",
+      "variants": {
+        "title": "Variantes do Serviço",
+        "subtitle": "Defina opções de tamanho/nível com preços individuais",
+        "name": "Nome",
+        "slug": "Slug",
+        "description": "Descrição",
+        "price": "Preço",
+        "default": "Padrão",
+        "active": "Ativo",
+        "addVariant": "Adicionar Variante",
+        "removeVariant": "Remover",
+        "noVariants": "Sem variantes definidas. Adicione variantes para preços por tamanho/nível."
+      }
     },
     "coupons": {
       "title": "Cupons",

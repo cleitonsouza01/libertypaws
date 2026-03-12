@@ -156,7 +156,8 @@
     "categories": {
       "all": "All Products",
       "esa": "ESA Letters",
-      "psd": "PSD Registration"
+      "psd": "Service Dogs",
+      "services": "Professional Services"
     },
     "filters": {
       "category": "Category",
@@ -176,6 +177,10 @@
       "addOns": {
         "title": "Add-Ons",
         "appleWallet": "Apple Wallet Digital Card"
+      },
+      "variants": {
+        "title": "Select Your Package",
+        "recommended": "Recommended"
       },
       "relatedProducts": "Related Products",
       "backToProducts": "Back to Products"
@@ -438,29 +443,21 @@
     }
   },
   "productDetails": {
+    "svan-program": {
+      "name": "Service Dog Program (SVAN)",
+      "description": "Provides identification and supporting documentation for trained service dogs assisting with physical or psychological conditions. Includes official ID card, certificate, housing documentation, DOT air travel form support, relief certification, personalized harness, matching leash, and complete identification kit."
+    },
+    "esa-full-kit": {
+      "name": "Emotional Support Animal (ESA) - Full Kit",
+      "description": "Professional evaluation and identification for individuals benefiting from the emotional support of their pet. Includes ESA qualification evaluation, official ESA letter, personalized certificate, pet ID card, identified harness, matching leash, and complete identification kit."
+    },
     "esa-letter-housing": {
-      "name": "ESA Letter for Housing",
-      "description": "Official Emotional Support Animal letter for housing accommodations under the Fair Housing Act. Written by a licensed mental health professional, this letter ensures your landlord recognizes your legal right to live with your ESA."
+      "name": "ESA Letter: Housing Support Documentation",
+      "description": "Licensed mental health professional evaluation via secure video consultation for housing and condo accommodations. Includes online video consultation, clinical ESA evaluation, official ESA letter issued after assessment, and housing compliance documentation."
     },
-    "esa-letter-travel": {
-      "name": "ESA Letter for Travel",
-      "description": "Documentation for traveling with your Emotional Support Animal on airlines. Our licensed professionals provide proper documentation to ensure smooth travel experiences with your companion."
-    },
-    "esa-combo-package": {
-      "name": "ESA Complete Package",
-      "description": "Comprehensive ESA package including both housing and travel letters, plus an official ESA ID card. The best value for complete coverage and peace of mind."
-    },
-    "psd-registration": {
-      "name": "Psychiatric Service Dog Registration",
-      "description": "Official registration for your Psychiatric Service Dog with comprehensive documentation and ID card. ADA compliant documentation to protect your rights in public spaces."
-    },
-    "psd-training-guide": {
-      "name": "PSD Training & Documentation",
-      "description": "Complete training guide and documentation package for Psychiatric Service Dogs. Includes training curriculum, public access guide, and legal rights handbook."
-    },
-    "psd-complete-kit": {
-      "name": "PSD Complete Kit",
-      "description": "Everything you need for your Psychiatric Service Dog: full registration, official ID card, service dog vest, and comprehensive documentation. The ultimate package for complete service dog support."
+    "travel-advisory": {
+      "name": "Liberty Paws Travel Advisory",
+      "description": "Specialized veterinary guidance for international pet travel requirements and preparation. Includes veterinarian consultation, route and destination evaluation, document review, airlines coordination support, and 24-hour initial contact guarantee."
     }
   },
   "searchRegistration": {
@@ -759,7 +756,20 @@
       "changePhoto": "Change Image",
       "remove": "Remove",
       "uploadError": "Image upload failed",
-      "petPhotoHint": "JPEG, PNG or WebP — max 5 MB"
+      "petPhotoHint": "JPEG, PNG or WebP — max 5 MB",
+      "variants": {
+        "title": "Service Variants",
+        "subtitle": "Define size/tier options with individual pricing",
+        "name": "Name",
+        "slug": "Slug",
+        "description": "Description",
+        "price": "Price",
+        "default": "Default",
+        "active": "Active",
+        "addVariant": "Add Variant",
+        "removeVariant": "Remove",
+        "noVariants": "No variants defined. Add variants for size/tier-based pricing."
+      }
     },
     "coupons": {
       "title": "Coupons",

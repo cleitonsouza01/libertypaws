@@ -98,6 +98,21 @@ export interface AdminContactMessage {
 
 export type MessageStatus = 'new' | 'read' | 'replied' | 'closed'
 
+export interface AdminServiceVariant {
+  id: string
+  service_id: string
+  slug: string
+  name: string
+  description: string | null
+  price: number
+  stripe_price_id: string | null
+  is_default: boolean
+  is_active: boolean
+  sort_order: number
+  created_at: string
+  updated_at: string
+}
+
 export interface AdminService {
   id: string
   name: string
@@ -113,6 +128,7 @@ export interface AdminService {
   image_url: string
   created_at: string
   updated_at: string
+  variants?: AdminServiceVariant[]
 }
 
 export interface AdminCoupon {

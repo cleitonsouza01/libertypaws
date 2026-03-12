@@ -156,7 +156,8 @@
     "categories": {
       "all": "Todos los Productos",
       "esa": "Cartas ESA",
-      "psd": "Registro PSD"
+      "psd": "Perros de Servicio",
+      "services": "Servicios Profesionales"
     },
     "filters": {
       "category": "Categoría",
@@ -176,6 +177,10 @@
       "addOns": {
         "title": "Complementos",
         "appleWallet": "Tarjeta Digital Apple Wallet"
+      },
+      "variants": {
+        "title": "Selecciona tu Paquete",
+        "recommended": "Recomendado"
       },
       "relatedProducts": "Productos Relacionados",
       "backToProducts": "Volver a Productos"
@@ -438,29 +443,21 @@
     }
   },
   "productDetails": {
+    "svan-program": {
+      "name": "Programa de Perro de Servicio (SVAN)",
+      "description": "Proporciona identificación y documentación de respaldo para perros de servicio entrenados que asisten con condiciones físicas o psicológicas. Incluye tarjeta de identificación oficial, certificado, documentación de vivienda, soporte de formulario DOT para viaje aéreo, certificación de alivio, arnés personalizado, correa a juego y kit de identificación completo."
+    },
+    "esa-full-kit": {
+      "name": "Animal de Apoyo Emocional (ESA) - Kit Completo",
+      "description": "Evaluación profesional e identificación para personas que se benefician del apoyo emocional de su mascota. Incluye evaluación de calificación ESA, carta ESA oficial, certificado personalizado, tarjeta de identificación de mascota, arnés identificado, correa a juego y kit de identificación completo."
+    },
     "esa-letter-housing": {
-      "name": "Carta ESA para Vivienda",
-      "description": "Carta oficial de Animal de Apoyo Emocional para acomodaciones de vivienda bajo la Ley de Vivienda Justa. Escrita por un profesional de salud mental licenciado, esta carta asegura que tu arrendador reconozca tu derecho legal de vivir con tu ESA."
+      "name": "Carta ESA: Documentación de Apoyo para Vivienda",
+      "description": "Evaluación por un profesional de salud mental licenciado mediante consulta de video segura para acomodaciones de vivienda y condominio. Incluye consulta de video en línea, evaluación clínica ESA, carta ESA oficial emitida después de la evaluación y documentación de cumplimiento de vivienda."
     },
-    "esa-letter-travel": {
-      "name": "Carta ESA para Viaje",
-      "description": "Documentación para viajar con tu Animal de Apoyo Emocional en aerolíneas. Nuestros profesionales licenciados proporcionan la documentación adecuada para asegurar experiencias de viaje sin problemas con tu compañero."
-    },
-    "esa-combo-package": {
-      "name": "Paquete ESA Completo",
-      "description": "Paquete ESA completo que incluye cartas de vivienda y viaje, más una tarjeta de identificación ESA oficial. El mejor valor para cobertura completa y tranquilidad."
-    },
-    "psd-registration": {
-      "name": "Registro de Perro de Servicio Psiquiátrico",
-      "description": "Registro oficial para tu Perro de Servicio Psiquiátrico con documentación completa y tarjeta de identificación. Documentación conforme a la ADA para proteger tus derechos en espacios públicos."
-    },
-    "psd-training-guide": {
-      "name": "Guía de Entrenamiento y Documentación PSD",
-      "description": "Guía de entrenamiento completa y paquete de documentación para Perros de Servicio Psiquiátrico. Incluye currículum de entrenamiento, guía de acceso público y manual de derechos legales."
-    },
-    "psd-complete-kit": {
-      "name": "Kit PSD Completo",
-      "description": "Todo lo que necesitas para tu Perro de Servicio Psiquiátrico: registro completo, tarjeta de identificación oficial, chaleco de perro de servicio y documentación completa. El paquete definitivo para soporte completo de perro de servicio."
+    "travel-advisory": {
+      "name": "Asesoría de Viaje Liberty Paws",
+      "description": "Orientación veterinaria especializada para requisitos y preparación de viaje internacional con mascotas. Incluye consulta con veterinario, evaluación de ruta y destino, revisión de documentos, soporte de coordinación con aerolíneas y garantía de contacto inicial en 24 horas."
     }
   },
   "searchRegistration": {
@@ -759,7 +756,20 @@
       "changePhoto": "Cambiar Imagen",
       "remove": "Eliminar",
       "uploadError": "Error al subir la imagen",
-      "petPhotoHint": "JPEG, PNG o WebP — máx. 5 MB"
+      "petPhotoHint": "JPEG, PNG o WebP — máx. 5 MB",
+      "variants": {
+        "title": "Variantes del Servicio",
+        "subtitle": "Define opciones de tamaño/nivel con precios individuales",
+        "name": "Nombre",
+        "slug": "Slug",
+        "description": "Descripción",
+        "price": "Precio",
+        "default": "Predeterminado",
+        "active": "Activo",
+        "addVariant": "Agregar Variante",
+        "removeVariant": "Eliminar",
+        "noVariants": "Sin variantes definidas. Agregue variantes para precios por tamaño/nivel."
+      }
     },
     "coupons": {
       "title": "Cupones",

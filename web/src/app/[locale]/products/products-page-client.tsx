@@ -9,7 +9,7 @@ import { ProductCard, type Product } from '@/components/sections/product-card'
 import { cn } from '@/lib/utils'
 import { getImageUrl } from '@/lib/assets'
 
-type Category = 'all' | 'esa' | 'psd'
+type Category = 'all' | 'esa' | 'psd' | 'services'
 type SortOption = 'featured' | 'priceLow' | 'priceHigh' | 'newest'
 
 function ProductsContent({ products }: { products: Product[] }) {
@@ -24,6 +24,7 @@ function ProductsContent({ products }: { products: Product[] }) {
     { value: 'all', label: t('categories.all') },
     { value: 'esa', label: t('categories.esa') },
     { value: 'psd', label: t('categories.psd') },
+    { value: 'services', label: t('categories.services') },
   ]
 
   const sortOptions: { value: SortOption; label: string }[] = [
@@ -62,7 +63,7 @@ function ProductsContent({ products }: { products: Product[] }) {
     })
 
     return sorted
-  }, [category, sortBy])
+  }, [products, category, sortBy])
 
   return (
     <>
@@ -147,7 +148,7 @@ function ProductsContent({ products }: { products: Product[] }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+            className="grid gap-6 sm:grid-cols-2"
           >
             {filteredAndSortedProducts.map((product, index) => (
               <motion.div
@@ -197,8 +198,8 @@ function ProductsLoading() {
       {/* Products Grid Skeleton */}
       <section className="py-12">
         <div className="container mx-auto px-4">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
+          <div className="grid gap-6 sm:grid-cols-2">
+            {[1, 2, 3, 4].map((i) => (
               <div key={i} className="h-96 animate-pulse rounded-2xl bg-gray-200" />
             ))}
           </div>

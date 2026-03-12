@@ -438,7 +438,7 @@ export async function fetchServiceDetail(
 ): Promise<AdminService | null> {
   const { data, error } = await supabase
     .from('services')
-    .select('*, service_media(url, is_primary)')
+    .select('*, service_media(url, is_primary), service_variants(*)')
     .eq('id', serviceId)
     .single()
 
@@ -450,8 +450,16 @@ export async function fetchServiceDetail(
     | undefined
   const primaryImage = media?.find((m) => m.is_primary)?.url ?? media?.[0]?.url ?? ''
 
-  const { service_media: _, ...rest } = data as Record<string, unknown>
-  return { ...rest, image_url: primaryImage } as unknown as AdminService
+  // Extract variants, sorted by sort_order
+  const variants = (data as Record<string, unknown>).service_variants as
+    | import('@/types/admin').AdminServiceVariant[]
+    | undefined
+  const sortedVariants = variants
+    ? [...variants].sort((a, b) => a.sort_order - b.sort_order)
+    : undefined
+
+  const { service_media: _, service_variants: _sv, ...rest } = data as Record<string, unknown>
+  return { ...rest, image_url: primaryImage, variants: sortedVariants } as unknown as AdminService
 }
 
 // ── Coupons ─────────────────────────────────────────────────────────

@@ -5,11 +5,12 @@ import { useTranslations } from 'next-intl'
 import { useRouter, Link } from '@/i18n/routing'
 import { createClient } from '@/lib/supabase/client'
 import { fetchServiceDetail } from '@/lib/admin/queries'
-import { updateService } from '@/lib/admin/actions'
+import { updateService, saveServiceVariants } from '@/lib/admin/actions'
+import type { VariantInput } from '@/lib/admin/actions'
 import { revalidateServices } from '@/lib/services/revalidate'
 import { PhotoUpload } from '@/components/admin/photo-upload'
 import { getAssetUrl } from '@/lib/assets'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, Plus, Trash2 } from 'lucide-react'
 import type { AdminService } from '@/types/admin'
 
 export default function AdminEditServicePage({
@@ -25,6 +26,7 @@ export default function AdminEditServicePage({
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const [imageUrl, setImageUrl] = useState('')
+  const [variants, setVariants] = useState<VariantInput[]>([])
 
   useEffect(() => {
     async function load() {
@@ -33,6 +35,20 @@ export default function AdminEditServicePage({
       setService(data)
       if (data?.image_url) {
         setImageUrl(data.image_url.startsWith('http') ? data.image_url : getAssetUrl(data.image_url))
+      }
+      if (data?.variants) {
+        setVariants(
+          data.variants.map((v) => ({
+            id: v.id,
+            slug: v.slug,
+            name: v.name,
+            description: v.description ?? '',
+            price: Number(v.price),
+            is_default: v.is_default,
+            is_active: v.is_active,
+            sort_order: v.sort_order,
+          }))
+        )
       }
       setLoading(false)
     }
@@ -64,6 +80,7 @@ export default function AdminEditServicePage({
     try {
       const supabase = createClient()
       await updateService(supabase, service.id, data)
+      await saveServiceVariants(supabase, service.id, variants)
       await revalidateServices()
       router.push('/admin/services')
     } catch {
@@ -214,6 +231,161 @@ export default function AdminEditServicePage({
                 />
                 {t('featured')}
               </label>
+            </div>
+
+            {/* ── Service Variants ─────────────────────────────── */}
+            <div className="card bg-base-100 shadow-sm">
+              <div className="card-body space-y-4">
+                <div>
+                  <h3 className="text-lg font-semibold text-secondary">{t('variants.title')}</h3>
+                  <p className="text-sm text-base-content/60">{t('variants.subtitle')}</p>
+                </div>
+
+                {variants.length === 0 && (
+                  <p className="text-sm text-base-content/40 italic">{t('variants.noVariants')}</p>
+                )}
+
+                {variants.map((variant, idx) => (
+                  <div key={variant.id ?? `new-${idx}`} className="rounded-lg border border-base-300 p-4 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-base-content/60">
+                        #{idx + 1}
+                      </span>
+                      <button
+                        type="button"
+                        className="btn btn-ghost btn-sm btn-circle text-error"
+                        onClick={() => setVariants((prev) => prev.filter((_, i) => i !== idx))}
+                        title={t('variants.removeVariant')}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                      <fieldset className="fieldset">
+                        <legend className="fieldset-legend">{t('variants.name')}</legend>
+                        <input
+                          type="text"
+                          className="input input-bordered w-full input-sm"
+                          value={variant.name}
+                          onChange={(e) => {
+                            const val = e.target.value
+                            setVariants((prev) =>
+                              prev.map((v, i) =>
+                                i === idx ? { ...v, name: val, slug: val.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '') } : v
+                              )
+                            )
+                          }}
+                          required
+                        />
+                      </fieldset>
+
+                      <fieldset className="fieldset">
+                        <legend className="fieldset-legend">{t('variants.slug')}</legend>
+                        <input
+                          type="text"
+                          className="input input-bordered w-full input-sm"
+                          value={variant.slug}
+                          onChange={(e) => {
+                            const val = e.target.value
+                            setVariants((prev) =>
+                              prev.map((v, i) => (i === idx ? { ...v, slug: val } : v))
+                            )
+                          }}
+                          required
+                        />
+                      </fieldset>
+
+                      <fieldset className="fieldset">
+                        <legend className="fieldset-legend">{t('variants.price')}</legend>
+                        <input
+                          type="number"
+                          step="0.01"
+                          min="0"
+                          className="input input-bordered w-full input-sm"
+                          value={variant.price}
+                          onChange={(e) => {
+                            const val = parseFloat(e.target.value) || 0
+                            setVariants((prev) =>
+                              prev.map((v, i) => (i === idx ? { ...v, price: val } : v))
+                            )
+                          }}
+                          required
+                        />
+                      </fieldset>
+                    </div>
+
+                    <fieldset className="fieldset">
+                      <legend className="fieldset-legend">{t('variants.description')}</legend>
+                      <input
+                        type="text"
+                        className="input input-bordered w-full input-sm"
+                        value={variant.description}
+                        onChange={(e) => {
+                          const val = e.target.value
+                          setVariants((prev) =>
+                            prev.map((v, i) => (i === idx ? { ...v, description: val } : v))
+                          )
+                        }}
+                      />
+                    </fieldset>
+
+                    <div className="flex items-center gap-6">
+                      <label className="label cursor-pointer gap-2">
+                        <input
+                          type="radio"
+                          name="default_variant"
+                          className="radio radio-primary radio-sm"
+                          checked={variant.is_default}
+                          onChange={() => {
+                            setVariants((prev) =>
+                              prev.map((v, i) => ({ ...v, is_default: i === idx }))
+                            )
+                          }}
+                        />
+                        <span className="text-sm">{t('variants.default')}</span>
+                      </label>
+
+                      <label className="label cursor-pointer gap-2">
+                        <input
+                          type="checkbox"
+                          className="toggle toggle-primary toggle-sm"
+                          checked={variant.is_active}
+                          onChange={(e) => {
+                            const val = e.target.checked
+                            setVariants((prev) =>
+                              prev.map((v, i) => (i === idx ? { ...v, is_active: val } : v))
+                            )
+                          }}
+                        />
+                        <span className="text-sm">{t('variants.active')}</span>
+                      </label>
+                    </div>
+                  </div>
+                ))}
+
+                <button
+                  type="button"
+                  className="btn btn-outline btn-primary btn-sm"
+                  onClick={() =>
+                    setVariants((prev) => [
+                      ...prev,
+                      {
+                        slug: '',
+                        name: '',
+                        description: '',
+                        price: 0,
+                        is_default: prev.length === 0,
+                        is_active: true,
+                        sort_order: prev.length,
+                      },
+                    ])
+                  }
+                >
+                  <Plus className="h-4 w-4" />
+                  {t('variants.addVariant')}
+                </button>
+              </div>
             </div>
 
             <div className="card-actions justify-end">

@@ -1,7 +1,7 @@
 import { unstable_cache } from 'next/cache'
 import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 import { getAssetUrl } from '@/lib/assets'
-import type { Product } from '@/components/sections/product-card'
+import type { Product, ProductVariant } from '@/components/sections/product-card'
 
 // Use a plain Supabase client (no cookies) since catalog data is public
 // and these queries must work at build time (generateStaticParams, sitemap)
@@ -16,6 +16,16 @@ function getClient() {
 
 // ── Mapping helper ──────────────────────────────────────────────────
 
+interface ServiceVariantRow {
+  id: string
+  slug: string
+  name: string
+  description: string | null
+  price: number
+  is_default: boolean
+  sort_order: number
+}
+
 interface ServiceRow {
   id: string
   slug: string
@@ -29,24 +39,51 @@ interface ServiceRow {
   sort_order: number
   service_categories: { categories: { slug: string } }[]
   service_media: { url: string }[]
+  service_variants?: ServiceVariantRow[]
+}
+
+function mapVariants(rows?: ServiceVariantRow[]): ProductVariant[] | undefined {
+  if (!rows || rows.length === 0) return undefined
+  return rows
+    .sort((a, b) => a.sort_order - b.sort_order)
+    .map((v) => ({
+      id: v.id,
+      slug: v.slug,
+      name: v.name,
+      description: v.description ?? undefined,
+      price: Number(v.price),
+      isDefault: v.is_default,
+    }))
 }
 
 function mapToProduct(row: ServiceRow): Product {
   const categorySlug = row.service_categories?.[0]?.categories?.slug ?? 'esa'
   const imageUrl = row.service_media?.[0]?.url
+  const variants = mapVariants(row.service_variants)
+
+  // Auto-compute price range from variants when available
+  let price = Number(row.price)
+  let maxPrice = row.max_price ? Number(row.max_price) : undefined
+  if (variants && variants.length > 0) {
+    const prices = variants.map((v) => v.price)
+    price = Math.min(...prices)
+    const max = Math.max(...prices)
+    maxPrice = max > price ? max : undefined
+  }
 
   return {
     id: row.slug,
     slug: row.slug,
-    category: categorySlug as 'esa' | 'psd',
+    category: categorySlug,
     name: row.name,
     description: row.description,
-    price: Number(row.price),
-    maxPrice: row.max_price ? Number(row.max_price) : undefined,
+    price,
+    maxPrice,
     image: imageUrl ? getAssetUrl(imageUrl) : getAssetUrl('images/products/placeholder.jpg'),
     badge: row.badge_text ?? undefined,
     popular: row.is_featured,
     features: Array.isArray(row.features) ? row.features : [],
+    variants,
   }
 }
 
@@ -56,7 +93,8 @@ const SERVICE_SELECT = `
   id, slug, name, description, price, max_price,
   is_featured, badge_text, features, sort_order,
   service_categories(categories(slug)),
-  service_media(url)
+  service_media(url),
+  service_variants(id, slug, name, description, price, is_default, sort_order)
 ` as const
 
 // ── Queries ─────────────────────────────────────────────────────────
