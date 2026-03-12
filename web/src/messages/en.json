@@ -267,6 +267,33 @@
     "copyright": "© {year} Liberty Paws International. All rights reserved.",
     "craftedBy": "Crafted by"
   },
+  "cart": {
+    "title": "Shopping Cart",
+    "empty": "Your cart is empty",
+    "emptyDescription": "Browse our products and add items to your cart",
+    "continueShopping": "Continue Shopping",
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "checkout": "Proceed to Checkout",
+    "remove": "Remove",
+    "quantity": "Qty",
+    "itemAdded": "Added to cart",
+    "viewCart": "View Cart",
+    "items": "{count, plural, =0 {No items} =1 {1 item} other {# items}}",
+    "clearCart": "Clear Cart",
+    "checkoutLoading": "Redirecting to payment...",
+    "checkoutError": "Something went wrong. Please try again."
+  },
+  "checkout": {
+    "title": "Checkout",
+    "success": {
+      "title": "Payment Successful!",
+      "subtitle": "Thank you for your purchase. You will receive a confirmation email shortly.",
+      "orderInfo": "Your order is being processed. You can check your order status in your account.",
+      "backToHome": "Back to Home",
+      "viewProducts": "View More Products"
+    }
+  },
   "common": {
     "loading": "Loading...",
     "error": "An error occurred",

@@ -4,18 +4,20 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/routing'
-import { Menu, X, Search, LogIn } from 'lucide-react'
+import { Menu, X, Search, LogIn, ShoppingCart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { LanguageSwitcher, LanguageSwitcherCompact } from './language-switcher'
 import { MobileNav } from './mobile-nav'
 import { UserMenu } from './user-menu'
 import { useAuth } from '@/contexts/auth-context'
+import { useCart } from '@/contexts/cart-context'
 import { getImageUrl } from '@/lib/assets'
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const t = useTranslations('nav')
   const { isAuthenticated, isLoading } = useAuth()
+  const { totalItems, toggleCart } = useCart()
 
   const navLinks = [
     { href: '/', label: t('home') },
@@ -66,6 +68,21 @@ export function Header() {
       {/* Desktop Right Side - navbar-end */}
       <div className="navbar-end">
         <div className="hidden items-center gap-3 md:flex">
+          <button
+            type="button"
+            onClick={toggleCart}
+            className="btn btn-ghost btn-square btn-sm"
+            aria-label="Shopping cart"
+          >
+            <div className="indicator">
+              <ShoppingCart className="h-5 w-5" />
+              {totalItems > 0 && (
+                <span className="badge badge-primary badge-xs indicator-item">
+                  {totalItems}
+                </span>
+              )}
+            </div>
+          </button>
           <LanguageSwitcher />
           {!isLoading && (
             <>
@@ -85,6 +102,21 @@ export function Header() {
 
         {/* Mobile Right Side */}
         <div className="flex items-center gap-2 md:hidden">
+          <button
+            type="button"
+            onClick={toggleCart}
+            className="btn btn-ghost btn-square btn-sm"
+            aria-label="Shopping cart"
+          >
+            <div className="indicator">
+              <ShoppingCart className="h-5 w-5" />
+              {totalItems > 0 && (
+                <span className="badge badge-primary badge-xs indicator-item">
+                  {totalItems}
+                </span>
+              )}
+            </div>
+          </button>
           <LanguageSwitcherCompact />
           <button
             type="button"

@@ -10,6 +10,8 @@ import { locales, type Locale } from '@/i18n/config'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { AuthProvider } from '@/contexts/auth-context'
+import { CartProvider } from '@/contexts/cart-context'
+import { CartDrawer } from '@/components/layout/cart-drawer'
 import { ClarityScript } from '@/components/analytics/clarity-script'
 import { buildMetadata } from '@/lib/seo'
 
@@ -73,12 +75,15 @@ export default async function LocaleLayout({
       <body className="min-h-screen bg-base-100 font-sans antialiased">
         <NextIntlClientProvider messages={messages}>
           <AuthProvider>
-            <ClarityScript />
-            <div className="flex min-h-screen flex-col">
-              <Header />
-              <main className="flex-1">{children}</main>
-              <Footer />
-            </div>
+            <CartProvider>
+              <ClarityScript />
+              <div className="flex min-h-screen flex-col">
+                <Header />
+                <main className="flex-1">{children}</main>
+                <Footer />
+              </div>
+              <CartDrawer />
+            </CartProvider>
           </AuthProvider>
         </NextIntlClientProvider>
         <Analytics />

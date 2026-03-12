@@ -2,12 +2,13 @@
 
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { Link } from '@/i18n/routing'
+import { Link, useRouter } from '@/i18n/routing'
 import Image from 'next/image'
 import { ArrowLeft, Check, ShoppingCart, Shield, Clock, Award } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { VariantSelector } from '@/components/ui/variant-selector'
 import { ProductCard, type Product } from '@/components/sections/product-card'
+import { useCart } from '@/contexts/cart-context'
 
 export function ProductDetailContent({
   product,
@@ -18,6 +19,8 @@ export function ProductDetailContent({
 }) {
   const tProduct = useTranslations(`productDetails.${product.id}`)
   const tCommon = useTranslations('products')
+  const { addItem } = useCart()
+  const router = useRouter()
 
   // Variant selection state
   const defaultVariant = product.variants?.find((v) => v.isDefault) ?? product.variants?.[0]
@@ -151,11 +154,23 @@ export function ProductDetailContent({
 
               {/* Action Buttons */}
               <div className="flex flex-col gap-4 sm:flex-row">
-                <Button size="lg" className="flex-1">
+                <Button
+                  size="lg"
+                  className="flex-1"
+                  onClick={() => {
+                    addItem(product, selectedVariant)
+                    router.push('/cart')
+                  }}
+                >
                   <ShoppingCart className="mr-2 h-5 w-5" />
                   {tCommon('buyNow')}
                 </Button>
-                <Button size="lg" variant="outline" className="flex-1">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => addItem(product, selectedVariant)}
+                >
                   {tCommon('addToCart')}
                 </Button>
               </div>
