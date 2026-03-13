@@ -40,9 +40,9 @@ export function LanguageSwitcher({
     setIsOpen(false)
   }
 
-  // Close dropdown when clicking outside
+  // Close dropdown when clicking/touching outside
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
       if (
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
@@ -52,7 +52,11 @@ export function LanguageSwitcher({
     }
 
     document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
+    document.addEventListener('touchstart', handleClickOutside, { passive: true })
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('touchstart', handleClickOutside)
+    }
   }, [])
 
   // Close dropdown on escape key
@@ -74,15 +78,15 @@ export function LanguageSwitcher({
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          'btn btn-ghost btn-sm gap-2',
-          variant === 'compact' && 'btn-xs'
+          'btn btn-ghost gap-2 touch-manipulation',
+          variant === 'compact' ? 'btn-sm min-h-[44px] px-2' : 'btn-sm'
         )}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
         aria-label="Select language"
       >
-        <Globe className="h-4 w-4 text-primary" />
-        <span className="flex items-center gap-1.5">
+        <Globe className={cn('text-primary', variant === 'compact' ? 'h-3.5 w-3.5' : 'h-4 w-4')} />
+        <span className="flex items-center gap-1">
           <span className="text-base" role="img" aria-label={currentLocale.name}>
             {currentLocale.flag}
           </span>
@@ -92,7 +96,7 @@ export function LanguageSwitcher({
         </span>
         <ChevronDown
           className={cn(
-            'h-3.5 w-3.5 transition-transform duration-200',
+            'h-3 w-3 transition-transform duration-200',
             isOpen && 'rotate-180'
           )}
         />
@@ -107,7 +111,7 @@ export function LanguageSwitcher({
             exit={{ opacity: 0, y: -8, scale: 0.96 }}
             transition={{ duration: 0.15, ease: 'easeOut' }}
             className={cn(
-              'menu dropdown-content z-50 mt-2 min-w-[180px] rounded-box bg-base-200 p-2 shadow-lg',
+              'menu dropdown-content z-[60] mt-2 min-w-[180px] rounded-box bg-base-200 p-2 shadow-lg',
               variant === 'compact' && 'min-w-[160px]'
             )}
             role="listbox"
@@ -120,7 +124,7 @@ export function LanguageSwitcher({
                   <button
                     onClick={() => handleLocaleChange(loc.code)}
                     className={cn(
-                      'flex items-center gap-3',
+                      'flex items-center gap-3 touch-manipulation min-h-[44px]',
                       isSelected && 'active'
                     )}
                     role="option"

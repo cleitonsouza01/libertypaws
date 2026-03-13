@@ -101,11 +101,11 @@ export function Header() {
         </div>
 
         {/* Mobile Right Side */}
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-1 md:hidden">
           <button
             type="button"
             onClick={toggleCart}
-            className="btn btn-ghost btn-square btn-sm"
+            className="btn btn-ghost btn-square btn-sm min-h-[44px] min-w-[44px] touch-manipulation"
             aria-label="Shopping cart"
           >
             <div className="indicator">
@@ -121,7 +121,7 @@ export function Header() {
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="btn btn-ghost btn-square"
+            className="btn btn-ghost btn-square min-h-[44px] min-w-[44px] touch-manipulation"
             aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
           >
             {isMobileMenuOpen ? (
